@@ -1,0 +1,182 @@
+@import "tailwindcss";
+@plugin "@tailwindcss/typography";
+
+@theme {
+  --font-sans: var(--font-inter), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --font-display: var(--font-inter), ui-sans-serif, system-ui, sans-serif;
+
+  /* Brand - primary palette (from CliniClick brand guide, 2026-05-08) */
+  --color-brand-purple: #A75CFF;
+  --color-brand-navy: #001435;
+  --color-brand-white: #FFFFFF;
+
+  /* Brand - secondary palette */
+  --color-brand-black: #000000;
+  --color-brand-grey: #6D6E70;
+
+  /* Purple scale (derived from #A75CFF for hover/active states + tints) */
+  --color-purple-50: #f6f0ff;
+  --color-purple-100: #ede0ff;
+  --color-purple-200: #d9bdff;
+  --color-purple-300: #c599ff;
+  --color-purple-400: #b676ff;
+  --color-purple-500: #A75CFF;
+  --color-purple-600: #8a3ee6;
+  --color-purple-700: #6d2dbf;
+  --color-purple-800: #531f99;
+  --color-purple-900: #3a1373;
+
+  /* Navy scale (derived from #001435) */
+  --color-navy-50: #eef1f7;
+  --color-navy-100: #d4dceb;
+  --color-navy-200: #a3b3d2;
+  --color-navy-300: #6f86b4;
+  --color-navy-400: #3e5790;
+  --color-navy-500: #1d3367;
+  --color-navy-600: #0c1f4a;
+  --color-navy-700: #061840;
+  --color-navy-800: #021639;
+  --color-navy-900: #001435;
+
+  /* Ink scale - neutrals for body, lines, surfaces */
+  --color-ink-50: #f8fafb;
+  --color-ink-100: #f1f3f5;
+  --color-ink-200: #e3e6ea;
+  --color-ink-300: #cbd0d6;
+  --color-ink-400: #9aa1ac;
+  --color-ink-500: #6D6E70; /* brand grey */
+  --color-ink-600: #4f5258;
+  --color-ink-700: #353940;
+  --color-ink-800: #1d2128;
+  --color-ink-900: #0e1116;
+}
+
+:root {
+  color-scheme: light;
+  --content-max-width: 72ch;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-rendering: optimizeLegibility;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: var(--font-sans);
+  background-color: white;
+  color: var(--color-ink-800);
+  font-feature-settings: "ss01", "cv11";
+}
+
+/* Typography defaults - restrained, editorial-medical */
+.prose {
+  --tw-prose-body: var(--color-ink-700);
+  --tw-prose-headings: var(--color-ink-900);
+  --tw-prose-lead: var(--color-ink-600);
+  --tw-prose-links: var(--color-purple-700);
+  --tw-prose-bold: var(--color-ink-900);
+  --tw-prose-bullets: var(--color-ink-300);
+  --tw-prose-quotes: var(--color-ink-800);
+  --tw-prose-quote-borders: var(--color-purple-200);
+  --tw-prose-captions: var(--color-ink-500);
+  --tw-prose-code: var(--color-ink-900);
+  --tw-prose-hr: var(--color-ink-200);
+}
+
+/* Eyebrow label - small uppercase axis tags ("CONCERN", "TREATMENT", etc.) */
+.eyebrow {
+  font-size: 0.75rem;
+  letter-spacing: 0.12em;
+  font-weight: 600;
+  text-transform: uppercase;
+  color: var(--color-purple-700);
+}
+
+/* Focus ring - accessibility */
+*:focus-visible {
+  outline: 2px solid var(--color-purple-500);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Inputs handle their own focus state via the wrapper border - never show
+   the global purple outline on form fields. */
+input:focus,
+input:focus-visible,
+textarea:focus,
+textarea:focus-visible,
+select:focus,
+select:focus-visible {
+  outline: none !important;
+}
+
+/* Reset native input appearance so border-radius classes always apply.
+   Some browsers (Safari, iOS, certain Android) impose default control
+   styling on input[type=email|search|text|...] that hides custom rounded
+   corners. Force our rounded-full / rounded-2xl utilities to win. */
+input,
+textarea,
+select {
+  appearance: none;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+}
+/* Search clear button removal (Safari + Chrome) so our custom X button is the only one shown */
+input[type="search"]::-webkit-search-cancel-button,
+input[type="search"]::-webkit-search-decoration {
+  -webkit-appearance: none;
+}
+
+/* Selection */
+::selection {
+  background-color: var(--color-purple-200);
+  color: var(--color-navy-900);
+}
+
+/* Hide scrollbars for horizontal-scroll mobile rails (kept keyboard/touch accessible) */
+.scrollbar-none::-webkit-scrollbar { display: none; }
+.scrollbar-none { scrollbar-width: none; -ms-overflow-style: none; }
+
+/* Horizontal scroll rail - used on mobile for card carousels */
+.h-rail {
+  display: flex;
+  gap: 0.75rem;
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  -webkit-overflow-scrolling: touch;
+  margin-left: -1.5rem;
+  margin-right: -1.5rem;
+  padding-left: 1.5rem;
+  padding-right: 1.5rem;
+  padding-bottom: 0.5rem;
+}
+.h-rail > * {
+  scroll-snap-align: start;
+  flex-shrink: 0;
+}
+
+/* Auto-scrolling marquee - used in hero on mobile for a "live ticker" feel.
+   Two copies of the children render side-by-side; we translate -50% so the
+   second copy lands exactly where the first started → seamless infinite loop. */
+@keyframes marquee-x {
+  from { transform: translate3d(0, 0, 0); }
+  to   { transform: translate3d(-50%, 0, 0); }
+}
+.animate-marquee {
+  animation: marquee-x 38s linear infinite;
+  will-change: transform;
+}
+.animate-marquee:hover,
+.animate-marquee:focus-within {
+  animation-play-state: paused;
+}
+@media (prefers-reduced-motion: reduce) {
+  .animate-marquee { animation: none; }
+}
+
+/* Edge-fade mask for marquee containers (modern Safari + Chrome support) */
+.edge-fade-x {
+  -webkit-mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+          mask-image: linear-gradient(to right, transparent, #000 8%, #000 92%, transparent);
+}
