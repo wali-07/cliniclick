@@ -64,13 +64,13 @@ articles:
       - which is better botox or fillers
     dueDate: "2026-05-13"
     status: published
+    publishedDate: "2026-05-10"
     brief: |
       Side-by-side comparison. Mechanism, what each treats, duration, downtime,
       cost, who suits which. Frame as "they solve different problems" not "X is
       better." Cross-link to both What is botox and What is dermal fillers.
       Include a clear table (mechanism, treats, duration, downtime, typical cost
       AED, when to consider).
-    publishedDate: "2026-05-10"
   - slug: how-aesthetic-clinic-pricing-works-in-the-uae
     parentType: guide
     parentSlug: pricing
@@ -104,7 +104,7 @@ articles:
       - laser hair removal dark skin
       - laser hair removal sessions
     dueDate: "2026-05-18"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview. How lasers target melanin in the hair follicle.
       Different laser types and which suit which skin tones (Fitzpatrick).
