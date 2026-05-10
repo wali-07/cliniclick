@@ -11,6 +11,7 @@ import { ArticlePreviewMock } from "@/components/site/article-preview-mock";
 import { FloatingPreviewCards } from "@/components/site/floating-preview-cards";
 import { MobilePreviewRail } from "@/components/site/mobile-preview-rail";
 import { TrustPanelMock } from "@/components/site/trust-panel-mock";
+import { NewsletterSignupForm } from "@/components/site/newsletter-signup-form";
 import { getPublishedConcerns } from "@/lib/content/concerns";
 import { getPublishedTreatments } from "@/lib/content/treatments";
 import { getPublishedMachines } from "@/lib/content/machines";
@@ -289,15 +290,7 @@ export default function HomePage() {
               </p>
             </div>
             <div className="lg:col-span-5">
-              <form action="/api/subscribe" method="post" className="flex flex-col gap-3" data-capture-surface="home-brief">
-                <input type="hidden" name="surface" value="home-brief" />
-                <label htmlFor="brief-home" className="sr-only">Your email</label>
-                <input id="brief-home" type="email" name="email" required autoComplete="email" placeholder="you@example.com" className="w-full rounded-full border border-ink-200 bg-white px-6 py-4 text-base text-navy-900 placeholder-ink-400 focus:border-navy-900 focus:outline-none" />
-                <button type="submit" className="w-full rounded-full bg-navy-900 px-6 py-4 text-sm font-semibold text-white transition hover:bg-navy-700">
-                  Subscribe. It&apos;s free.
-                </button>
-                <p className="text-xs text-ink-500">Unsubscribe anytime. Your email stays with us only.</p>
-              </form>
+              <NewsletterSignupForm placement="homepage" variant="panel" />
             </div>
           </div>
         </div>

@@ -12,20 +12,20 @@ export default function ContactPage() {
       <ul className="mt-8 space-y-4 text-ink-700">
         <li>
           <strong className="text-navy-900">General:</strong>{" "}
-          <a href="mailto:hello@cliniclick.ai" className="text-purple-700 hover:underline">
-            hello@cliniclick.ai
+          <a href="mailto:support@cliniclick.ae" className="text-purple-700 hover:underline">
+            support@cliniclick.ae
           </a>
         </li>
         <li>
           <strong className="text-navy-900">Corrections / feedback:</strong>{" "}
-          <a href="mailto:feedback@cliniclick.ai" className="text-purple-700 hover:underline">
-            feedback@cliniclick.ai
+          <a href="mailto:feedback@cliniclick.ae" className="text-purple-700 hover:underline">
+            feedback@cliniclick.ae
           </a>
         </li>
         <li>
           <strong className="text-navy-900">Press:</strong>{" "}
-          <a href="mailto:press@cliniclick.ai" className="text-purple-700 hover:underline">
-            press@cliniclick.ai
+          <a href="mailto:press@cliniclick.ae" className="text-purple-700 hover:underline">
+            press@cliniclick.ae
           </a>
         </li>
       </ul>

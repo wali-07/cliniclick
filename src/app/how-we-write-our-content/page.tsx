@@ -223,10 +223,10 @@ export default function HowWeWriteOurContentPage() {
             </div>
             <div className="lg:col-span-4 lg:text-right">
               <Link
-                href="mailto:feedback@cliniclick.ai"
+                href="mailto:feedback@cliniclick.ae"
                 className="inline-flex rounded-full bg-navy-900 px-7 py-3.5 text-sm font-semibold text-white transition hover:bg-navy-700"
               >
-                feedback@cliniclick.ai
+                feedback@cliniclick.ae
               </Link>
             </div>
           </div>

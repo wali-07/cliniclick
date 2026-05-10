@@ -1,5 +1,6 @@
 import Link from "next/link";
 import { siteConfig } from "@/lib/site-config";
+import { NewsletterSignupForm } from "@/components/site/newsletter-signup-form";
 
 export function SiteFooter() {
   return (
@@ -13,6 +14,15 @@ export function SiteFooter() {
             <p className="mt-3 max-w-md text-sm text-navy-100/80">
               The UAE&apos;s evidence-based guide to aesthetic treatments. Information only - not medical advice.
             </p>
+            <div className="mt-6 max-w-md">
+              <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-purple-300">
+                The bi-weekly Brief
+              </p>
+              <p className="mt-2 mb-3 text-xs text-navy-100/70">
+                One short read every two weeks. No spam, one-click unsubscribe.
+              </p>
+              <NewsletterSignupForm placement="footer" variant="inline" />
+            </div>
           </div>
           <div>
             <p className="eyebrow text-purple-300">Explore</p>

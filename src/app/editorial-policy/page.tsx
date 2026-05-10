@@ -130,8 +130,8 @@ export default function EditorialPolicyPage() {
               </h2>
               <p className="mt-3 text-sm leading-relaxed text-ink-600">
                 We publish a visible correction on the article. Spotted an error? Email{" "}
-                <a href="mailto:feedback@cliniclick.ai" className="text-purple-700 hover:underline">
-                  feedback@cliniclick.ai
+                <a href="mailto:feedback@cliniclick.ae" className="text-purple-700 hover:underline">
+                  feedback@cliniclick.ae
                 </a>{" "}
                 or use the &ldquo;Report an error&rdquo; link on any article.
               </p>

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { Resend } from "resend";
+import { sendWelcomeEmail } from "@/lib/email/welcome";
 
 /**
  * Email capture endpoint. Every notify-me / newsletter form on the site
@@ -52,6 +53,7 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, configured: false });
   }
 
+  let isDuplicate = false;
   try {
     await resend.contacts.create({
       email,
@@ -64,18 +66,28 @@ export async function POST(req: Request) {
       unsubscribed: false,
     });
     console.log(`[notify] Captured ${email} from ${surfaceTag}`);
-    return NextResponse.json({ ok: true });
   } catch (err) {
     const message = err instanceof Error ? err.message : String(err);
-    // Treat "already exists" as success - the user just resubmitted, no
-    // need to surface a confusing error.
     if (/already.*exist|duplicate/i.test(message)) {
-      return NextResponse.json({ ok: true, deduped: true });
+      isDuplicate = true;
+      console.log(`[notify] ${email} already in audience (re-submit from ${surfaceTag})`);
+    } else {
+      console.error(`[notify] Resend error for ${email}: ${message}`);
+      return NextResponse.json(
+        { ok: false, error: "Could not subscribe right now - please try again" },
+        { status: 502 }
+      );
     }
-    console.error(`[notify] Resend error for ${email}: ${message}`);
-    return NextResponse.json(
-      { ok: false, error: "Could not subscribe right now - please try again" },
-      { status: 502 }
-    );
   }
+
+  // Welcome email - only send for genuinely new contacts to avoid spamming
+  // someone every time they re-submit a form. Best-effort; failure here
+  // does not roll back the audience add.
+  if (!isDuplicate) {
+    sendWelcomeEmail({ to: email, surface: surfaceTag }).then((id) => {
+      if (id) console.log(`[notify] Sent welcome email to ${email} (id: ${id})`);
+    });
+  }
+
+  return NextResponse.json({ ok: true, ...(isDuplicate ? { deduped: true } : {}) });
 }

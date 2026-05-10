@@ -14,7 +14,7 @@ export const siteConfig = {
     url: "/how-we-write-our-content",
   },
   contact: {
-    email: "hello@cliniclick.ae",
+    email: "support@cliniclick.ae",
     feedback: "feedback@cliniclick.ae",
   },
   nav: {
