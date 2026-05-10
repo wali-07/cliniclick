@@ -116,8 +116,11 @@ export type LinkHealthReport = {
 
 /**
  * Extract every `url: "..."` field that appears under a sources entry.
- * The Drafter outputs sources as an array of objects each with a url string;
- * we don't try to parse the TS source AST - a regex over the file body
+ * The Drafter outputs sources as an array of objects; the `url` field is
+ * optional. Sources without a url are skipped here (they will render as
+ * non-clickable citations on the page).
+ *
+ * We don't try to parse the TS source AST - a regex over the file body
  * is sufficient because the structure is highly constrained.
  */
 function extractSourceUrls(tsContent: string): string[] {

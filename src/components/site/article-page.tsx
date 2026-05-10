@@ -170,18 +170,24 @@ export function ArticlePage({
                                 <p className="text-[10px] font-semibold uppercase tracking-[0.14em] text-ink-500">
                                   {source.type} · {source.publisher}
                                 </p>
-                                <a
-                                  href={source.url}
-                                  target="_blank"
-                                  rel="noreferrer"
-                                  className="mt-1 inline-flex items-start gap-1.5 text-[15px] font-medium leading-snug text-navy-900 transition hover:text-purple-700"
-                                >
-                                  <span>{source.title}</span>
-                                  <ExternalLink
-                                    className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-ink-400"
-                                    aria-hidden
-                                  />
-                                </a>
+                                {source.url ? (
+                                  <a
+                                    href={source.url}
+                                    target="_blank"
+                                    rel="noreferrer"
+                                    className="mt-1 inline-flex items-start gap-1.5 text-[15px] font-medium leading-snug text-navy-900 transition hover:text-purple-700"
+                                  >
+                                    <span>{source.title}</span>
+                                    <ExternalLink
+                                      className="mt-0.5 h-3.5 w-3.5 flex-shrink-0 text-ink-400"
+                                      aria-hidden
+                                    />
+                                  </a>
+                                ) : (
+                                  <p className="mt-1 text-[15px] font-medium leading-snug text-navy-900">
+                                    {source.title}
+                                  </p>
+                                )}
                               </div>
                             </div>
                           </li>

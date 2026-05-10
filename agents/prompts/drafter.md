@@ -160,17 +160,40 @@ If you find yourself wanting to add more, cut something else first. Tighter arti
 - Every factual / mechanism / efficacy claim gets a citation.
 - Do not cite for opinion or synthesis sentences.
 
-### URL accuracy (critical - broken URLs block publishing)
+### URL accuracy (critical - the `url` field is OPTIONAL, omit it when unsure)
 
-- **Never invent or guess source URL paths.** If you are not 100% certain that the exact URL path exists, do not cite it.
-- For NHS, prefer the canonical condition page format: `https://www.nhs.uk/conditions/<condition-name>/`. These exist for almost every common condition. Do not invent NHS sub-paths.
-- For AAD (American Academy of Dermatology), the public-facing path is `https://www.aad.org/public/...`. Do NOT invent paths under `/cosmetic/` or other sub-sections - if you are not sure of the exact path, link to the AAD homepage or a parent index page you know exists.
-- For Cleveland Clinic, the canonical pattern is `https://my.clevelandclinic.org/health/<diseases|treatments|symptoms>/<id>-<name>`. Do not invent the numeric ID.
-- For Mayo Clinic, canonical is `https://www.mayoclinic.org/diseases-conditions/<name>/symptoms-causes/syc-XXXXXXXX`. Do not invent the syc-ID.
-- For journals (JAAD, NEJM, BMJ, Lancet, Cochrane), only cite if you are sure of the exact DOI URL. If unsure, prefer a publisher-side review or skip the claim entirely.
-- For FDA, the canonical pattern is `https://www.fda.gov/drugs/...` or `https://www.accessdata.fda.gov/...`. Verify the exact path exists - prefer not to cite than to cite a wrong URL.
+You do not have web access. You cannot verify whether a specific URL path exists. Your training data is also stale. Therefore:
 
-The Link Health Agent will fetch every source URL and reject the article if any are 404. Hallucinated URLs cost you a revision cycle and burn API budget. **When unsure, drop the citation rather than guess the URL.**
+**The `url` field on a source is optional. Omit it whenever you are not 100% certain the exact URL path exists right now.** A source without a url renders as plain text "Title, Publisher" - still attributable, still trustworthy, just not clickable. **An attributed-but-unlinked source is always better than a broken URL.**
+
+When you DO include a url:
+- Use only the canonical homepage / category page of the publisher (e.g., `https://www.nhs.uk/`, `https://www.aad.org/`, `https://www.mayoclinic.org/`) where you are 100% sure the URL exists.
+- Or use a DOI link (`https://doi.org/10.xxxx/yyyy`) for journal articles when you are sure of the exact DOI.
+
+When you are NOT sure (the default for most specific articles):
+- **Omit the url field entirely.** The Article schema makes it optional.
+- Still include the source: `{ title: "Acne overview", publisher: "AAD", type: "guideline" }` - no url field.
+- The reader gets "Acne overview, AAD" as a citation they can verify by Googling.
+
+**Examples of the right call:**
+
+```ts
+// SAFE - canonical homepage, definitely exists
+{ title: "About skin conditions", publisher: "NHS", url: "https://www.nhs.uk/conditions/", type: "guideline" }
+
+// SAFE - DOI URL we are sure of
+{ title: "Topical retinoids in acne", publisher: "Cochrane Database of Systematic Reviews", url: "https://doi.org/10.1002/14651858.CD011154.pub2", type: "review" }
+
+// SAFE - omit url when uncertain about the exact path
+{ title: "Botulinum toxin injections", publisher: "NHS", type: "guideline" }
+{ title: "Adult acne: causes and treatments", publisher: "AAD", type: "guideline" }
+{ title: "Laser hair removal: what to expect", publisher: "Cleveland Clinic", type: "explainer" }
+
+// UNSAFE - guessed URL path
+{ title: "Acne", publisher: "AAD", url: "https://www.aad.org/public/diseases/acne/really-acne/overview", type: "guideline" }
+```
+
+**Default to omitting the url.** Add it only when you have a high-confidence canonical link.
 
 ---
 

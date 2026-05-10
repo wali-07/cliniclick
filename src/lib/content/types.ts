@@ -10,7 +10,14 @@ export const sexAppealSchema = z.enum(["all", "women", "men"]);
 export const sourceSchema = z.object({
   title: z.string(),
   publisher: z.string(),
-  url: z.string().url(),
+  /**
+   * Optional - omit when the Drafter cannot verify the exact URL exists.
+   * When present, Link Health validates that it is reachable. When absent,
+   * the renderer shows the citation as plain text (still attributable but
+   * not clickable). Better to ship an attributed citation than to ship a
+   * broken URL or to drop the citation entirely.
+   */
+  url: z.string().url().optional(),
   type: z.enum(["guideline", "review", "study", "explainer", "regulator"]),
 });
 export type Source = z.infer<typeof sourceSchema>;
