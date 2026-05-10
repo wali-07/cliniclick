@@ -1,12 +1,11 @@
 import { cn } from "@/lib/utils";
 
-export type EyebrowAxis = "concern" | "treatment" | "machine" | "decoder" | "guide";
+export type EyebrowAxis = "concern" | "treatment" | "machine" | "guide";
 
 const labels: Record<EyebrowAxis, string> = {
   concern: "CONCERN",
   treatment: "TREATMENT",
   machine: "MACHINE",
-  decoder: "DECODER",
   guide: "GUIDE",
 };
 

@@ -5,7 +5,7 @@ import { z } from "zod";
 
 const calendarEntrySchema = z.object({
   slug: z.string(),
-  parentType: z.enum(["concern", "treatment", "machine", "decoder"]),
+  parentType: z.enum(["concern", "treatment", "machine", "guide"]),
   parentSlug: z.string(),
   kind: z.enum(["overview", "explainer", "comparison", "cost-guide", "questions"]),
   title: z.string(),

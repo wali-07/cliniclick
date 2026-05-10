@@ -71,7 +71,7 @@ articles:
       Include a clear table (mechanism, treats, duration, downtime, typical cost
       AED, when to consider).
   - slug: how-aesthetic-clinic-pricing-works-in-the-uae
-    parentType: decoder
+    parentType: guide
     parentSlug: pricing
     kind: explainer
     title: How aesthetic clinic pricing works in the UAE
@@ -83,7 +83,7 @@ articles:
     dueDate: "2026-05-15"
     status: awaiting-approval
     brief: |
-      Decoder article (lives under /learn). Explain the components of price
+      Guide article (lives under /learn). Explain the components of price
       variation: machine cost amortisation, per-unit consumables (toxin units,
       filler syringes), practitioner credentialing tier, location overhead,
       package vs single-session economics, follow-up inclusion, complication
@@ -125,9 +125,9 @@ articles:
       Commercial spoke. Per-area AED ranges, full-body package economics,
       what drives price variation (machine, technician, package size), what
       to compare across quotes. Cross-link to What is laser hair removal
-      pillar and the pricing decoder.
+      pillar and the pricing guide.
   - slug: dha-mohap-licensing-how-to-verify-your-clinic
-    parentType: decoder
+    parentType: guide
     parentSlug: regulation
     kind: explainer
     title: DHA and MOHAP licensing - how to verify your clinic
@@ -140,8 +140,8 @@ articles:
     dueDate: "2026-05-22"
     status: queued
     brief: |
-      Decoder. Walk reader through how DHA / MOHAP / Emirates Health Services
+      Guide. Walk reader through how DHA / MOHAP / Emirates Health Services
       licensing works for clinics and individual practitioners. How to look up
       a license number, what each license type covers, what to do if you
-      cannot verify. Most UAE-specific decoder we have - high credibility
+      cannot verify. Most UAE-specific guide we have - high credibility
       builder.

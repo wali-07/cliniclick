@@ -27,7 +27,7 @@ src/
       concerns/[slug]/...    Articles nested under a concern
       treatments/[slug]/...  Articles nested under a treatment
       machines/[slug]/...    Articles nested under a device
-      decoders/...           Standalone /learn articles
+      guides/...             Standalone /learn articles
       index.ts               Auto-maintained barrel of every article
   lib/
     content/                 Content loaders + Zod schemas

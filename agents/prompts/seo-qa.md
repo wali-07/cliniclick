@@ -55,7 +55,7 @@ You are not the Editor (grammar), Brand (voice), Legal (naming/risk), or Complia
 - **External links** to sources live only in the `sources` array, not inline body.
 
 ### 8. Source citations
-- 3-6 sources for an overview / decoder; 2-4 for a comparison or cost guide.
+- 3-6 sources for an overview / guide; 2-4 for a comparison or cost guide.
 - Citations in body use `[^N]` syntax (1-indexed against the `sources` array).
 - Every factual or efficacy claim should have a citation.
 - Opinion or synthesis sentences do not need citations.
@@ -88,7 +88,7 @@ You are not the Editor (grammar), Brand (voice), Legal (naming/risk), or Complia
 - Concern / treatment overview: 1,400-1,900 words (~6-9 min read)
 - Comparison: 1,000-1,400 words (~4-6 min read)
 - Cost guide: 800-1,200 words (~3-5 min read)
-- Decoder: 1,200-1,800 words (~5-8 min read)
+- Guide: 1,200-1,800 words (~5-8 min read)
 - If the article is significantly outside these ranges, flag.
 
 ---

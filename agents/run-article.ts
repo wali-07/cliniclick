@@ -248,7 +248,7 @@ function buildTelegramMessage(
   meta: { cycle: number; draftLength: number }
 ): string {
   const previewPath =
-    entry.parentType === "decoder"
+    entry.parentType === "guide"
       ? `/learn/${entry.slug}`
       : `/${entry.parentType}s/${entry.parentSlug}/${entry.slug}`;
   const localPreview = `http://localhost:3001${previewPath}`;

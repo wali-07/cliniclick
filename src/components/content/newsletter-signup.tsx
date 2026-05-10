@@ -1,7 +1,7 @@
 /**
  * Newsletter capture for "The CliniClick Brief" (bi-weekly).
  * Used on home, hubs, and the bottom of articles where booking-readiness slot
- * doesn't fit (e.g., decoder articles).
+ * doesn't fit (e.g., guide articles).
  */
 
 export function NewsletterSignup({

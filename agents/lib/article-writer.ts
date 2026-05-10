@@ -17,11 +17,11 @@ export function camelize(slug: string): string {
 /**
  * Compute the relative file path under src/content/articles/ for a given
  * calendar entry. Concerns/treatments/machines nest under their parent slug;
- * decoders sit flat under /decoders/.
+ * guides sit flat under /guides/.
  */
 export function articleFilePath(entry: CalendarEntry): string {
-  if (entry.parentType === "decoder") {
-    return resolve(ARTICLES_DIR, "decoders", `${entry.slug}.ts`);
+  if (entry.parentType === "guide") {
+    return resolve(ARTICLES_DIR, "guides", `${entry.slug}.ts`);
   }
   return resolve(
     ARTICLES_DIR,
@@ -36,8 +36,8 @@ export function articleFilePath(entry: CalendarEntry): string {
  * given calendar entry. Mirrors articleFilePath but as an import string.
  */
 function articleImportPath(entry: CalendarEntry): string {
-  if (entry.parentType === "decoder") {
-    return `./decoders/${entry.slug}`;
+  if (entry.parentType === "guide") {
+    return `./guides/${entry.slug}`;
   }
   return `./${entry.parentType}s/${entry.parentSlug}/${entry.slug}`;
 }

@@ -277,11 +277,12 @@ export type ArticleBlock = z.infer<typeof articleBlockSchema>;
 export const articleSchema = z.object({
   slug: z.string().regex(/^[a-z0-9-]+$/),
   /**
-   * "decoder" articles are top-level guides without a hub parent - they live
-   * at /learn/[slug]. parentSlug for decoders is a category tag for file-tree
-   * organisation (e.g. "pricing", "regulation"), not a real entity slug.
+   * "guide" articles are top-level explainers without a hub parent - they
+   * live at /learn/[slug]. parentSlug for guides is a category tag for
+   * file-tree organisation (e.g. "pricing", "regulation"), not a real entity
+   * slug.
    */
-  parentType: z.enum(["concern", "treatment", "machine", "decoder"]),
+  parentType: z.enum(["concern", "treatment", "machine", "guide"]),
   parentSlug: z.string(),
   kind: z.enum([
     "overview", // "What is X" - one per parent, required

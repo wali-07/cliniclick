@@ -8,7 +8,7 @@ export function ComingSoonPage({
   description,
   surface,
 }: {
-  axis: "concern" | "treatment" | "machine" | "decoder" | "guide";
+  axis: "concern" | "treatment" | "machine" | "guide";
   title: string;
   description: string;
   surface: string;

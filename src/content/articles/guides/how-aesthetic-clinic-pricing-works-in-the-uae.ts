@@ -2,7 +2,7 @@ import { defineArticle } from "@/lib/content/types";
 
 export const howAestheticClinicPricingWorksInTheUae = defineArticle({
   slug: "how-aesthetic-clinic-pricing-works-in-the-uae",
-  parentType: "decoder",
+  parentType: "guide",
   parentSlug: "pricing",
   kind: "explainer",
   title: "How aesthetic clinic pricing works in the UAE",

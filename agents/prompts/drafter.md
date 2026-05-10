@@ -75,7 +75,7 @@ Never critique specific clinics, machines, brands, or doctors. Give readers the 
 
 ---
 
-## Article structure (concern overview / treatment overview / decoder)
+## Article structure (concern overview / treatment overview / guide)
 
 1. **Opening paragraph** that frames why this matters and what the reader is about to learn. Hooks with empathy, not fear.
 2. **What is it / how it works** — first-principles explanation. Use a numbered list when the mechanism has discrete steps.
@@ -150,7 +150,7 @@ Example: `"Botulinum toxin temporarily blocks acetylcholine release.[^2]"`
 - Concern / treatment overview: **1,400-1,900 words. Hard ceiling 2,000.**
 - Comparison: **1,000-1,400 words. Hard ceiling 1,500.**
 - Cost guide: **800-1,200 words. Hard ceiling 1,300.**
-- Decoder explainer: **1,200-1,800 words. Hard ceiling 1,900.**
+- Guide explainer: **1,200-1,800 words. Hard ceiling 1,900.**
 
 If you find yourself wanting to add more, cut something else first. Tighter articles rank better, get cited by LLMs more, and respect the reader's time. Long is not the same as thorough.
 
