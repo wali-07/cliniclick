@@ -63,13 +63,14 @@ articles:
       - difference between botox and fillers
       - which is better botox or fillers
     dueDate: "2026-05-13"
-    status: awaiting-approval
+    status: published
     brief: |
       Side-by-side comparison. Mechanism, what each treats, duration, downtime,
       cost, who suits which. Frame as "they solve different problems" not "X is
       better." Cross-link to both What is botox and What is dermal fillers.
       Include a clear table (mechanism, treats, duration, downtime, typical cost
       AED, when to consider).
+    publishedDate: "2026-05-10"
   - slug: how-aesthetic-clinic-pricing-works-in-the-uae
     parentType: guide
     parentSlug: pricing
@@ -82,6 +83,7 @@ articles:
       - how clinics price treatments
     dueDate: "2026-05-15"
     status: published
+    publishedDate: "2026-05-10"
     brief: |
       Guide article (lives under /learn). Explain the components of price
       variation: machine cost amortisation, per-unit consumables (toxin units,
@@ -90,7 +92,6 @@ articles:
       management coverage. Make the reader confident they can interrogate any
       quote. Strict criteria mode - no clinic naming, no "they overcharge"
       framing. Brand-defining piece.
-    publishedDate: "2026-05-10"
   - slug: what-is-laser-hair-removal
     parentType: treatment
     parentSlug: laser-hair-removal
