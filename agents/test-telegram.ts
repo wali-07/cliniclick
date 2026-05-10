@@ -11,7 +11,7 @@
  */
 
 import "dotenv/config";
-import { sendMessage, isTelegramConfigured } from "./lib/telegram.js";
+import { sendMessage, escapeMd, isTelegramConfigured } from "./lib/telegram.js";
 
 async function main() {
   if (!isTelegramConfigured()) {
@@ -21,8 +21,9 @@ async function main() {
     process.exit(1);
   }
   console.log("Sending test message...");
+  const ts = new Date().toISOString().slice(0, 16);
   const id = await sendMessage(
-    `*CliniClick editorial pipeline*: telegram wiring confirmed at ${new Date().toISOString().slice(0, 16)}\\.`
+    `*CliniClick editorial pipeline*: telegram wiring confirmed at ${escapeMd(ts)}\\.`
   );
   console.log(`Done. Message id: ${id}`);
 }

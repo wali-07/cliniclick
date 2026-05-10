@@ -254,19 +254,25 @@ function buildTelegramMessage(
   const localPreview = `http://localhost:3001${previewPath}`;
   const wordEstimate = Math.round(meta.draftLength / 6);
 
+  // MarkdownV2 escapes:
+  //   - Inside the surrounding text, escape every reserved char in dynamic
+  //     values via escapeMd.
+  //   - Inside `inline code` (between backticks), characters do NOT need to
+  //     be escaped EXCEPT backticks and backslashes - so "--slug=foo" is
+  //     literal inside backticks; do not double-escape.
   return [
     `*New draft ready: ${escapeMd(entry.title)}*`,
     ``,
-    `Kind: ${escapeMd(entry.kind)}  Parent: ${escapeMd(entry.parentType)}/${escapeMd(entry.parentSlug)}`,
-    `Converged in ${meta.cycle} cycle${meta.cycle === 1 ? "" : "s"}  ~${wordEstimate} words`,
+    `Kind: ${escapeMd(entry.kind)}  Parent: ${escapeMd(`${entry.parentType}/${entry.parentSlug}`)}`,
+    `Converged in ${meta.cycle} cycle${meta.cycle === 1 ? "" : "s"}, \\~${wordEstimate} words`,
     ``,
     `Preview \\(local\\): ${escapeMd(localPreview)}`,
     ``,
     `*Approve:*`,
-    `\`npm run publish\\-article \\-\\- \\-\\-slug=${escapeMd(entry.slug)}\``,
+    `\`npm run publish-article -- --slug=${entry.slug}\``,
     ``,
     `*Reject \\(redraft on next run\\):*`,
-    `\`npm run reject\\-article \\-\\- \\-\\-slug=${escapeMd(entry.slug)} \\-\\-reason=\"...\"\``,
+    `\`npm run reject-article -- --slug=${entry.slug} --reason="..."\``,
   ].join("\n");
 }
 

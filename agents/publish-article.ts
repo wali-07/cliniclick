@@ -45,7 +45,7 @@ async function main() {
   if (isTelegramConfigured()) {
     try {
       await sendMessage(
-        `*Published:* ${escapeMd(entry.title)}\n\nLive on dev\\. Commit \\& push to ship to production\\.`
+        `*Published:* ${escapeMd(entry.title)}\n\nLive on dev\\. Commit and push to ship to production\\.`
       );
     } catch {
       // non-fatal
