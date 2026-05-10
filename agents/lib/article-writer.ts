@@ -121,14 +121,19 @@ function registerInIndex(args: { binding: string; importPath: string }): void {
 
   const importLine = `import { ${args.binding} } from "${args.importPath}";`;
   if (!source.includes(importLine)) {
-    const lastImportMatch = source.match(/^(import .+;\n)+/m);
+    // Match the consecutive import block at file top. Handles both LF and
+    // CRLF line endings (the file lives in git which auto-converts on
+    // Windows checkout).
+    const lastImportMatch = source.match(/^(import .+;\r?\n)+/m);
     if (!lastImportMatch) {
       throw new Error(
         "Could not locate import block in src/content/articles/index.ts"
       );
     }
     const insertAt = lastImportMatch.index! + lastImportMatch[0].length;
-    source = source.slice(0, insertAt) + importLine + "\n" + source.slice(insertAt);
+    // Match the line ending used in the surrounding file (CRLF or LF).
+    const eol = source.includes("\r\n") ? "\r\n" : "\n";
+    source = source.slice(0, insertAt) + importLine + eol + source.slice(insertAt);
   }
 
   if (!new RegExp(`\\b${args.binding}\\b`).test(source.split("export const allArticles")[1] ?? "")) {
