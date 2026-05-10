@@ -23,6 +23,7 @@ import { pickEntry, updateEntry, type CalendarEntry } from "./lib/calendar.js";
 import { callAgent, type AgentName } from "./lib/anthropic.js";
 import { writeArticle, stripCodeFence } from "./lib/article-writer.js";
 import { sendMessage, escapeMd, isTelegramConfigured } from "./lib/telegram.js";
+import { runLinkHealth, formatReport } from "./lib/link-health.js";
 
 // ---------------------------------------------------------------------------
 // CLI args
@@ -151,6 +152,17 @@ async function runPipeline(entry: CalendarEntry, opts: { dry: boolean; maxCycles
   });
   let draftTs = stripCodeFence(draftRaw);
   log(`  draft length: ${draftTs.length} chars`);
+
+  // ---- Link Health (auto-fix broken URLs before reviewers see them) ----
+  log(`\n[Link Health] Validating sources + internal links...`);
+  const linkResult = await runLinkHealth(draftTs);
+  log(formatReport(linkResult.report));
+  if (linkResult.blocking) {
+    throw new Error(
+      `Link Health: ${linkResult.report.externalUnfixable.length} external source(s) are unreachable and have no Wayback snapshot. Article cannot ship without verifiable evidence. See report above.`
+    );
+  }
+  draftTs = linkResult.content;
 
   // ---- Review loop ----
   let cycle = 0;

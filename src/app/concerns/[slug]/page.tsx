@@ -17,6 +17,7 @@ import {
 import { getTreatmentsForConcern, getTreatmentBySlug } from "@/lib/content/treatments";
 import { getPublishedMachines } from "@/lib/content/machines";
 import { ConcernOverviewMock } from "@/components/site/concern-overview-mock";
+import { NotifyForm } from "@/components/site/notify-form";
 
 export async function generateStaticParams() {
   return getPublishedConcerns().map((c) => ({ slug: c.slug }));
@@ -394,32 +395,7 @@ export default async function ConcernPage({
               <p className="mx-auto mt-6 max-w-xl text-base text-ink-600 sm:text-lg">
                 Our independent directory launches soon. Be first to compare verified providers, prices, and practitioners - then book in a click.
               </p>
-              <form
-                action="/api/notify"
-                method="post"
-                className="mx-auto mt-10 flex max-w-lg flex-col gap-2 sm:flex-row"
-                data-capture-surface={`concern-${concern.slug}`}
-              >
-                <input type="hidden" name="surface" value={`concern-${concern.slug}`} />
-                <label htmlFor={`notify-email-${concern.slug}`} className="sr-only">
-                  Your email
-                </label>
-                <input
-                  id={`notify-email-${concern.slug}`}
-                  type="email"
-                  name="email"
-                  required
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  className="flex-1 rounded-full border border-ink-200 bg-white px-6 py-3.5 text-sm text-navy-900 placeholder-ink-400 focus:outline-none sm:text-base"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-navy-900 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-navy-700 sm:text-base"
-                >
-                  Notify me
-                </button>
-              </form>
+              <NotifyForm surface={`concern-${concern.slug}`} />
               <p className="mt-4 text-xs text-ink-500">
                 We&apos;ll only email you when the directory is live.
               </p>

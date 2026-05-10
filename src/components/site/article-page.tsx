@@ -9,6 +9,7 @@ import {
 import type { Article } from "@/lib/content/types";
 import { ArticleBlocks } from "@/components/site/article-blocks";
 import { ArticleToc } from "@/components/site/article-toc";
+import { NotifyForm } from "@/components/site/notify-form";
 import { estimateReadingMinutes } from "@/lib/content/articles";
 import { siteConfig } from "@/lib/site-config";
 
@@ -294,39 +295,7 @@ export function ArticlePage({
                 verified providers, prices, and practitioners - then book in a
                 click.
               </p>
-              <form
-                action="/api/notify"
-                method="post"
-                className="mx-auto mt-8 flex max-w-lg flex-col gap-2 sm:flex-row"
-                data-capture-surface={`article-${article.slug}`}
-              >
-                <input
-                  type="hidden"
-                  name="surface"
-                  value={`article-${article.slug}`}
-                />
-                <label
-                  htmlFor={`notify-email-${article.slug}`}
-                  className="sr-only"
-                >
-                  Your email
-                </label>
-                <input
-                  id={`notify-email-${article.slug}`}
-                  type="email"
-                  name="email"
-                  required
-                  autoComplete="email"
-                  placeholder="you@example.com"
-                  className="flex-1 rounded-full border border-ink-200 bg-white px-6 py-3.5 text-sm text-navy-900 placeholder-ink-400 focus:outline-none sm:text-base"
-                />
-                <button
-                  type="submit"
-                  className="rounded-full bg-navy-900 px-8 py-3.5 text-sm font-semibold text-white transition hover:bg-navy-700 sm:text-base"
-                >
-                  Notify me
-                </button>
-              </form>
+              <NotifyForm surface={`article-${article.slug}`} />
             </div>
           </div>
         </div>
