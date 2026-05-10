@@ -1,9 +1,6 @@
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
-import {
-  getArticleBySlug,
-  getPublishedArticles,
-} from "@/lib/content/articles";
+import { getPublishedArticles } from "@/lib/content/articles";
 import { ArticlePage } from "@/components/site/article-page";
 
 export async function generateStaticParams() {
