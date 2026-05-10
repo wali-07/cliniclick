@@ -81,7 +81,7 @@ articles:
       - cosmetic treatment cost dubai
       - how clinics price treatments
     dueDate: "2026-05-15"
-    status: awaiting-approval
+    status: published
     brief: |
       Guide article (lives under /learn). Explain the components of price
       variation: machine cost amortisation, per-unit consumables (toxin units,
@@ -90,6 +90,7 @@ articles:
       management coverage. Make the reader confident they can interrogate any
       quote. Strict criteria mode - no clinic naming, no "they overcharge"
       framing. Brand-defining piece.
+    publishedDate: "2026-05-10"
   - slug: what-is-laser-hair-removal
     parentType: treatment
     parentSlug: laser-hair-removal
