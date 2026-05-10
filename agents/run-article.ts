@@ -22,6 +22,7 @@ import { resolve } from "node:path";
 import { pickEntry, updateEntry, type CalendarEntry } from "./lib/calendar.js";
 import { callAgent, type AgentName } from "./lib/anthropic.js";
 import { writeArticle, stripCodeFence } from "./lib/article-writer.js";
+import { sendMessage, escapeMd, isTelegramConfigured } from "./lib/telegram.js";
 
 // ---------------------------------------------------------------------------
 // CLI args
@@ -220,7 +221,53 @@ async function runPipeline(entry: CalendarEntry, opts: { dry: boolean; maxCycles
   log(`\n[Calendar] Marking ${entry.slug} as awaiting-approval`);
   updateEntry(entry.slug, { status: "awaiting-approval" });
 
+  // ---- Telegram notification ----
+  if (isTelegramConfigured()) {
+    log(`\n[Telegram] Sending notification...`);
+    try {
+      await sendMessage(buildTelegramMessage(entry, { cycle, draftLength: draftTs.length }));
+      log(`  sent.`);
+    } catch (err) {
+      log(`  failed (non-fatal): ${err instanceof Error ? err.message : String(err)}`);
+    }
+  } else {
+    log(`\n[Telegram] not configured (TELEGRAM_BOT_TOKEN / TELEGRAM_CHAT_ID missing) - skipping notification.`);
+  }
+
   log(`\n=== Done. Review the article on the dev server before approving. ===`);
+  log(`Approve with:  npm run publish-article -- --slug=${entry.slug}`);
+}
+
+/**
+ * Build the Telegram message body. MarkdownV2 - special characters in dynamic
+ * values must be escaped via escapeMd; pre-formatted markdown (bold, links)
+ * wraps the escaped values, never the other way around.
+ */
+function buildTelegramMessage(
+  entry: CalendarEntry,
+  meta: { cycle: number; draftLength: number }
+): string {
+  const previewPath =
+    entry.parentType === "decoder"
+      ? `/learn/${entry.slug}`
+      : `/${entry.parentType}s/${entry.parentSlug}/${entry.slug}`;
+  const localPreview = `http://localhost:3001${previewPath}`;
+  const wordEstimate = Math.round(meta.draftLength / 6);
+
+  return [
+    `*New draft ready: ${escapeMd(entry.title)}*`,
+    ``,
+    `Kind: ${escapeMd(entry.kind)}  Parent: ${escapeMd(entry.parentType)}/${escapeMd(entry.parentSlug)}`,
+    `Converged in ${meta.cycle} cycle${meta.cycle === 1 ? "" : "s"}  ~${wordEstimate} words`,
+    ``,
+    `Preview \\(local\\): ${escapeMd(localPreview)}`,
+    ``,
+    `*Approve:*`,
+    `\`npm run publish\\-article \\-\\- \\-\\-slug=${escapeMd(entry.slug)}\``,
+    ``,
+    `*Reject \\(redraft on next run\\):*`,
+    `\`npm run reject\\-article \\-\\- \\-\\-slug=${escapeMd(entry.slug)} \\-\\-reason=\"...\"\``,
+  ].join("\n");
 }
 
 // ---------------------------------------------------------------------------

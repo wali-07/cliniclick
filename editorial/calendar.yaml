@@ -40,7 +40,8 @@ articles:
       - dermal fillers vs botox
       - dermal fillers cost dubai
     dueDate: "2026-05-11"
-    status: awaiting-approval
+    status: published
+    publishedDate: "2026-05-10"
     brief: |
       Pillar overview of dermal fillers. Same shape as What is botox - what
       they are, what they do, what they do not, where they get used, what to
@@ -48,6 +49,7 @@ articles:
       calcium hydroxylapatite, poly-L-lactic acid) at a high level. Cover
       the brand layer briefly (Juvederm, Restylane, Sculptra) without naming
       any clinic. Include UAE cost ranges per syringe + per area.
+    notes: First fully-AI-drafted article. Approved on the first read after pipeline iteration 1 prompt tuning.
   - slug: vs-botox
     parentType: treatment
     parentSlug: dermal-fillers

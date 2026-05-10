@@ -9,7 +9,10 @@
     "lint": "next lint",
     "typecheck": "tsc --noEmit",
     "postbuild": "next-sitemap",
-    "draft": "tsx agents/run-article.ts"
+    "draft": "tsx agents/run-article.ts",
+    "publish-article": "tsx agents/publish-article.ts",
+    "reject-article": "tsx agents/reject-article.ts",
+    "test-telegram": "tsx agents/test-telegram.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.1",
