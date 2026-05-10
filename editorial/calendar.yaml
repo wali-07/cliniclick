@@ -49,7 +49,9 @@ articles:
       calcium hydroxylapatite, poly-L-lactic acid) at a high level. Cover
       the brand layer briefly (Juvederm, Restylane, Sculptra) without naming
       any clinic. Include UAE cost ranges per syringe + per area.
-    notes: First fully-AI-drafted article. Approved on the first read after pipeline iteration 1 prompt tuning.
+    notes: >-
+      First fully-AI-drafted article. Approved on the first read after pipeline iteration 1 prompt
+      tuning.
   - slug: vs-botox
     parentType: treatment
     parentSlug: dermal-fillers
@@ -61,7 +63,7 @@ articles:
       - difference between botox and fillers
       - which is better botox or fillers
     dueDate: "2026-05-13"
-    status: queued
+    status: awaiting-approval
     brief: |
       Side-by-side comparison. Mechanism, what each treats, duration, downtime,
       cost, who suits which. Frame as "they solve different problems" not "X is

@@ -1,0 +1,86 @@
+# Editorial pipeline scheduled run.
+#
+# Fires daily at 16:00 UTC (20:00 / 8PM Dubai). Picks the next queued
+# calendar entry whose dueDate is on or before today, runs it through the
+# full Drafter -> Reviewers loop, and commits the resulting article TS file
+# + updated calendar.yaml directly to main.
+#
+# The Telegram notification fires from inside the worker - the workflow
+# itself does not send any message.
+#
+# Manual trigger via the Actions tab is also enabled (workflow_dispatch).
+#
+# REQUIRED REPOSITORY SECRETS:
+#   ANTHROPIC_API_KEY    - for the Drafter / Reviewer agents
+#   TELEGRAM_BOT_TOKEN   - for notification when a draft is ready
+#   TELEGRAM_CHAT_ID     - target chat for the notification
+#
+# Add these in: GitHub repo -> Settings -> Secrets and variables -> Actions
+
+name: Editorial cron
+
+on:
+  schedule:
+    # 16:00 UTC = 20:00 GST (Dubai, 8PM). 7 days a week. The worker no-ops
+    # if nothing is due today, so weekend fires are cheap.
+    - cron: "0 16 * * *"
+  workflow_dispatch:
+    inputs:
+      slug:
+        description: "Optional slug to draft (overrides the auto-pick)"
+        required: false
+        type: string
+
+jobs:
+  draft:
+    name: Draft next article
+    runs-on: ubuntu-latest
+    permissions:
+      # Required for the post-run step to commit + push the new article file.
+      contents: write
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          # Fetch full history so the post-run commit references main correctly.
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "20"
+          cache: "npm"
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Run pipeline
+        id: pipeline
+        env:
+          ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
+          TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+        run: |
+          if [ -n "${{ inputs.slug }}" ]; then
+            npm run draft -- --slug="${{ inputs.slug }}"
+          else
+            npm run draft
+          fi
+
+      - name: Commit + push if anything changed
+        # The pipeline writes new files to src/content/articles/ and updates
+        # editorial/calendar.yaml + src/content/articles/index.ts. If the
+        # working tree is unchanged (e.g. nothing was due today), this step
+        # is a no-op.
+        run: |
+          if [[ -z "$(git status --porcelain)" ]]; then
+            echo "No changes to commit."
+            exit 0
+          fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add -A
+          git commit -m "editorial cron: drafted article on $(date -u +%Y-%m-%d)"
+          git push
