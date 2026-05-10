@@ -17,7 +17,7 @@
  */
 
 import "dotenv/config";
-import { readFileSync } from "node:fs";
+import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pickEntry, updateEntry, type CalendarEntry } from "./lib/calendar.js";
 import { callAgent, type AgentName } from "./lib/anthropic.js";
@@ -179,14 +179,24 @@ async function runPipeline(entry: CalendarEntry, opts: { dry: boolean; maxCycles
     }
 
     if (cycle >= opts.maxCycles) {
-      log(`\n[Cycle ${cycle}] Max revision cycles reached. Saving with flags.`);
-      log("\nReviewer issues that remain:");
-      for (const [r, v] of Object.entries(feedback)) {
-        if (!/^PASS\b/i.test((v ?? "").trim())) log(`\n--- ${r} ---\n${v}`);
-      }
-      throw new Error(
-        `Article did not converge after ${opts.maxCycles} cycles - escalating to manual review`
-      );
+      log(`\n[Cycle ${cycle}] Max revision cycles reached. Saving for manual review.`);
+      // Save the latest draft + reviewer feedback so we can inspect rather
+      // than losing all the API work. Status flips to "in-review" (not
+      // awaiting-approval) so it is clear this needs human triage.
+      const { filePath } = writeArticle({ entry, tsContent: draftTs });
+      const feedbackPath = filePath.replace(/\.ts$/, ".reviewer-feedback.md");
+      const feedbackBody = Object.entries(feedback)
+        .map(([r, v]) => `## ${r}\n\n${v}`)
+        .join("\n\n---\n\n");
+      writeFileSync(feedbackPath, feedbackBody, "utf-8");
+      updateEntry(entry.slug, {
+        status: "in-review",
+        notes: `Did not converge after ${opts.maxCycles} cycles. See ${feedbackPath} for reviewer issues that remain.`,
+      });
+      log(`  draft:    ${filePath}`);
+      log(`  feedback: ${feedbackPath}`);
+      log(`\nNon-passing reviewer feedback saved. Triage manually.`);
+      return;
     }
 
     log(`\n[Cycle ${cycle}] Sending feedback to Drafter for revision...`);

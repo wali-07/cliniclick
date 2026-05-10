@@ -1,34 +1,9 @@
-# CliniClick editorial calendar.
-#
-# Single source of truth for what gets written, when, and what state it is in.
-# The pipeline worker reads this on every run to decide which articles to draft.
-#
-# STATUS LIFECYCLE:
-#   queued        -> waiting for its dueDate
-#   drafting      -> pipeline picked it up, Drafter agent is writing
-#   in-review     -> review chain is checking the draft
-#   awaiting-approval -> draft is in a PR, Telegram message sent to Abdullah
-#   approved      -> Abdullah clicked Approve in Telegram, PR auto-merging
-#   published     -> PR merged, article live
-#   rejected      -> Abdullah clicked Reject; reason captured in `rejectionNotes`,
-#                    pipeline will redraft on next run
-#   skipped       -> manual override, do not draft
-#
-# CADENCE: 3 articles per week (locked 2026-05-09 in project_editorial_pipeline.md).
-# Mix per week: 1 pillar + 1 spoke + 1 decoder.
-#
-# DUE DATES use ISO format (YYYY-MM-DD). The cron runs daily and picks any entry
-# whose dueDate <= today AND status == queued.
-
 articles:
-  # ---------------------------------------------------------------------------
-  # PUBLISHED (manually drafted in crawl mode, before pipeline existed)
-  # ---------------------------------------------------------------------------
   - slug: what-is-acne
     parentType: concern
     parentSlug: acne
     kind: overview
-    title: "What is acne"
+    title: What is acne
     keywords:
       - what is acne
       - acne explained
@@ -38,13 +13,12 @@ articles:
     dueDate: "2026-05-09"
     status: published
     publishedDate: "2026-05-09"
-    notes: "Manual draft - first article, used to design the template."
-
+    notes: Manual draft - first article, used to design the template.
   - slug: what-is-botox
     parentType: treatment
     parentSlug: botox
     kind: overview
-    title: "What is botox"
+    title: What is botox
     keywords:
       - what is botox
       - botox explained
@@ -53,19 +27,12 @@ articles:
     dueDate: "2026-05-09"
     status: published
     publishedDate: "2026-05-09"
-    notes: "Manual draft - validated template under treatment parent."
-
-  # ---------------------------------------------------------------------------
-  # QUEUED - WEEK 1 (week of 2026-05-11)
-  # Pillar: What is dermal fillers (treatment overview)
-  # Spoke: Botox vs Dysport (comparison)
-  # Decoder: How aesthetic clinic pricing works in the UAE
-  # ---------------------------------------------------------------------------
+    notes: Manual draft - validated template under treatment parent.
   - slug: what-is-dermal-fillers
     parentType: treatment
     parentSlug: dermal-fillers
     kind: overview
-    title: "What are dermal fillers"
+    title: What are dermal fillers
     keywords:
       - what are dermal fillers
       - dermal fillers explained
@@ -73,7 +40,7 @@ articles:
       - dermal fillers vs botox
       - dermal fillers cost dubai
     dueDate: "2026-05-11"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview of dermal fillers. Same shape as What is botox - what
       they are, what they do, what they do not, where they get used, what to
@@ -81,12 +48,11 @@ articles:
       calcium hydroxylapatite, poly-L-lactic acid) at a high level. Cover
       the brand layer briefly (Juvederm, Restylane, Sculptra) without naming
       any clinic. Include UAE cost ranges per syringe + per area.
-
   - slug: vs-botox
     parentType: treatment
     parentSlug: dermal-fillers
     kind: comparison
-    title: "Dermal fillers vs botox"
+    title: Dermal fillers vs botox
     keywords:
       - dermal fillers vs botox
       - botox or fillers
@@ -100,12 +66,11 @@ articles:
       better." Cross-link to both What is botox and What is dermal fillers.
       Include a clear table (mechanism, treats, duration, downtime, typical cost
       AED, when to consider).
-
   - slug: how-aesthetic-clinic-pricing-works-in-the-uae
     parentType: decoder
     parentSlug: pricing
     kind: explainer
-    title: "How aesthetic clinic pricing works in the UAE"
+    title: How aesthetic clinic pricing works in the UAE
     keywords:
       - aesthetic clinic prices uae
       - why aesthetic treatments expensive
@@ -121,18 +86,11 @@ articles:
       management coverage. Make the reader confident they can interrogate any
       quote. Strict criteria mode - no clinic naming, no "they overcharge"
       framing. Brand-defining piece.
-
-  # ---------------------------------------------------------------------------
-  # QUEUED - WEEK 2 (week of 2026-05-18)
-  # Pillar: What is laser hair removal
-  # Spoke: Laser hair removal cost in Dubai
-  # Decoder: DHA & MOHAP licensing - how to verify your clinic
-  # ---------------------------------------------------------------------------
   - slug: what-is-laser-hair-removal
     parentType: treatment
     parentSlug: laser-hair-removal
     kind: overview
-    title: "What is laser hair removal"
+    title: What is laser hair removal
     keywords:
       - what is laser hair removal
       - how laser hair removal works
@@ -147,12 +105,11 @@ articles:
       Crucial section on safety for darker skin tones (IV-VI) - this is a
       high-search-volume question in the UAE. Sessions, expectations,
       maintenance, downtime, contraindications.
-
   - slug: cost-in-dubai
     parentType: treatment
     parentSlug: laser-hair-removal
     kind: cost-guide
-    title: "Cost of laser hair removal in Dubai"
+    title: Cost of laser hair removal in Dubai
     keywords:
       - laser hair removal cost dubai
       - laser hair removal price dubai
@@ -165,12 +122,11 @@ articles:
       what drives price variation (machine, technician, package size), what
       to compare across quotes. Cross-link to What is laser hair removal
       pillar and the pricing decoder.
-
   - slug: dha-mohap-licensing-how-to-verify-your-clinic
     parentType: decoder
     parentSlug: regulation
     kind: explainer
-    title: "DHA and MOHAP licensing - how to verify your clinic"
+    title: DHA and MOHAP licensing - how to verify your clinic
     keywords:
       - dha license check
       - mohap license check

@@ -81,19 +81,21 @@ Articles must read as independent. Never say "in partnership with" or "recommend
 
 ## Output contract
 
+**Your reply MUST start with one of two literal first words: `PASS` or `LEGAL`.** No preamble. The worker uses the first word to decide whether revision is needed.
+
 You receive the draft. Output one of two things:
 
-**If clean:**
+**If clean (start with PASS):**
 ```
 PASS
 ```
 
-**If anything flagged:**
+**If anything flagged (start with LEGAL):**
 ```
 LEGAL HOLD
 
-<quoted phrase or location>: <which rule (1-6) it breaks> — <specific fix or "remove">
-<quoted phrase or location>: <which rule it breaks> — <specific fix>
+<quoted phrase or location>: <which rule (1-6) it breaks> - <specific fix or "remove">
+<quoted phrase or location>: <which rule it breaks> - <specific fix>
 ...
 ```
 

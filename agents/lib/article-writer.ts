@@ -53,6 +53,34 @@ export function stripCodeFence(text: string): string {
 }
 
 /**
+ * Extract the actual exported binding name from a generated TS file.
+ * The Drafter agent picks its own grammatically-natural name (e.g.
+ * "whatAreDermalFillers" rather than slug-derived "whatIsDermalFillers"),
+ * so we parse it from the source rather than guess.
+ */
+export function extractExportName(tsContent: string): string | null {
+  const match = tsContent.match(/^export const ([A-Za-z_][A-Za-z0-9_]*)\s*=\s*defineArticle/m);
+  return match ? match[1] : null;
+}
+
+/**
+ * Force the article's slug, parentType, and parentSlug to match what the
+ * calendar entry says, regardless of what the Drafter wrote. Drafters
+ * sometimes "improve" these fields to be grammatically nicer, which breaks
+ * URL resolution. This is the safety belt.
+ */
+export function enforceCalendarFields(args: {
+  tsContent: string;
+  entry: CalendarEntry;
+}): string {
+  let out = args.tsContent;
+  out = out.replace(/(slug:\s*)"[^"]*"/, `$1"${args.entry.slug}"`);
+  out = out.replace(/(parentType:\s*)"[^"]*"/, `$1"${args.entry.parentType}"`);
+  out = out.replace(/(parentSlug:\s*)"[^"]*"/, `$1"${args.entry.parentSlug}"`);
+  return out;
+}
+
+/**
  * Write the article TS file to disk and add an entry to the central index.
  * Idempotent: if the file already exists, it gets overwritten; if the index
  * already imports it, the import is left as-is.
@@ -63,10 +91,15 @@ export function writeArticle(args: {
 }): { filePath: string; importPath: string; binding: string } {
   const filePath = articleFilePath(args.entry);
   const importPath = articleImportPath(args.entry);
-  const binding = camelize(args.entry.slug);
+  const finalContent = enforceCalendarFields({
+    tsContent: args.tsContent,
+    entry: args.entry,
+  });
+  const binding =
+    extractExportName(finalContent) ?? camelize(args.entry.slug);
 
   mkdirSync(dirname(filePath), { recursive: true });
-  writeFileSync(filePath, args.tsContent + "\n", "utf-8");
+  writeFileSync(filePath, finalContent + "\n", "utf-8");
 
   registerInIndex({ binding, importPath });
 

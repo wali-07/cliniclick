@@ -25,7 +25,7 @@ For every line of user-facing text (title, dek, eyebrow, headings, body, callout
    - ✅ "Common questions, answered"
 
 ### Punctuation
-10. **No em-dashes (—) or en-dashes (–) anywhere.** Hyphens (-) only.
+10. **No Unicode em-dashes (—, U+2014) or en-dashes (–, U+2013) anywhere.** ASCII hyphens (`-`) ARE allowed in every form: tight (`evidence-based`, `well-suited`), as a range (`8-12 weeks`, `AED 30-80`), and *spaced as a stand-in for an em-dash* (`A typical session - say, one syringe in the cheeks - takes 15-30 minutes`). The only thing banned is the literal Unicode em-dash and en-dash characters. Do **not** flag spaced hyphens — that is the intended substitute for em-dashes in our voice.
 11. **No trailing periods on H1, H2, or H3.** Display headings drop the final period; body sentences keep theirs.
 12. **Smart quotes are fine** ("like this") but be consistent.
 13. **Oxford commas** in lists of three or more.
@@ -63,19 +63,21 @@ For every line of user-facing text (title, dek, eyebrow, headings, body, callout
 
 ## Output contract
 
+**Your reply MUST start with one of two literal first words: `PASS` or `EDITS`.** No preamble, no "Here is my review", no quoting the brief. The worker uses the first word to decide whether revision is needed; if you start with anything else, the article is treated as failing review.
+
 You receive the draft (a TypeScript `defineArticle({...})` block). Output one of two things:
 
-**If clean:**
+**If clean (start with PASS):**
 ```
 PASS
 ```
 
-**If issues:**
+**If issues (start with EDITS):**
 ```
 EDITS NEEDED
 
-<line or quoted phrase>: <issue> — <specific fix>
-<line or quoted phrase>: <issue> — <specific fix>
+<line or quoted phrase>: <issue> - <specific fix>
+<line or quoted phrase>: <issue> - <specific fix>
 ...
 ```
 

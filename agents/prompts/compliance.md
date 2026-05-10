@@ -102,19 +102,21 @@ If the article includes aftercare instructions:
 
 ## Output contract
 
+**Your reply MUST start with one of two literal first words: `PASS` or `COMPLIANCE`.** No preamble, no narrative review summary. If the article does not violate any of the 9 rules, output exactly `PASS` and nothing else - even if you noticed minor advisory points (those are not blocking and should not appear in your reply).
+
 You receive the draft. Output one of two things:
 
-**If clean:**
+**If clean (start with PASS):**
 ```
 PASS
 ```
 
-**If anything flagged:**
+**If anything flagged (start with COMPLIANCE):**
 ```
 COMPLIANCE HOLD
 
-<quoted phrase or location>: <which rule (1-9) it breaks> — <specific fix>
-<quoted phrase or location>: <which rule it breaks> — <specific fix>
+<quoted phrase or location>: <which rule (1-9) it breaks> - <specific fix>
+<quoted phrase or location>: <which rule it breaks> - <specific fix>
 ...
 ```
 
