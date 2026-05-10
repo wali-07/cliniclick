@@ -36,8 +36,18 @@ async function fetchWithTimeout(url: string, opts: RequestInit = {}): Promise<Re
 }
 
 /**
+ * Status codes that indicate the URL exists but our automated checker is
+ * being blocked (anti-bot defences, rate limits, regional restrictions).
+ * These are common on academic journals (JAAD, NEJM, BMJ) and Cloudflare-
+ * fronted sites. We treat them as "probably alive" - if a human can read it,
+ * the citation is valid. Source quality is the Drafter's job, not ours.
+ */
+const ANTI_BOT_STATUSES = new Set([401, 403, 429, 503]);
+
+/**
  * HEAD request first, fall back to GET if HEAD is not allowed (some servers
- * return 405 for HEAD even when GET is fine).
+ * return 405 for HEAD even when GET is fine). Treats anti-bot blocks as OK
+ * because they almost always indicate a working URL behind a defence.
  */
 export async function checkUrl(url: string): Promise<CheckResult> {
   for (const method of ["HEAD", "GET"] as const) {
@@ -46,14 +56,18 @@ export async function checkUrl(url: string): Promise<CheckResult> {
         method,
         redirect: "follow",
         headers: {
-          // Some sites block default fetch UA - present as a real browser.
+          // Present as a real browser so most sites do not block the request.
           "user-agent":
-            "Mozilla/5.0 CliniClick-LinkHealth/1.0 (+https://cliniclick.ae)",
+            "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/120.0 Safari/537.36",
+          accept: "text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8",
         },
       });
       if (res.ok) return { ok: true };
-      // 405 on HEAD - retry as GET; everything else is a real failure.
+      // 405 on HEAD - retry as GET; everything else is judged below.
       if (method === "HEAD" && res.status === 405) continue;
+      // Anti-bot status codes - treat as alive. The URL likely works for
+      // a human visitor; we just cannot programmatically verify it.
+      if (ANTI_BOT_STATUSES.has(res.status)) return { ok: true };
       return { ok: false, status: res.status };
     } catch (err) {
       if (method === "HEAD") continue;

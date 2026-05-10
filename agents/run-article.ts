@@ -109,6 +109,35 @@ function buildReviewerMessage(draftTs: string): string {
   return `Review this draft.\n\n\`\`\`ts\n${draftTs}\n\`\`\``;
 }
 
+function buildSourceSwapMessage(
+  draftTs: string,
+  unfixable: { url: string; status?: number; error?: string }[]
+): string {
+  const list = unfixable
+    .map((u) => `- ${u.url}  (status: ${u.status ?? u.error ?? "unknown"})`)
+    .join("\n");
+  return `The following source URL${unfixable.length === 1 ? "" : "s"} in your draft cannot be reached and have no archived version. Either the URL is wrong (e.g., the path was hallucinated) or the page has been removed.
+
+UNREACHABLE SOURCE${unfixable.length === 1 ? "" : "S"}:
+${list}
+
+Re-output the COMPLETE article as a defineArticle({...}) TypeScript code block, with the broken source(s) replaced by alternative real URLs from the same publishers (or other tier-1 / tier-2 publishers from the source canon if no alternative exists at the original publisher).
+
+Rules for the replacement URLs:
+- Use only canonical, well-known URL paths. Do not invent URL paths you are not certain exist.
+- Prefer NHS, AAD, Cleveland Clinic, Mayo Clinic, NHS, BAD, WHO, DHA / MOHAP for general guideline-level claims.
+- Only cite a journal article if you are certain of the exact DOI or canonical URL.
+- If you cannot find a verifiable replacement source for a particular claim, REMOVE that claim and its inline citation rather than ship a broken source.
+
+Keep the rest of the article unchanged. Output the full article as one TypeScript code block, no commentary.
+
+DRAFT TO REVISE:
+
+\`\`\`ts
+${draftTs}
+\`\`\``;
+}
+
 function buildRevisionMessage(
   originalDraftTs: string,
   reviewerFeedback: Record<AgentName, string>
@@ -192,15 +221,31 @@ async function runPipeline(
   let draftTs = stripCodeFence(draftRaw);
   log(`  draft length: ${draftTs.length} chars`);
 
-  // ---- Link Health ----
+  // ---- Link Health (with one Drafter retry on unfixable sources) ----
   log(`\n[Link Health] Validating sources + internal links...`);
-  const linkResult = await runLinkHealth(draftTs);
+  let linkResult = await runLinkHealth(draftTs);
   log(formatReport(linkResult.report));
   if (linkResult.blocking) {
-    if (!opts.local) checkoutMain();
-    throw new Error(
-      `Link Health: ${linkResult.report.externalUnfixable.length} external source(s) are unreachable and have no Wayback snapshot. Article cannot ship without verifiable evidence.`
+    log(
+      `\n[Link Health] ${linkResult.report.externalUnfixable.length} unfixable source(s). Asking Drafter to swap them.`
     );
+    draftRaw = await callAgent({
+      agent: "drafter",
+      systemPrompt: drafterPrompt,
+      userMessage: buildSourceSwapMessage(draftTs, linkResult.report.externalUnfixable),
+      maxTokens: 12000,
+    });
+    draftTs = stripCodeFence(draftRaw);
+    log(`  retry draft length: ${draftTs.length} chars`);
+    log(`\n[Link Health] Re-validating after swap...`);
+    linkResult = await runLinkHealth(draftTs);
+    log(formatReport(linkResult.report));
+    if (linkResult.blocking) {
+      if (!opts.local) checkoutMain();
+      throw new Error(
+        `Link Health: still ${linkResult.report.externalUnfixable.length} unfixable source(s) after Drafter retry. Article cannot ship without verifiable evidence.`
+      );
+    }
   }
   draftTs = linkResult.content;
 

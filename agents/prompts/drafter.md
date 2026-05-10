@@ -160,6 +160,18 @@ If you find yourself wanting to add more, cut something else first. Tighter arti
 - Every factual / mechanism / efficacy claim gets a citation.
 - Do not cite for opinion or synthesis sentences.
 
+### URL accuracy (critical - broken URLs block publishing)
+
+- **Never invent or guess source URL paths.** If you are not 100% certain that the exact URL path exists, do not cite it.
+- For NHS, prefer the canonical condition page format: `https://www.nhs.uk/conditions/<condition-name>/`. These exist for almost every common condition. Do not invent NHS sub-paths.
+- For AAD (American Academy of Dermatology), the public-facing path is `https://www.aad.org/public/...`. Do NOT invent paths under `/cosmetic/` or other sub-sections - if you are not sure of the exact path, link to the AAD homepage or a parent index page you know exists.
+- For Cleveland Clinic, the canonical pattern is `https://my.clevelandclinic.org/health/<diseases|treatments|symptoms>/<id>-<name>`. Do not invent the numeric ID.
+- For Mayo Clinic, canonical is `https://www.mayoclinic.org/diseases-conditions/<name>/symptoms-causes/syc-XXXXXXXX`. Do not invent the syc-ID.
+- For journals (JAAD, NEJM, BMJ, Lancet, Cochrane), only cite if you are sure of the exact DOI URL. If unsure, prefer a publisher-side review or skip the claim entirely.
+- For FDA, the canonical pattern is `https://www.fda.gov/drugs/...` or `https://www.accessdata.fda.gov/...`. Verify the exact path exists - prefer not to cite than to cite a wrong URL.
+
+The Link Health Agent will fetch every source URL and reject the article if any are 404. Hallucinated URLs cost you a revision cycle and burn API budget. **When unsure, drop the citation rather than guess the URL.**
+
 ---
 
 ## Output contract
