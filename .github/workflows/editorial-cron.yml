@@ -62,25 +62,12 @@ jobs:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
+          GITHUB_TOKEN_FOR_PR_BOT: ${{ secrets.GITHUB_TOKEN_FOR_PR_BOT }}
+          # The worker handles its own branching, committing, pushing, and
+          # PR creation. The runner only invokes it.
         run: |
           if [ -n "${{ inputs.slug }}" ]; then
             npm run draft -- --slug="${{ inputs.slug }}"
           else
             npm run draft
           fi
-
-      - name: Commit + push if anything changed
-        # The pipeline writes new files to src/content/articles/ and updates
-        # editorial/calendar.yaml + src/content/articles/index.ts. If the
-        # working tree is unchanged (e.g. nothing was due today), this step
-        # is a no-op.
-        run: |
-          if [[ -z "$(git status --porcelain)" ]]; then
-            echo "No changes to commit."
-            exit 0
-          fi
-          git config user.name "github-actions[bot]"
-          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
-          git add -A
-          git commit -m "editorial cron: drafted article on $(date -u +%Y-%m-%d)"
-          git push

@@ -8,8 +8,8 @@ import { hydrafacialMd } from "./hydrafacial-md";
 import { juvederm } from "./juvederm";
 
 export const allMachines: Machine[] = [
-  sopranoIcePlatinum,
   candelaGentleMaxPro,
+  sopranoIcePlatinum,
   coolsculptingElite,
   picosure,
   morpheus8,
