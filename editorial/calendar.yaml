@@ -81,7 +81,7 @@ articles:
       - cosmetic treatment cost dubai
       - how clinics price treatments
     dueDate: "2026-05-15"
-    status: queued
+    status: awaiting-approval
     brief: |
       Decoder article (lives under /learn). Explain the components of price
       variation: machine cost amortisation, per-unit consumables (toxin units,
