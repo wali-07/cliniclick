@@ -3,7 +3,10 @@ import { siteConfig } from "@/lib/site-config";
 import { getPublishedConcerns } from "@/lib/content/concerns";
 import { getPublishedTreatments } from "@/lib/content/treatments";
 import { getPublishedMachines } from "@/lib/content/machines";
-import { getPublishedArticles } from "@/lib/content/articles";
+import {
+  getPublishedArticles,
+  getArticlesForParent,
+} from "@/lib/content/articles";
 
 /**
  * Native Next.js sitemap. Auto-runs at build time, generates sitemap.xml
@@ -41,19 +44,35 @@ export default function sitemap(): MetadataRoute.Sitemap {
     priority: 0.8,
   }));
 
-  const treatmentRoutes: MetadataRoute.Sitemap = getPublishedTreatments().map((t) => ({
-    url: `${base}/treatments/${t.slug}`,
-    lastModified: t.lastReviewed ?? today,
-    changeFrequency: "monthly" as const,
-    priority: 0.8,
-  }));
+  // Treatment/device hub pages are noindex coming-soon stubs UNTIL they
+  // have a published article (mirrors the index/noindex logic in their
+  // page.tsx). Only emit the indexable ones so Search Console does not
+  // flag "Submitted URL marked noindex".
+  const treatmentRoutes: MetadataRoute.Sitemap = getPublishedTreatments()
+    .filter(
+      (t) =>
+        getArticlesForParent({ parentType: "treatment", parentSlug: t.slug })
+          .length > 0
+    )
+    .map((t) => ({
+      url: `${base}/treatments/${t.slug}`,
+      lastModified: t.lastReviewed ?? today,
+      changeFrequency: "monthly" as const,
+      priority: 0.8,
+    }));
 
-  const machineRoutes: MetadataRoute.Sitemap = getPublishedMachines().map((m) => ({
-    url: `${base}/machines/${m.slug}`,
-    lastModified: m.lastReviewed ?? today,
-    changeFrequency: "monthly" as const,
-    priority: 0.7,
-  }));
+  const machineRoutes: MetadataRoute.Sitemap = getPublishedMachines()
+    .filter(
+      (m) =>
+        getArticlesForParent({ parentType: "machine", parentSlug: m.slug })
+          .length > 0
+    )
+    .map((m) => ({
+      url: `${base}/machines/${m.slug}`,
+      lastModified: m.lastReviewed ?? today,
+      changeFrequency: "monthly" as const,
+      priority: 0.7,
+    }));
 
   const articleRoutes: MetadataRoute.Sitemap = getPublishedArticles().map((a) => {
     const path =
