@@ -34,6 +34,11 @@ export function getArticlesForParent(args: {
   );
 }
 
+/** Published top-level guide articles (live at /learn/[slug]). */
+export function getPublishedGuides(): Article[] {
+  return allArticles.filter((a) => a.parentType === "guide" && a.published);
+}
+
 /**
  * Estimate reading time at ~220 words per minute over text-bearing blocks.
  * Used when an Article doesn't supply an explicit `readingMinutes`.

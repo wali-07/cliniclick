@@ -1,8 +1,26 @@
 import type { Article } from "@/lib/content/types";
 import { whatIsAcne } from "./concerns/acne/what-is-acne";
+import { whatIsBodyFat } from "./concerns/body-fat/what-is-body-fat";
+import { whatIsHairLoss } from "./concerns/hair-loss/what-is-hair-loss";
+import { whatIsPigmentation } from "./concerns/pigmentation/what-is-pigmentation";
+import { whatIsUnderEyeConcerns } from "./concerns/under-eye-concerns/what-is-under-eye-concerns";
+import { whatIsUnwantedHair } from "./concerns/unwanted-hair/what-is-unwanted-hair";
+import { whatIsWrinklesAndFineLines } from "./concerns/wrinkles-and-fine-lines/what-is-wrinkles-and-fine-lines";
 import { whatIsBotox } from "./treatments/botox/what-is-botox";
 import { whatAreDermalFillers } from "./treatments/dermal-fillers/what-is-dermal-fillers";
 import { vsBotox } from "./treatments/dermal-fillers/vs-botox";
 import { howAestheticClinicPricingWorksInTheUae } from "./guides/how-aesthetic-clinic-pricing-works-in-the-uae";
 
-export const allArticles: Article[] = [whatIsAcne, whatIsBotox, whatAreDermalFillers, vsBotox, howAestheticClinicPricingWorksInTheUae];
+export const allArticles: Article[] = [
+  whatIsAcne,
+  whatIsBodyFat,
+  whatIsHairLoss,
+  whatIsPigmentation,
+  whatIsUnderEyeConcerns,
+  whatIsUnwantedHair,
+  whatIsWrinklesAndFineLines,
+  whatIsBotox,
+  whatAreDermalFillers,
+  vsBotox,
+  howAestheticClinicPricingWorksInTheUae,
+];

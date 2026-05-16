@@ -5,7 +5,12 @@ import {
   getArticleBySlug,
   getArticlesForParent,
 } from "@/lib/content/articles";
+import {
+  getExpectedArticleSlugs,
+  titleFromSlug,
+} from "@/lib/content/expected-articles";
 import { ArticlePage } from "@/components/site/article-page";
+import { ArticleComingSoon } from "@/components/site/article-coming-soon";
 
 export async function generateStaticParams() {
   const params: { slug: string; subSlug: string }[] = [];
@@ -20,6 +25,18 @@ export async function generateStaticParams() {
   return params;
 }
 
+function eyebrowForSlug(subSlug: string): string {
+  if (subSlug.startsWith("what-is-")) return "Overview";
+  if (subSlug.startsWith("vs-")) return "Comparison";
+  return "Explainer";
+}
+
+function comingSoonTitle(concernSlug: string, subSlug: string): string {
+  const concern = getConcernBySlug(concernSlug);
+  const sub = concern?.subConcerns.find((s) => s.slug === subSlug);
+  return sub?.name ?? titleFromSlug(subSlug);
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -31,11 +48,17 @@ export async function generateMetadata({
     parentSlug: slug,
     slug: subSlug,
   });
-  if (!article) return {};
+  if (article && article.published) {
+    return {
+      title: article.metaTitle ?? article.title,
+      description: article.metaDescription ?? article.dek,
+      alternates: { canonical: `/concerns/${slug}/${subSlug}` },
+    };
+  }
+  // Expected-but-unwritten: a coming-soon page. Never index thin pages.
   return {
-    title: article.metaTitle ?? article.title,
-    description: article.metaDescription ?? article.dek,
-    alternates: { canonical: `/concerns/${slug}/${subSlug}` },
+    title: `${comingSoonTitle(slug, subSlug)} - coming soon`,
+    robots: { index: false, follow: true },
   };
 }
 
@@ -47,12 +70,31 @@ export default async function Page({
   const { slug, subSlug } = await params;
   const concern = getConcernBySlug(slug);
   if (!concern) notFound();
+
   const article = getArticleBySlug({
     parentType: "concern",
     parentSlug: slug,
     slug: subSlug,
   });
-  if (!article || !article.published) notFound();
+
+  if (!article || !article.published) {
+    // Render coming-soon for slugs the site legitimately links to;
+    // genuine 404 for anything else so we never index junk URLs.
+    if (!getExpectedArticleSlugs("concern", slug).has(subSlug)) notFound();
+    return (
+      <ArticleComingSoon
+        title={comingSoonTitle(slug, subSlug)}
+        eyebrow={eyebrowForSlug(subSlug)}
+        parent={{
+          displayName: concern.name,
+          hubHref: `/concerns/${concern.slug}`,
+          hubLabel: "Concerns",
+          hubBaseHref: "/concerns",
+        }}
+        surface={`coming-soon-concern-${slug}-${subSlug}`}
+      />
+    );
+  }
 
   const related = getArticlesForParent({
     parentType: "concern",

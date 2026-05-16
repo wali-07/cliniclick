@@ -19,11 +19,24 @@
 
 name: Editorial cron
 
+# ─────────────────────────────────────────────────────────────────────────
+# SCHEDULED TRIGGER DISABLED — 7-day post-reinstatement cooldown.
+#
+# GitHub manually reinstated the account on 2026-05-16 after an abuse-
+# detection false positive. Scheduled automation + commit bursts were part
+# of the original signal combination, so the cron is OFF until the cooldown
+# clears. A second suspension after a manual review is far harder to undo.
+#
+# DO NOT re-enable before 2026-05-23. To re-enable: uncomment the
+# `schedule:` block below. Leave this comment and the date in place so the
+# decision stays auditable. See memory/project_github_safety.md.
+# ─────────────────────────────────────────────────────────────────────────
+
 on:
-  schedule:
-    # 16:00 UTC = 20:00 GST (Dubai, 8PM). 7 days a week. The worker no-ops
-    # if nothing is due today, so weekend fires are cheap.
-    - cron: "0 16 * * *"
+  # schedule:
+  #   # 16:00 UTC = 20:00 GST (Dubai, 8PM). 7 days a week. The worker no-ops
+  #   # if nothing is due today, so weekend fires are cheap.
+  #   - cron: "0 16 * * *"
   workflow_dispatch:
     inputs:
       slug:

@@ -16,6 +16,7 @@ import {
 } from "@/lib/content/concerns";
 import { getTreatmentsForConcern, getTreatmentBySlug } from "@/lib/content/treatments";
 import { getPublishedMachines } from "@/lib/content/machines";
+import { resolveComparisonHref } from "@/lib/content/expected-articles";
 import { ConcernOverviewMock } from "@/components/site/concern-overview-mock";
 import { NotifyForm } from "@/components/site/notify-form";
 
@@ -157,7 +158,7 @@ export default async function ConcernPage({
               </div>
               {concern.subConcerns.length > 3 && (
                 <Link
-                  href={`/concerns/${concern.slug}/types`}
+                  href={`/learn?topic=${concern.slug}`}
                   className="hidden flex-shrink-0 items-center gap-1.5 text-sm font-medium text-navy-900 transition hover:text-purple-700 sm:inline-flex"
                 >
                   See all types
@@ -289,7 +290,7 @@ export default async function ConcernPage({
               {comparisons.slice(0, 3).map((c) => (
                 <li key={`${c.slugA}-${c.slugB}`}>
                   <Link
-                    href={`/treatments/${c.slugA}/vs/${c.slugB}`}
+                    href={resolveComparisonHref(c.slugA, c.slugB)}
                     className="group flex h-full items-center justify-between gap-4 rounded-2xl border border-ink-100 bg-white p-6 transition hover:border-purple-200 hover:shadow-[0_12px_40px_rgba(167,92,255,0.10)]"
                   >
                     <div className="flex items-center gap-4">

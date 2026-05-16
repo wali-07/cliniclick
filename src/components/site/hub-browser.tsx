@@ -57,6 +57,8 @@ export type HubItem = {
   icon: string;
   meta?: string[];
   searchTerms?: string[];
+  /** When true, the card shows a "Coming soon" pill instead of the arrow. */
+  comingSoon?: boolean;
 };
 
 export type HubGroup = {
@@ -216,10 +218,20 @@ export function HubBrowser({
                     <span className="grid h-11 w-11 place-items-center rounded-2xl bg-purple-50 text-purple-700 transition group-hover:scale-105 group-hover:bg-purple-100">
                       <Icon name={item.icon} className="h-5 w-5" />
                     </span>
-                    <ArrowUpRight
-                      className="h-4 w-4 text-ink-300 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-700"
-                      aria-hidden
-                    />
+                    {item.comingSoon ? (
+                      <span className="inline-flex items-center gap-1.5 rounded-full bg-purple-50 px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wider text-purple-700">
+                        <span
+                          aria-hidden
+                          className="h-1.5 w-1.5 animate-pulse rounded-full bg-purple-500"
+                        />
+                        Coming soon
+                      </span>
+                    ) : (
+                      <ArrowUpRight
+                        className="h-4 w-4 text-ink-300 transition group-hover:-translate-y-0.5 group-hover:translate-x-0.5 group-hover:text-purple-700"
+                        aria-hidden
+                      />
+                    )}
                   </div>
                   {item.groupLabel && (
                     <span className="mt-5 text-[10px] font-semibold uppercase tracking-[0.16em] text-purple-700">

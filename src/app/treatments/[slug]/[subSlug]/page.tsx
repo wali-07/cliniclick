@@ -8,7 +8,12 @@ import {
   getArticleBySlug,
   getArticlesForParent,
 } from "@/lib/content/articles";
+import {
+  getExpectedArticleSlugs,
+  titleFromSlug,
+} from "@/lib/content/expected-articles";
 import { ArticlePage } from "@/components/site/article-page";
+import { ArticleComingSoon } from "@/components/site/article-coming-soon";
 
 export async function generateStaticParams() {
   const params: { slug: string; subSlug: string }[] = [];
@@ -23,6 +28,18 @@ export async function generateStaticParams() {
   return params;
 }
 
+function eyebrowForSlug(subSlug: string): string {
+  if (subSlug.startsWith("what-is-")) return "Overview";
+  if (subSlug.startsWith("vs-")) return "Comparison";
+  return "Explainer";
+}
+
+function comingSoonTitle(treatmentSlug: string, subSlug: string): string {
+  const treatment = getTreatmentBySlug(treatmentSlug);
+  const sub = treatment?.subTreatments.find((s) => s.slug === subSlug);
+  return sub?.name ?? titleFromSlug(subSlug);
+}
+
 export async function generateMetadata({
   params,
 }: {
@@ -34,11 +51,16 @@ export async function generateMetadata({
     parentSlug: slug,
     slug: subSlug,
   });
-  if (!article) return {};
+  if (article && article.published) {
+    return {
+      title: article.metaTitle ?? article.title,
+      description: article.metaDescription ?? article.dek,
+      alternates: { canonical: `/treatments/${slug}/${subSlug}` },
+    };
+  }
   return {
-    title: article.metaTitle ?? article.title,
-    description: article.metaDescription ?? article.dek,
-    alternates: { canonical: `/treatments/${slug}/${subSlug}` },
+    title: `${comingSoonTitle(slug, subSlug)} - coming soon`,
+    robots: { index: false, follow: true },
   };
 }
 
@@ -50,12 +72,29 @@ export default async function Page({
   const { slug, subSlug } = await params;
   const treatment = getTreatmentBySlug(slug);
   if (!treatment) notFound();
+
   const article = getArticleBySlug({
     parentType: "treatment",
     parentSlug: slug,
     slug: subSlug,
   });
-  if (!article || !article.published) notFound();
+
+  if (!article || !article.published) {
+    if (!getExpectedArticleSlugs("treatment", slug).has(subSlug)) notFound();
+    return (
+      <ArticleComingSoon
+        title={comingSoonTitle(slug, subSlug)}
+        eyebrow={eyebrowForSlug(subSlug)}
+        parent={{
+          displayName: treatment.name,
+          hubHref: `/treatments/${treatment.slug}`,
+          hubLabel: "Treatments",
+          hubBaseHref: "/treatments",
+        }}
+        surface={`coming-soon-treatment-${slug}-${subSlug}`}
+      />
+    );
+  }
 
   const related = getArticlesForParent({
     parentType: "treatment",

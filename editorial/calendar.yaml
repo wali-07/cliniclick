@@ -147,3 +147,89 @@ articles:
       a license number, what each license type covers, what to do if you
       cannot verify. Most UAE-specific guide we have - high credibility
       builder.
+  - slug: what-is-body-fat
+    parentType: concern
+    parentSlug: body-fat
+    kind: overview
+    title: What is stubborn body fat
+    keywords:
+      - what is stubborn fat
+      - non surgical fat reduction uae
+      - fat reduction vs weight loss
+      - body contouring dubai
+    dueDate: "2026-05-16"
+    status: published
+    publishedDate: "2026-05-16"
+    notes: >-
+      Backfill batch - concern overview drafted off-cron to clear the broken
+      "Read the overview" CTA. Reviewed via full agent board before publish.
+  - slug: what-is-hair-loss
+    parentType: concern
+    parentSlug: hair-loss
+    kind: overview
+    title: What is hair loss
+    keywords:
+      - what is hair loss
+      - types of hair loss
+      - hair loss causes
+      - hair loss treatment dubai
+    dueDate: "2026-05-16"
+    status: published
+    publishedDate: "2026-05-16"
+    notes: Backfill batch - concern overview drafted off-cron. Agent-board reviewed.
+  - slug: what-is-pigmentation
+    parentType: concern
+    parentSlug: pigmentation
+    kind: overview
+    title: What is pigmentation
+    keywords:
+      - what is pigmentation
+      - melasma
+      - post inflammatory hyperpigmentation
+      - dark spots dark skin uae
+    dueDate: "2026-05-16"
+    status: published
+    publishedDate: "2026-05-16"
+    notes: Backfill batch - concern overview drafted off-cron. Agent-board reviewed.
+  - slug: what-is-under-eye-concerns
+    parentType: concern
+    parentSlug: under-eye-concerns
+    kind: overview
+    title: What are under-eye concerns
+    keywords:
+      - dark circles causes
+      - under eye bags
+      - tear trough
+      - under eye treatment dubai
+    dueDate: "2026-05-16"
+    status: published
+    publishedDate: "2026-05-16"
+    notes: Backfill batch - concern overview drafted off-cron. Agent-board reviewed.
+  - slug: what-is-unwanted-hair
+    parentType: concern
+    parentSlug: unwanted-hair
+    kind: overview
+    title: What is unwanted hair
+    keywords:
+      - unwanted hair
+      - laser hair removal dark skin
+      - hirsutism
+      - hair removal methods uae
+    dueDate: "2026-05-16"
+    status: published
+    publishedDate: "2026-05-16"
+    notes: Backfill batch - concern overview drafted off-cron. Agent-board reviewed.
+  - slug: what-is-wrinkles-and-fine-lines
+    parentType: concern
+    parentSlug: wrinkles-and-fine-lines
+    kind: overview
+    title: What are wrinkles and fine lines
+    keywords:
+      - what causes wrinkles
+      - fine lines vs wrinkles
+      - dynamic vs static wrinkles
+      - anti ageing treatment dubai
+    dueDate: "2026-05-16"
+    status: published
+    publishedDate: "2026-05-16"
+    notes: Backfill batch - concern overview drafted off-cron. Agent-board reviewed.

@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { getPublishedMachines } from "@/lib/content/machines";
+import { getArticlesForParent } from "@/lib/content/articles";
 import { HubBrowser, type HubGroup, type HubItem } from "@/components/site/hub-browser";
 
 export const metadata: Metadata = {
@@ -57,6 +58,11 @@ export default function MachinesHubPage() {
   const machines = getPublishedMachines();
   const items: HubItem[] = machines.map((m) => {
     const groupId = groupFor(m.category, m.kind);
+    // Tagged "Coming soon" until this device has a published read; the
+    // badge clears automatically per-device the moment its article lands.
+    const hasArticle =
+      getArticlesForParent({ parentType: "machine", parentSlug: m.slug })
+        .length > 0;
     return {
       slug: m.slug,
       name: m.name,
@@ -65,6 +71,7 @@ export default function MachinesHubPage() {
       group: groupId,
       groupLabel: groupLabelMap[groupId],
       icon: deviceIconMap[m.slug] ?? "cpu",
+      comingSoon: !hasArticle,
       // Surface sub-devices (for brands like Juvederm) or alternate names as chips.
       meta:
         m.subDevices.length > 0

@@ -21,9 +21,9 @@ export function ComingSoonPage({
       </h1>
       <p className="mt-6 text-lg text-ink-600">{description}</p>
       <p className="mt-4 text-sm text-ink-500">
-        We&apos;re building this carefully - with cited sources, UAE-specific context, and the
-        criteria-mode approach that makes the rest of CliniClick worth your time. Want to know the
-        moment it&apos;s live?
+        We&apos;re building this carefully - with cited sources, real local context, and the
+        same honest, no-hype approach that makes the rest of CliniClick worth your time. Want to
+        know the moment it&apos;s live?
       </p>
       <div className="mt-8">
         <NewsletterSignup surface={surface} variant="inline" />
