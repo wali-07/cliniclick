@@ -1,0 +1,69 @@
+# Social (Instagram) content calendar - source of truth for the admin
+# dashboard's Social view. Crawl-stage: maintained here as posts are
+# produced + delivered to Telegram. status: draft | delivered | posted | skipped
+#  - draft     = concept only
+#  - delivered = image + caption produced and sent to Telegram, awaiting manual post
+#  - posted    = live on Instagram
+posts:
+  - topic: "Dark spots"
+    slug: dark-spots
+    article: /concerns/pigmentation/what-is-pigmentation
+    scheduledFor: "2026-05-17"
+    status: posted
+    notes: First content batch (posted by Abdullah for initial page content)
+  - topic: "Laser hair removal"
+    slug: laser-hair-removal
+    article: /treatments/laser-hair-removal/what-is-laser-hair-removal
+    scheduledFor: "2026-05-17"
+    status: posted
+    notes: First content batch
+  - topic: "Acne"
+    slug: acne
+    article: /concerns/acne/what-is-acne
+    scheduledFor: "2026-05-17"
+    status: posted
+    notes: First content batch
+  - topic: "Hair loss"
+    slug: hair-loss
+    article: /concerns/hair-loss/what-is-hair-loss
+    scheduledFor: "2026-05-18"
+    status: delivered
+    notes: Week 1 - in Telegram, awaiting post
+  - topic: "Under-eye"
+    slug: under-eye
+    article: /concerns/under-eye-concerns/what-is-under-eye-concerns
+    scheduledFor: "2026-05-20"
+    status: delivered
+    notes: Week 1 - in Telegram, awaiting post
+  - topic: "Wrinkles"
+    slug: wrinkles
+    article: /concerns/wrinkles-and-fine-lines/what-is-wrinkles-and-fine-lines
+    scheduledFor: "2026-05-23"
+    status: delivered
+    notes: Week 1 - in Telegram, awaiting post
+  # --- Forward plan: rolling 2-week+ queue (top up every session). draft =
+  #     concept only, not yet produced. Each ties to a live article. ---
+  - topic: "Body fat"
+    slug: body-fat
+    article: /concerns/body-fat/what-is-body-fat
+    scheduledFor: "2026-05-25"
+    status: draft
+    notes: Week 2 - concept, not yet produced
+  - topic: "Unwanted hair"
+    slug: unwanted-hair
+    article: /concerns/unwanted-hair/what-is-unwanted-hair
+    scheduledFor: "2026-05-28"
+    status: draft
+    notes: Week 2 - concept, not yet produced
+  - topic: "Botox"
+    slug: botox
+    article: /treatments/botox/what-is-botox
+    scheduledFor: "2026-05-30"
+    status: draft
+    notes: Week 2 - concept, not yet produced
+  - topic: "Dermal fillers"
+    slug: dermal-fillers
+    article: /treatments/dermal-fillers/what-is-dermal-fillers
+    scheduledFor: "2026-06-02"
+    status: draft
+    notes: Week 2 - concept, not yet produced
