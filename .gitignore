@@ -51,3 +51,9 @@ public/robots.txt
 
 # brand-style bootstrap scratch (Recraft candidate frames - never committed)
 brand-style-candidates/
+
+# social crawl-stage scratch (never committed)
+social-crawl/
+
+# favicon crawl-stage scratch
+favicon-crawl/

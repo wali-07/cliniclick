@@ -14,7 +14,9 @@
     "test-telegram": "tsx agents/test-telegram.ts",
     "backfill-images": "tsx agents/backfill-images.ts",
     "bootstrap-brand-style": "tsx agents/bootstrap-brand-style.ts",
-    "site-health": "tsx agents/site-health.ts"
+    "site-health": "tsx agents/site-health.ts",
+    "social-post": "tsx agents/social-post.ts",
+    "favicon": "tsx agents/favicon.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.1",

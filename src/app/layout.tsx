@@ -6,6 +6,7 @@ import "./globals.css";
 import { SiteHeader } from "@/components/site/site-header";
 import { SiteFooter } from "@/components/site/site-footer";
 import { MobileBottomNav } from "@/components/site/mobile-bottom-nav";
+import { SiteShell } from "@/components/site/site-shell";
 import { JsonLd } from "@/components/seo/json-ld";
 import { organizationSchema, websiteSchema } from "@/lib/seo/schemas";
 import { Analytics } from "@/components/analytics/analytics";
@@ -60,13 +61,20 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         >
           Skip to content
         </a>
-        <JsonLd data={organizationSchema()} />
-        <JsonLd data={websiteSchema()} />
-        <SiteHeader />
-        <main id="main">{children}</main>
-        <SiteFooter />
-        <MobileBottomNav />
-        <Analytics />
+        <SiteShell
+          jsonLd={
+            <>
+              <JsonLd data={organizationSchema()} />
+              <JsonLd data={websiteSchema()} />
+            </>
+          }
+          header={<SiteHeader />}
+          footer={<SiteFooter />}
+          mobileNav={<MobileBottomNav />}
+          analytics={<Analytics />}
+        >
+          {children}
+        </SiteShell>
       </body>
     </html>
   );
