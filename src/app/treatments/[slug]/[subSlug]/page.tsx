@@ -14,6 +14,7 @@ import {
 } from "@/lib/content/expected-articles";
 import { ArticlePage } from "@/components/site/article-page";
 import { ArticleComingSoon } from "@/components/site/article-coming-soon";
+import { buildArticleMetadata } from "@/lib/seo/article-metadata";
 
 export async function generateStaticParams() {
   const params: { slug: string; subSlug: string }[] = [];
@@ -52,11 +53,10 @@ export async function generateMetadata({
     slug: subSlug,
   });
   if (article && article.published) {
-    return {
-      title: article.metaTitle ?? article.title,
-      description: article.metaDescription ?? article.dek,
-      alternates: { canonical: `/treatments/${slug}/${subSlug}` },
-    };
+    return buildArticleMetadata({
+      article,
+      canonicalPath: `/treatments/${slug}/${subSlug}`,
+    });
   }
   return {
     title: `${comingSoonTitle(slug, subSlug)} - coming soon`,

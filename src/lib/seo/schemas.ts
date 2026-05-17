@@ -92,6 +92,10 @@ export function articleSchema(args: {
   url: string;
   datePublished?: string;
   dateModified?: string;
+  /** Absolute hero image URL. Required for Google Discover / rich results. */
+  image?: string;
+  imageWidth?: number;
+  imageHeight?: number;
 }) {
   return {
     "@context": "https://schema.org",
@@ -99,6 +103,17 @@ export function articleSchema(args: {
     headline: args.title,
     description: args.description,
     url: args.url,
+    mainEntityOfPage: { "@type": "WebPage", "@id": args.url },
+    ...(args.image
+      ? {
+          image: {
+            "@type": "ImageObject",
+            url: args.image,
+            ...(args.imageWidth ? { width: args.imageWidth } : {}),
+            ...(args.imageHeight ? { height: args.imageHeight } : {}),
+          },
+        }
+      : {}),
     author: { "@type": "Organization", name: siteConfig.name, url: `${siteConfig.url}${siteConfig.editorial.url}` },
     publisher: {
       "@type": "Organization",

@@ -2,6 +2,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { getPublishedArticles } from "@/lib/content/articles";
 import { ArticlePage } from "@/components/site/article-page";
+import { buildArticleMetadata } from "@/lib/seo/article-metadata";
 
 export async function generateStaticParams() {
   return getPublishedArticles()
@@ -17,11 +18,7 @@ export async function generateMetadata({
   const { slug } = await params;
   const article = findGuide(slug);
   if (!article) return {};
-  return {
-    title: article.metaTitle ?? article.title,
-    description: article.metaDescription ?? article.dek,
-    alternates: { canonical: `/learn/${slug}` },
-  };
+  return buildArticleMetadata({ article, canonicalPath: `/learn/${slug}` });
 }
 
 function findGuide(slug: string) {

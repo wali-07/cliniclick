@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsBotox = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-botox.webp",
+    "alt": "A single wooden rolling pin resting on a flat solid purple background, softly lit from above, centred with generous empty space around it.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single classic wooden rolling pin, whole and intact, centred in the frame at modest scale (roughly one-third of the frame height), shown at a gentle three-quarter angle so its cylindrical form reads clearly. The wood has a warm natural grain and the handles are smooth and rounded — clean, fresh, unfussy. Nothing else in the frame: no flour, no dough, no surface texture, no second object, no props. The ENTIRE background is one flat solid vivid purple (#A75CFF) — seamless, no gradient, no vignette, no horizon line, no shadow cast on a surface plane. A soft natural drop shadow directly beneath the rolling pin only. Natural colours throughout. NOT an illustration, NOT a 3D render, NOT CGI. No people, no text, no logos, no brand markings, no medical items.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-botox",
   parentType: "treatment",
   parentSlug: "botox",

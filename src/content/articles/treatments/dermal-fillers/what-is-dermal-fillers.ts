@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatAreDermalFillers = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-dermal-fillers.webp",
+    "alt": "A single plump whole green grape on a solid purple background, lit with soft studio light and a gentle drop shadow beneath it.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single whole plump glossy fresh green grape, perfectly intact and unblemished, taut skin glistening slightly, centred with generous empty space on all sides, modest in scale (approximately one-third of the frame). The entire background is one flat solid vivid lavender-purple (#A75CFF), perfectly seamless with no gradients, no second colour, no visible surface or horizon line — only a soft natural drop shadow beneath the grape. Natural colour rendering. Shot magazine-grade with professional still-life lighting. NOT an illustration, NOT a 3D/CGI render, NOT a diagram. No people, no hands, no body parts, no medical instruments, no needles, no syringes, no text, no logos, no brand markings, no additional objects, no props, no garnish, no second grape, no bunch of grapes — one single grape only.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-dermal-fillers",
   parentType: "treatment",
   parentSlug: "dermal-fillers",

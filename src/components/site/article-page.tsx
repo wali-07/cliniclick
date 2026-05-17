@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Image from "next/image";
 import {
   ArrowUpRight,
   ChevronRight,
@@ -10,6 +11,12 @@ import type { Article } from "@/lib/content/types";
 import { ArticleBlocks } from "@/components/site/article-blocks";
 import { ArticleToc } from "@/components/site/article-toc";
 import { NotifyForm } from "@/components/site/notify-form";
+import { JsonLd } from "@/components/seo/json-ld";
+import {
+  articleSchema,
+  breadcrumbSchema,
+  faqPageSchema,
+} from "@/lib/seo/schemas";
 import { estimateReadingMinutes } from "@/lib/content/articles";
 import { siteConfig } from "@/lib/site-config";
 
@@ -45,8 +52,36 @@ export function ArticlePage({
   const readingMinutes = estimateReadingMinutes(article);
   const eyebrow = article.eyebrow ?? eyebrowFromKind[article.kind];
 
+  const canonicalPath = `${parent.hubHref}/${article.slug}`;
+  const canonicalUrl = `${siteConfig.url}${canonicalPath}`;
+  const heroImageUrl = article.heroImage
+    ? `${siteConfig.url}${article.heroImage.src}`
+    : undefined;
+
+  const jsonLd = [
+    articleSchema({
+      title: article.metaTitle ?? article.title,
+      description: article.metaDescription ?? article.dek,
+      url: canonicalUrl,
+      datePublished: article.lastReviewed,
+      dateModified: article.lastReviewed,
+      image: heroImageUrl,
+      imageWidth: article.heroImage?.width,
+      imageHeight: article.heroImage?.height,
+    }),
+    breadcrumbSchema([
+      { name: parent.hubLabel, url: parent.hubBaseHref },
+      { name: parent.displayName, url: parent.hubHref },
+      { name: article.title, url: canonicalPath },
+    ]),
+    faqPageSchema(article.faqs),
+  ];
+
   return (
     <article className="relative bg-gradient-to-b from-purple-100/30 via-white to-purple-50/40">
+      {jsonLd.map((data, i) => (
+        <JsonLd key={i} data={data} />
+      ))}
       {/* HERO */}
       <header className="relative border-b border-purple-100/60">
         <div
@@ -102,6 +137,26 @@ export function ArticlePage({
               </>
             )}
           </div>
+
+          {article.heroImage && (
+            <figure className="mt-9 overflow-hidden rounded-2xl border border-ink-100 bg-white">
+              <div className="relative aspect-[16/9] w-full bg-purple-50/40">
+                <Image
+                  src={article.heroImage.src}
+                  alt={article.heroImage.alt}
+                  fill
+                  priority
+                  sizes="(max-width: 896px) 100vw, 896px"
+                  className="object-cover"
+                />
+              </div>
+              {article.heroImage.caption && (
+                <figcaption className="border-t border-ink-100 px-5 py-3 text-xs text-ink-500">
+                  {article.heroImage.caption}
+                </figcaption>
+              )}
+            </figure>
+          )}
         </div>
       </header>
 

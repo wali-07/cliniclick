@@ -47,3 +47,7 @@ next-env.d.ts
 # generated
 public/sitemap*.xml
 public/robots.txt
+.gstack/
+
+# brand-style bootstrap scratch (Recraft candidate frames - never committed)
+brand-style-candidates/

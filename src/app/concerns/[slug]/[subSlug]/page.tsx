@@ -11,6 +11,7 @@ import {
 } from "@/lib/content/expected-articles";
 import { ArticlePage } from "@/components/site/article-page";
 import { ArticleComingSoon } from "@/components/site/article-coming-soon";
+import { buildArticleMetadata } from "@/lib/seo/article-metadata";
 
 export async function generateStaticParams() {
   const params: { slug: string; subSlug: string }[] = [];
@@ -49,11 +50,10 @@ export async function generateMetadata({
     slug: subSlug,
   });
   if (article && article.published) {
-    return {
-      title: article.metaTitle ?? article.title,
-      description: article.metaDescription ?? article.dek,
-      alternates: { canonical: `/concerns/${slug}/${subSlug}` },
-    };
+    return buildArticleMetadata({
+      article,
+      canonicalPath: `/concerns/${slug}/${subSlug}`,
+    });
   }
   // Expected-but-unwritten: a coming-soon page. Never index thin pages.
   return {

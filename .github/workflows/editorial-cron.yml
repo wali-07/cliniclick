@@ -11,7 +11,8 @@
 # Manual trigger via the Actions tab is also enabled (workflow_dispatch).
 #
 # REQUIRED REPOSITORY SECRETS:
-#   ANTHROPIC_API_KEY    - for the Drafter / Reviewer agents
+#   ANTHROPIC_API_KEY    - for the Drafter / Reviewer / Visuals agents
+#   RECRAFT_API_KEY      - for the Visuals Agent hero-image generation
 #   TELEGRAM_BOT_TOKEN   - for notification when a draft is ready
 #   TELEGRAM_CHAT_ID     - target chat for the notification
 #
@@ -73,6 +74,7 @@ jobs:
         id: pipeline
         env:
           ANTHROPIC_API_KEY: ${{ secrets.ANTHROPIC_API_KEY }}
+          RECRAFT_API_KEY: ${{ secrets.RECRAFT_API_KEY }}
           TELEGRAM_BOT_TOKEN: ${{ secrets.TELEGRAM_BOT_TOKEN }}
           TELEGRAM_CHAT_ID: ${{ secrets.TELEGRAM_CHAT_ID }}
           GITHUB_TOKEN_FOR_PR_BOT: ${{ secrets.GITHUB_TOKEN_FOR_PR_BOT }}

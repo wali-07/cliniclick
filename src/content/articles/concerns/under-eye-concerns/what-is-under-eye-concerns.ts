@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsUnderEyeConcerns = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-under-eye-concerns.webp",
+    "alt": "A single tea bag with two small googly eyes resting on its surface, sitting against a flat soft lavender background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single whole tea bag — a standard square paper tea bag with its string and tag — centred in the frame, shown complete and undamaged, natural warm cream and amber paper colour, the string and label intact. Two small googly eyes (the toy-shop kind: round white discs with a black pupil inside) rest gently flat on the surface of the tea bag, giving it a sleepy, droopy expression — they are NOT pierced into or embedded in the tea bag, they simply rest on top of it. The object occupies roughly one third of the frame with generous empty space all around it. Background is a single flat solid soft lavender colour, seamless, no gradient, no vignette, no surface line, no second colour. Mood: playful, whimsical, warm, editorial. NOT an illustration, NOT a 3D/CGI render, NOT a diagram. No people, no faces, no body parts, no text, no logos, no brand packaging, no medical instruments, no clinical props, no additional objects, no scene styling.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-under-eye-concerns",
   parentType: "concern",
   parentSlug: "under-eye-concerns",

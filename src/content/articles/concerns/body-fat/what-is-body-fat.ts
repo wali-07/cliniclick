@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsBodyFat = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-body-fat.webp",
+    "alt": "A single small intact rectangular pat of fresh pale-yellow butter centred on a flat solid vivid purple background, soft studio light, clean drop shadow.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single small, whole, fresh, intact rectangular pat of butter — clean pale yellow, modest in scale (occupying roughly one third of the frame), centred with generous empty space all around it. The butter is pristine and undamaged: not melted, not sliced, not bitten, completely intact and fresh-looking, with a soft natural drop shadow beneath it. Shot from a gentle three-quarter angle, sharp focus, natural colour. Background is a single flat solid vivid brand purple (#A75CFF) — the ENTIRE background is this one solid colour, no gradient, no vignette, no spotlight, no horizon line, no surface texture, no second colour. No people, no faces, no body parts, no text, no logos, no packaging, no labels, no other objects or props, no second item, no plate, no garnish. NOT an illustration, NOT a 3D/CGI render, NOT a diagram. Tasteful, wholesome, playful.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-body-fat",
   parentType: "concern",
   parentSlug: "body-fat",
