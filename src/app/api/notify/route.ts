@@ -53,31 +53,46 @@ export async function POST(req: Request) {
     return NextResponse.json({ ok: true, configured: false });
   }
 
+  // Resend v6's SDK returns { data, error } and does NOT throw on API
+  // errors; contacts.create is also upsert-ish (no "already exists" error),
+  // so the old try/catch-on-thrown-message approach never detected dupes AND
+  // silently swallowed real create failures (capture looked OK but wasn't).
+  // Fix: explicitly look the contact up by email first, and inspect the
+  // returned error on create. try/catch now only guards genuine network
+  // exceptions.
   let isDuplicate = false;
   try {
-    await resend.contacts.create({
-      email,
-      audienceId,
-      // We use first_name as a temporary capture-surface tag because Resend's
-      // free tier does not expose true tag fields. v2 will move surface
-      // tracking to its own table; for now this lets us segment in the
-      // Resend dashboard by searching first_name.
-      firstName: `via:${surfaceTag}`,
-      unsubscribed: false,
-    });
-    console.log(`[notify] Captured ${email} from ${surfaceTag}`);
-  } catch (err) {
-    const message = err instanceof Error ? err.message : String(err);
-    if (/already.*exist|duplicate/i.test(message)) {
+    const existing = await resend.contacts.get({ email, audienceId });
+    if (!existing.error && existing.data) {
       isDuplicate = true;
       console.log(`[notify] ${email} already in audience (re-submit from ${surfaceTag})`);
     } else {
-      console.error(`[notify] Resend error for ${email}: ${message}`);
-      return NextResponse.json(
-        { ok: false, error: "Could not subscribe right now - please try again" },
-        { status: 502 }
-      );
+      const created = await resend.contacts.create({
+        email,
+        audienceId,
+        // first_name doubles as a capture-surface tag - Resend's free tier
+        // has no real tag field. Segment in the dashboard by first_name.
+        firstName: `via:${surfaceTag}`,
+        unsubscribed: false,
+      });
+      if (created.error) {
+        console.error(
+          `[notify] Resend create error for ${email}: ${created.error.name} - ${created.error.message}`
+        );
+        return NextResponse.json(
+          { ok: false, error: "Could not subscribe right now - please try again" },
+          { status: 502 }
+        );
+      }
+      console.log(`[notify] Captured ${email} from ${surfaceTag}`);
     }
+  } catch (err) {
+    const message = err instanceof Error ? err.message : String(err);
+    console.error(`[notify] Resend network error for ${email}: ${message}`);
+    return NextResponse.json(
+      { ok: false, error: "Could not subscribe right now - please try again" },
+      { status: 502 }
+    );
   }
 
   // Welcome email - only send for genuinely new contacts to avoid spamming
