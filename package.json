@@ -11,7 +11,9 @@
     "draft": "tsx agents/run-article.ts",
     "publish-article": "tsx agents/publish-article.ts",
     "reject-article": "tsx agents/reject-article.ts",
-    "test-telegram": "tsx agents/test-telegram.ts"
+    "test-telegram": "tsx agents/test-telegram.ts",
+    "backfill-images": "tsx agents/backfill-images.ts",
+    "bootstrap-brand-style": "tsx agents/bootstrap-brand-style.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.1",
@@ -46,6 +48,7 @@
     "eslint": "^9.17.0",
     "eslint-config-next": "^15.1.0",
     "postcss": "^8.5.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^4.0.0",
     "tsx": "^4.21.0",
     "typescript": "^5.7.0"

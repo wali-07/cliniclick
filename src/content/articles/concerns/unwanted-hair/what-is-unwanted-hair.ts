@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsUnwantedHair = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-unwanted-hair.webp",
+    "alt": "A whole fuzzy brown coconut with a small bright coral-pink plastic toy razor leaning against its base, on a flat solid lavender background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single whole intact fuzzy brown coconut, modest in size (about one-third of the frame), positioned slightly off-centre with generous empty space around it. Leaning casually against the outside base of the coconut — completely separate, not touching the coconut's surface, not piercing or embedded in it in any way — is one small bright coral-pink plastic toy razor: slim handle and a clear razor-head silhouette, playful and toy-like but instantly recognisable as a razor. The razor simply leans beside the coconut on the same background surface, angled toward it. The coconut is completely whole, undamaged, and uncut. The background is a single flat solid soft lavender (approximately #C9A8FF) — no gradient, no vignette, no horizon line, no second colour, seamless. A soft natural drop shadow beneath both objects only. Colour palette: warm natural brown coconut fibres against one pop of bright coral-pink plastic, on the flat lavender ground. Mood: whimsical, fresh, playful editorial object pun — like a premium magazine still-life. NOT an illustration, NOT 3D/CGI, NOT a diagram. No people, no body parts, no text, no logos, no medical imagery.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-unwanted-hair",
   parentType: "concern",
   parentSlug: "unwanted-hair",

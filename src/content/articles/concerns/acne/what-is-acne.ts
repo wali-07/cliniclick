@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsAcne = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-acne.webp",
+    "alt": "A whole pineapple with a pair of tiny colourful sunglasses resting on its crown leaves, on a solid purple background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single whole pineapple with its natural bumpy textured skin, modestly sized at about one third of the frame, centred with generous empty space all around it. Perched lightly on top of the pineapple's crown leaves are one pair of tiny, bright, playful miniature sunglasses in a vivid solid colour — resting gently on the leaves, not piercing or inserted into the fruit. The pineapple is completely intact, undamaged, fresh and clean. The entire background is one single flat solid soft lavender-to-brand-purple colour (approximately #A75CFF), seamless with no gradient, no vignette, no horizon line, no second colour. Soft natural drop shadow beneath the fruit. Natural colours on the pineapple. The mood is whimsical, fresh, toy-like, and editorial — like a Selfologi campaign shot. NOT an illustration, NOT a 3D/CGI render, NOT a diagram. No people, no faces, no body parts, no medical items, no text, no logos, no brand packaging, no second objects beyond the sunglasses accessory resting on the pineapple.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-acne",
   parentType: "concern",
   parentSlug: "acne",

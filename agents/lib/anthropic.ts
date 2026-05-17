@@ -26,6 +26,12 @@ export const MODEL_FOR = {
   legal: "claude-sonnet-4-6",
   compliance: "claude-sonnet-4-6",
   "seo-qa": "claude-sonnet-4-6",
+  // Image pipeline. `visuals` is text-only (reads the article, writes the
+  // Recraft brief). `image-brand` and `image-safety` are multimodal - they
+  // look at the actual generated illustration.
+  visuals: "claude-sonnet-4-6",
+  "image-brand": "claude-sonnet-4-6",
+  "image-safety": "claude-sonnet-4-6",
 } as const;
 
 export type AgentName = keyof typeof MODEL_FOR;
@@ -51,6 +57,52 @@ export async function callAgent(args: {
       },
     ],
     messages: [{ role: "user", content: args.userMessage }],
+  });
+  const text = response.content
+    .filter((b): b is Anthropic.TextBlock => b.type === "text")
+    .map((b) => b.text)
+    .join("\n");
+  return text.trim();
+}
+
+/**
+ * Multimodal agent call - the model sees an actual generated image plus a
+ * text instruction. Used by the Image-Brand and Image-Safety gates so they
+ * judge the real illustration that will ship, not a description of it.
+ */
+export async function callVisionAgent(args: {
+  agent: AgentName;
+  systemPrompt: string;
+  userMessage: string;
+  image: { base64: string; mediaType: "image/webp" | "image/png" | "image/jpeg" };
+  maxTokens?: number;
+}): Promise<string> {
+  const response = await client().messages.create({
+    model: MODEL_FOR[args.agent],
+    max_tokens: args.maxTokens ?? 1500,
+    system: [
+      {
+        type: "text",
+        text: args.systemPrompt,
+        cache_control: { type: "ephemeral" },
+      },
+    ],
+    messages: [
+      {
+        role: "user",
+        content: [
+          {
+            type: "image",
+            source: {
+              type: "base64",
+              media_type: args.image.mediaType,
+              data: args.image.base64,
+            },
+          },
+          { type: "text", text: args.userMessage },
+        ],
+      },
+    ],
   });
   const text = response.content
     .filter((b): b is Anthropic.TextBlock => b.type === "text")

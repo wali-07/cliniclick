@@ -81,6 +81,57 @@ export function enforceCalendarFields(args: {
 }
 
 /**
+ * Inject (or replace) the `heroImage` property inside a `defineArticle({...})`
+ * block. Deterministic + idempotent via a trailing `// @generated-hero`
+ * marker, so backfill re-runs swap the image cleanly instead of stacking.
+ *
+ * heroImage is a flat object (no nested objects), so a JSON literal is valid
+ * TypeScript and safe to splice in.
+ */
+export function setHeroImage(
+  tsContent: string,
+  hero: Record<string, string | number | undefined>
+): string {
+  // Drop undefined keys so we never emit `"caption": undefined`.
+  const clean = Object.fromEntries(
+    Object.entries(hero).filter(([, v]) => v !== undefined)
+  );
+  const literal = JSON.stringify(clean, null, 2)
+    .split("\n")
+    .map((line, i) => (i === 0 ? line : `  ${line}`))
+    .join("\n");
+  const block = `  heroImage: ${literal}, // @generated-hero\n`;
+
+  // Remove any prior generated block first (idempotent).
+  let out = tsContent.replace(
+    /[ \t]*heroImage:\s*\{[\s\S]*?\},\s*\/\/ @generated-hero\r?\n/,
+    ""
+  );
+
+  const anchor = out.match(/defineArticle\(\{\s*\r?\n/);
+  if (!anchor) {
+    throw new Error(
+      "setHeroImage: could not find defineArticle({ opening to anchor heroImage"
+    );
+  }
+  const insertAt = anchor.index! + anchor[0].length;
+  out = out.slice(0, insertAt) + block + out.slice(insertAt);
+  return out;
+}
+
+/**
+ * Strip a generated `heroImage` block (idempotent; no-op if absent). Used by
+ * the backfill `--reset` path so a re-run under a new visual direction never
+ * leaves a previously-rejected image referenced.
+ */
+export function clearHeroImage(tsContent: string): string {
+  return tsContent.replace(
+    /[ \t]*heroImage:\s*\{[\s\S]*?\},\s*\/\/ @generated-hero\r?\n/,
+    ""
+  );
+}
+
+/**
  * Write the article TS file to disk and add an entry to the central index.
  * Idempotent: if the file already exists, it gets overwritten; if the index
  * already imports it, the import is left as-is.

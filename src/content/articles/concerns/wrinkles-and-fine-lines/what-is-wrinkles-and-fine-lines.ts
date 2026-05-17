@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsWrinklesAndFineLines = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-wrinkles-and-fine-lines.webp",
+    "alt": "A single whole walnut in its shell, its naturally wrinkled brown surface filling the centre of the frame, against a solid vivid purple background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single whole walnut in its shell, completely intact and undamaged, natural warm brown tones, showing its wonderfully wrinkled and furrowed surface texture in full detail. The walnut is modest in scale — approximately one-third of the frame — centred with generous empty space all around it. A soft natural drop shadow beneath it. The entire background is one single flat solid colour: vivid brand purple #A75CFF, seamless with no gradient, no vignette, no second colour, no visible surface or horizon line. One object only, nothing else in the frame. NOT an illustration, NOT a 3D or CGI render, NOT a diagram. No people, no body parts, no text, no logos, no medical instruments, no clinical props, no packaging.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-wrinkles-and-fine-lines",
   parentType: "concern",
   parentSlug: "wrinkles-and-fine-lines",

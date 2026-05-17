@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsHairLoss = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-hair-loss.webp",
+    "alt": "A whole lychee fruit with a few loose dark hairs resting flat on its bumpy surface, on a soft lavender background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus — NOT an illustration, NOT a 3D/CGI render. A single whole, intact, undamaged lychee fruit centred in frame, modest in size (roughly one-third of the frame), photographed from a three-quarter angle above so its bumpy reddish-pink skin texture is clearly visible. Three or four individual loose dark hairs rest gently flat on top of the lychee's bumpy surface, lying naturally as if shed — they do not pierce, stab into, or penetrate the fruit in any way. The lychee is completely whole, uncut, undamaged, and fresh. Generous empty space all around the fruit. Single flat solid background in soft lavender (#C9A6FF) — no gradient, no vignette, no second colour, no visible surface or horizon line. Soft natural drop shadow beneath the fruit only. No people, no faces, no body parts, no second object, no props, no plate, no bowl, no text, no logos, no medical instruments, no clinical items, no packaging, no anatomical shapes, nothing suggestive.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-hair-loss",
   parentType: "concern",
   parentSlug: "hair-loss",

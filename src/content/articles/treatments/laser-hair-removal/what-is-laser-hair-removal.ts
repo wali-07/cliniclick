@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsLaserHairRemoval = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-laser-hair-removal.webp",
+    "alt": "A whole fuzzy brown kiwi fruit with a small bright pink plastic razor resting flat on its surface, against a solid soft purple background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single whole, intact, uncut fuzzy brown kiwi fruit sitting centred in the frame, modest in size (roughly one-third of the frame), surrounded by generous empty space. Resting gently flat on the kiwi's surface — not stuck into it, not pierced, not inserted — is one small, clearly recognisable plastic razor with a bright candy-pink or electric-yellow handle and a slim razor head, toy-like and friendly in colour, lying naturally on top. The kiwi is fresh, complete, undamaged, with its characteristic fuzzy brown skin fully intact. The entire background is a single flat solid soft lavender-to-brand-purple colour (approximately #C4A0FF), seamless with no gradient, no vignette, no second colour, no surface line, no horizon. A soft natural drop shadow beneath the kiwi is expected and fine. The mood is whimsical, playful, and magazine-fresh — like a premium beauty editorial prop shot. NOT an illustration, NOT a 3D or CGI render, NOT a diagram. No people, no hands, no body parts, no text, no numbers, no logos, no brand packaging, no medical devices, no clinical objects, no second fruit, no additional props.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-laser-hair-removal",
   parentType: "treatment",
   parentSlug: "laser-hair-removal",

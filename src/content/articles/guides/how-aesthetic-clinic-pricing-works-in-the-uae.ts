@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const howAestheticClinicPricingWorksInTheUae = defineArticle({
+  heroImage: {
+    "src": "/article-images/how-aesthetic-clinic-pricing-works-in-the-uae.webp",
+    "alt": "A clear glass jar filled with stacked gold and silver coins, centred on a flat solid purple background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single clear glass jar with a tight-fitting lid, filled with a cheerful stack of gold and silver coins visible through the glass, sitting whole and complete in the centre of the frame. The jar is modest in size — roughly one-third of the frame — with generous empty space all around it. The entire background is one flat solid lavender-purple colour (close to #A75CFF), seamless with no gradient, no vignette, no horizon line, no surface texture. Soft natural drop shadow beneath the jar only. Natural colours on the jar and coins — warm gold and cool silver tones. No people, no hands, no faces, no body parts, no text, no numbers, no logos, no brand markings, no medical equipment, no second objects, no props, no arrangement, no scene styling. NOT an illustration, NOT a 3D/CGI render, NOT a diagram.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "how-aesthetic-clinic-pricing-works-in-the-uae",
   parentType: "guide",
   parentSlug: "pricing",

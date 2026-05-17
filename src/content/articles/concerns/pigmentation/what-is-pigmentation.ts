@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const whatIsPigmentation = defineArticle({
+  heroImage: {
+    "src": "/article-images/what-is-pigmentation.webp",
+    "alt": "A single speckled brown egg with darker irregular spots on its shell, centred on a flat solid vivid purple background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft diffused studio light, crisp focus. A single whole fresh hen's egg with natural warm brown shell and darker irregular speckles, centred slightly off to one side in the frame, occupying roughly one-third of the image. The egg is completely intact — no cracks, no chips, pristine surface. Very generous empty space around it. The entire background is one flat solid vivid purple, approximately #A75CFF, seamless from edge to edge — no gradient, no vignette, no spotlight, no second colour, no horizon line or surface shadow beyond a soft natural drop shadow directly beneath the egg. Natural colours on the egg itself. No people, no faces, no body parts, no text, no numbers, no logos, no brand packaging, no medical instruments, no second objects, no props, no arrangement, no scene styling. NOT an illustration, NOT a 3D or CGI render, NOT a diagram. Magazine-grade photography.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "what-is-pigmentation",
   parentType: "concern",
   parentSlug: "pigmentation",

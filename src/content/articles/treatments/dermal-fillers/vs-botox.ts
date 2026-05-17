@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const vsBotox = defineArticle({
+  heroImage: {
+    "src": "/article-images/vs-botox.webp",
+    "alt": "A plump whole green grape and a small wooden rolling pin placed side by side on a flat solid lavender background.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus — NOT an illustration, NOT a 3D/CGI render. Two small everyday objects placed side by side with generous empty space between and around them on a single flat solid lavender background (soft pastel purple, approximately #C9A7FF): on the left, one plump glossy fresh green grape, whole and intact; on the right, one small classic wooden rolling pin, clean and simple. Both objects are modest in scale — together occupying roughly a third of the frame — centred with lots of breathing room. The grape reads instantly as 'plump/volume' and the rolling pin reads instantly as 'smooth/flatten.' Soft natural drop shadow beneath each object. No people, no faces, no body parts, no text, no numbers, no logos, no brand packaging, no medical devices, no needles, no syringes, no anatomy, no clinical imagery, no additional props, no plates, no surface lines, no second background colour, no gradient, no vignette. Tasteful, wholesome, magazine-quality. The entire background is one single flat solid pastel lavender colour with no variation.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "vs-botox",
   parentType: "treatment",
   parentSlug: "dermal-fillers",
