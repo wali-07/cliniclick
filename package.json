@@ -13,7 +13,8 @@
     "reject-article": "tsx agents/reject-article.ts",
     "test-telegram": "tsx agents/test-telegram.ts",
     "backfill-images": "tsx agents/backfill-images.ts",
-    "bootstrap-brand-style": "tsx agents/bootstrap-brand-style.ts"
+    "bootstrap-brand-style": "tsx agents/bootstrap-brand-style.ts",
+    "site-health": "tsx agents/site-health.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.95.1",
