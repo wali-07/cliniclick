@@ -229,7 +229,7 @@ export const whatIsLaserHairRemoval = defineArticle({
     },
     {
       type: "paragraph",
-      text: "Package deals typically reduce per-session cost by 20-40%. The two biggest price drivers are the technology used (Nd:YAG sessions for darker skin tones are sometimes priced higher than alexandrite because of the equipment cost) and the clinic setting - a medical dermatology clinic will generally price differently to a beauty chain.",
+      text: "Package deals typically reduce per-session cost by 20-40%. The two biggest price drivers are the technology used (Nd:YAG sessions for darker skin tones are sometimes priced higher than alexandrite because of the equipment cost) and the clinic setting - a medical dermatology clinic will generally price differently to a beauty chain. For a full breakdown - course and package costs, what drives the price differences, and how to compare quotes - see our [cost of laser hair removal in Dubai](/treatments/laser-hair-removal/cost-in-dubai) guide.",
     },
     {
       type: "callout",

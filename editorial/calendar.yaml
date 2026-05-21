@@ -123,7 +123,8 @@ articles:
       - cheapest laser hair removal uae
       - laser hair removal package dubai
     dueDate: "2026-05-20"
-    status: queued
+    status: published
+    publishedDate: "2026-05-21"
     brief: |
       Commercial spoke. Per-area AED ranges, full-body package economics,
       what drives price variation (machine, technician, package size), what
