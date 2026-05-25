@@ -11,9 +11,10 @@ import { whatAreDermalFillers } from "./treatments/dermal-fillers/what-is-dermal
 import { vsBotox } from "./treatments/dermal-fillers/vs-botox";
 import { howAestheticClinicPricingWorksInTheUae } from "./guides/how-aesthetic-clinic-pricing-works-in-the-uae";
 import { whatIsLaserHairRemoval } from "./treatments/laser-hair-removal/what-is-laser-hair-removal";
+import { costOfLaserHairRemovalInDubai } from "./treatments/laser-hair-removal/cost-in-dubai";
+import { howToVerifyClinicLicenseUae } from "./guides/dha-mohap-licensing-how-to-verify-your-clinic";
 
-export const allArticles: Article[] = [
-  whatIsAcne,
+export const allArticles: Article[] = [whatIsAcne,
   whatIsBodyFat,
   whatIsHairLoss,
   whatIsPigmentation,
@@ -25,4 +26,6 @@ export const allArticles: Article[] = [
   vsBotox,
   howAestheticClinicPricingWorksInTheUae,
   whatIsLaserHairRemoval,
+  costOfLaserHairRemovalInDubai,
+  howToVerifyClinicLicenseUae,
 ];

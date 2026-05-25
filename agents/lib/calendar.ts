@@ -7,7 +7,15 @@ const calendarEntrySchema = z.object({
   slug: z.string(),
   parentType: z.enum(["concern", "treatment", "machine", "guide"]),
   parentSlug: z.string(),
-  kind: z.enum(["overview", "explainer", "comparison", "cost-guide", "questions"]),
+  kind: z.enum([
+    "overview",
+    "explainer",
+    "comparison",
+    "cost-guide",
+    "questions",
+    "treatment-guide", // "How to treat X" - condition-led spoke
+    "safety-guide", // safety/considerations spoke (skin tone, contraindications)
+  ]),
   title: z.string(),
   keywords: z.array(z.string()).default([]),
   dueDate: z.string().regex(/^\d{4}-\d{2}-\d{2}$/),

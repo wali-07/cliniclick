@@ -123,7 +123,8 @@ articles:
       - cheapest laser hair removal uae
       - laser hair removal package dubai
     dueDate: "2026-05-20"
-    status: queued
+    status: published
+    publishedDate: "2026-05-21"
     brief: |
       Commercial spoke. Per-area AED ranges, full-body package economics,
       what drives price variation (machine, technician, package size), what
@@ -140,8 +141,8 @@ articles:
       - how to verify dubai clinic
       - is this clinic licensed dubai
       - aesthetic clinic licensing uae
-    dueDate: "2026-05-22"
-    status: queued
+    dueDate: "2026-05-25"
+    status: awaiting-approval
     brief: |
       Guide. Walk reader through how DHA / MOHAP / Emirates Health Services
       licensing works for clinics and individual practitioners. How to look up
@@ -162,8 +163,8 @@ articles:
     status: published
     publishedDate: "2026-05-16"
     notes: >-
-      Backfill batch - concern overview drafted off-cron to clear the broken
-      "Read the overview" CTA. Reviewed via full agent board before publish.
+      Backfill batch - concern overview drafted off-cron to clear the broken "Read the overview"
+      CTA. Reviewed via full agent board before publish.
   - slug: what-is-hair-loss
     parentType: concern
     parentSlug: hair-loss
@@ -234,9 +235,6 @@ articles:
     status: published
     publishedDate: "2026-05-16"
     notes: Backfill batch - concern overview drafted off-cron. Agent-board reviewed.
-  # --- Forward plan: rolling 2-week+ queue (top up every session, never let
-  #     the runway fall under 14 days). queued = not started; the Telegram
-  #     approval pipeline still gates every publish. Reorder/swap freely. ---
   - slug: cost-of-botox-in-dubai
     parentType: treatment
     parentSlug: botox
@@ -247,7 +245,7 @@ articles:
       - botox price dubai
       - botox per unit price uae
       - botox packages dubai
-    dueDate: "2026-05-25"
+    dueDate: "2026-05-27"
     status: queued
     brief: |
       Commercial spoke under the botox pillar. Per-unit and per-area AED
@@ -264,7 +262,7 @@ articles:
       - types of acne scars
       - acne scarring dark skin
       - microneedling vs laser acne scars
-    dueDate: "2026-05-27"
+    dueDate: "2026-05-29"
     status: queued
     brief: |
       Spoke under the acne pillar. Scar types (boxcar, rolling, ice-pick,
@@ -281,7 +279,7 @@ articles:
       - filler price per syringe dubai
       - lip filler cost uae
       - cheek filler price dubai
-    dueDate: "2026-05-29"
+    dueDate: "2026-06-01"
     status: queued
     brief: |
       Commercial spoke under the dermal fillers pillar. Per-syringe and
@@ -298,7 +296,7 @@ articles:
       - nd yag laser dark skin
       - safe laser hair removal brown skin uae
       - laser hair removal fitzpatrick
-    dueDate: "2026-06-01"
+    dueDate: "2026-06-03"
     status: queued
     brief: |
       High-search UAE spoke under the laser hair removal pillar. Why melanin-
@@ -315,7 +313,7 @@ articles:
       - prp hair treatment uae
       - minoxidil vs prp
       - hair transplant alternatives dubai
-    dueDate: "2026-06-03"
+    dueDate: "2026-06-05"
     status: queued
     brief: |
       Spoke under the hair loss pillar. Evidence-graded rundown (minoxidil,

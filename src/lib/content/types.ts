@@ -297,6 +297,8 @@ export const articleSchema = z.object({
     "comparison", // "X vs Y"
     "cost-guide", // "Cost of X in Dubai"
     "questions", // "Questions to ask in your consultation"
+    "treatment-guide", // "How to treat X" - condition-led practical spoke
+    "safety-guide", // safety/considerations spoke (skin tone, contraindications)
   ]),
   title: z.string(),
   /** One-line subhead under the H1. Drop trailing periods. */

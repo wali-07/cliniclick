@@ -2,21 +2,42 @@
  * CliniClick editorial pipeline worker - draft and review one article.
  *
  * Usage:
- *   npm run draft                     # next due queued entry
+ *   npm run draft                     # next due queued entry (LOCAL by default)
  *   npm run draft -- --slug=X         # specific calendar entry
  *   npm run draft -- --dry            # don't call API, show what would happen
  *   npm run draft -- --max-cycles=N   # cap revision rounds (default 3)
- *   npm run draft -- --local          # write to disk only, do not push or open PR
+ *   npm run draft -- --push           # opt-in to branch+push+PR (see SAFETY below)
+ *   npm run draft -- --local          # explicit local (also the DEFAULT now)
  *
  * Pipeline order: Drafter -> Link Health -> (Editor, Brand, Legal,
- * Compliance, SEO QA in sequence) -> push branch -> open PR.
+ * Compliance, SEO QA in sequence) -> Visuals -> write to disk.
+ * In --push mode (when EDITORIAL_PUSH_ENABLED=true is also set): then
+ * branch + commit + push + open PR.
  *
- * On success: creates editorial/<slug> branch, writes article + index +
- * calendar update on that branch, pushes, opens PR against main, sends
- * Telegram message with PR + Vercel preview URL. Article reaches main
- * (and therefore production) ONLY when Abdullah merges the PR.
+ * === SAFETY: GitHub auto-push gated, default OFF ===
  *
- * On reviewer-loop failure: writes the latest draft locally, captures
+ * GitHub suspended @wali-07 twice (2026-05-09..16, again ..21) under
+ * abuse-detection signals consistent with high-velocity automation:
+ * many short-lived branches + bot-authored PRs + same-minute open+merge.
+ * The article pipeline is the single biggest compounding source of
+ * those events, so the default behaviour is now LOCAL-only:
+ *
+ *   - Article + index + calendar update land in the working tree.
+ *   - No branch, no commit, no push, no PR.
+ *   - Telegram still notifies (the worker sends from within the run).
+ *   - Abdullah reviews + bundles into one batched commit + push when he
+ *     decides the velocity is sustainable.
+ *
+ * To re-enable auto-push you must do BOTH:
+ *   1. Pass --push on the command line
+ *   2. Set EDITORIAL_PUSH_ENABLED=true in the environment
+ *
+ * Passing only one of those bails with a clear message. This is
+ * deliberate: a forgotten flag or a stale env var alone cannot trigger
+ * a push. When you DO eventually re-enable, do it sparingly - one push
+ * per ~5 articles is sustainable, one per article was not.
+ *
+ * On reviewer-loop failure (any mode): writes the latest draft, captures
  * reviewer feedback to a sibling .md file, marks calendar in-review for
  * manual triage. No branch / PR is created.
  */
@@ -25,7 +46,11 @@ import "dotenv/config";
 import { readFileSync, writeFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { pickEntry, updateEntry, type CalendarEntry } from "./lib/calendar.js";
-import { callAgent, type AgentName } from "./lib/anthropic.js";
+import {
+  callAgent,
+  reviewerPasses,
+  type AgentName,
+} from "./lib/anthropic.js";
 import {
   writeArticle,
   stripCodeFence,
@@ -51,21 +76,26 @@ import { openPr, vercelPreviewUrl } from "./lib/github.js";
 function parseArgs(): {
   slug?: string;
   dry: boolean;
-  local: boolean;
+  push: boolean;
   maxCycles: number;
   skipImages: boolean;
 } {
   const args = process.argv.slice(2);
-  const out = { dry: false, local: false, maxCycles: 3, skipImages: false } as {
+  const out = { dry: false, push: false, maxCycles: 3, skipImages: false } as {
     slug?: string;
     dry: boolean;
-    local: boolean;
+    push: boolean;
     maxCycles: number;
     skipImages: boolean;
   };
   for (const arg of args) {
     if (arg === "--dry") out.dry = true;
-    else if (arg === "--local") out.local = true;
+    // --local is the DEFAULT now (push gated behind --push + env var); kept
+    // as an explicit no-op for back-compat with scripts/docs/memory that
+    // still pass it.
+    else if (arg === "--local") {
+      /* default */
+    } else if (arg === "--push") out.push = true;
     else if (arg === "--skip-images") out.skipImages = true;
     else if (arg.startsWith("--slug=")) out.slug = arg.slice("--slug=".length);
     else if (arg.startsWith("--max-cycles=")) {
@@ -191,14 +221,35 @@ async function runPipeline(
   entry: CalendarEntry,
   opts: {
     dry: boolean;
-    local: boolean;
+    push: boolean;
     maxCycles: number;
     skipImages: boolean;
   }
 ) {
   log(`\n=== Drafting: ${entry.title} (${entry.slug}) ===`);
   log(`Parent: ${entry.parentType}/${entry.parentSlug} · Kind: ${entry.kind}`);
-  log(`Mode:   ${opts.local ? "LOCAL (no push, no PR)" : "PR (branch + pull request)"}`);
+
+  // GitHub-suspension safety: pushing requires BOTH --push and an explicit
+  // env var. Bail clearly if --push was passed without the env var, so a
+  // forgotten env or a stale flag cannot accidentally trigger a push.
+  if (opts.push && process.env.EDITORIAL_PUSH_ENABLED !== "true") {
+    log(
+      `\n[SAFETY] --push was passed but EDITORIAL_PUSH_ENABLED is not set to "true".`
+    );
+    log(
+      `         Refusing to push. See the SAFETY block at the top of run-article.ts.`
+    );
+    log(
+      `         To proceed: set EDITORIAL_PUSH_ENABLED=true in the env AND pass --push.`
+    );
+    log(`         Or drop --push to run in default LOCAL mode.`);
+    process.exit(2);
+  }
+  log(
+    `Mode:   ${
+      opts.push ? "PUSH (branch + commit + push + PR)" : "LOCAL (no git ops)"
+    }`
+  );
 
   if (opts.dry) {
     log("\n[DRY RUN] Would call Drafter with this brief:");
@@ -214,11 +265,11 @@ async function runPipeline(
     return;
   }
 
-  // For PR mode, set up git and switch to a fresh branch BEFORE we write
+  // For PUSH mode, set up git and switch to a fresh branch BEFORE we write
   // anything. That way the article + calendar updates land on the branch,
-  // not on local main.
+  // not on local main. LOCAL mode (default) skips all git operations.
   const branchName = `editorial/${entry.slug}`;
-  if (!opts.local) {
+  if (opts.push) {
     requireCleanTree();
     configureForActions();
     log(`\n[Git] Creating branch ${branchName} from origin/main`);
@@ -257,7 +308,7 @@ async function runPipeline(
     linkResult = await runLinkHealth(draftTs);
     log(formatReport(linkResult.report));
     if (linkResult.blocking) {
-      if (!opts.local) checkoutMain();
+      if (opts.push) checkoutMain();
       throw new Error(
         `Link Health: still ${linkResult.report.externalUnfixable.length} unfixable source(s) after Drafter retry. Article cannot ship without verifiable evidence.`
       );
@@ -281,7 +332,7 @@ async function runPipeline(
         userMessage: buildReviewerMessage(draftTs),
         maxTokens: 2000,
       });
-      const passed = /^PASS\b/i.test(verdict.trim());
+      const passed = reviewerPasses(verdict);
       feedback[reviewer] = verdict;
       log(`  [${reviewer}] ${passed ? "PASS" : "ISSUES"}`);
       if (!passed) allPassed = false;
@@ -296,7 +347,7 @@ async function runPipeline(
       log(`\n[Cycle ${cycle}] Max revision cycles reached. Saving for manual review.`);
       // Save the latest draft + reviewer feedback locally (not on a branch).
       // This path is for triage, not publishing - no PR is opened.
-      if (!opts.local) checkoutMain();
+      if (opts.push) checkoutMain();
       const { filePath } = writeArticle({ entry, tsContent: draftTs });
       const feedbackPath = filePath.replace(/\.ts$/, ".reviewer-feedback.md");
       const feedbackBody = Object.entries(feedback)
@@ -365,9 +416,31 @@ async function runPipeline(
   log(`\n[Calendar] Marking ${entry.slug} as awaiting-approval`);
   updateEntry(entry.slug, { status: "awaiting-approval" });
 
-  // ---- LOCAL mode: stop here. PR mode: commit, push, open PR. ----
-  if (opts.local) {
+  // ---- LOCAL mode: send Telegram + stop. PUSH mode: commit, push, open
+  //      PR, then send Telegram with the PR/preview links. Telegram fires
+  //      in BOTH modes because it is the review surface - the local-mode
+  //      notification just points at the local file path instead of a PR.
+  if (!opts.push) {
+    if (isTelegramConfigured()) {
+      log(`\n[Telegram] Sending local-mode notification...`);
+      try {
+        await sendMessage(
+          buildTelegramMessageLocal({
+            entry,
+            cycle,
+            draftLength: draftTs.length,
+            filePath: articleFilePath(entry),
+          })
+        );
+        log(`  sent.`);
+      } catch (err) {
+        log(
+          `  failed (non-fatal): ${err instanceof Error ? err.message : String(err)}`
+        );
+      }
+    }
     log(`\n=== Done (LOCAL mode). Article + calendar updated on disk. ===`);
+    log(`Review the working tree; Abdullah bundles into a manual commit.`);
     log(`Approve with: npm run publish-article -- --slug=${entry.slug}`);
     return;
   }
@@ -448,6 +521,32 @@ ${entry.brief ?? "_(no additional brief)_"}
 `;
 }
 
+function buildTelegramMessageLocal(args: {
+  entry: CalendarEntry;
+  cycle: number;
+  draftLength: number;
+  filePath: string;
+}): string {
+  const wordEstimate = Math.round(args.draftLength / 6);
+  const relPath = args.filePath
+    .replace(process.cwd() + "\\", "")
+    .replace(process.cwd() + "/", "")
+    .replace(/\\/g, "/");
+  return [
+    `*New draft ready \\(LOCAL\\): ${escapeMd(args.entry.title)}*`,
+    ``,
+    `Kind: ${escapeMd(args.entry.kind)}  Parent: ${escapeMd(`${args.entry.parentType}/${args.entry.parentSlug}`)}`,
+    `Converged in ${args.cycle} cycle${args.cycle === 1 ? "" : "s"}, \\~${wordEstimate} words`,
+    ``,
+    `*File:* \`${escapeMd(relPath)}\``,
+    ``,
+    `Local mode \\- no PR or preview URL\\. Review the file in the working tree\\.`,
+    ``,
+    `*Approve when batched commit lands:*`,
+    `\`npm run publish-article -- --slug=${args.entry.slug}\``,
+  ].join("\n");
+}
+
 function buildTelegramMessage(args: {
   entry: CalendarEntry;
   cycle: number;
@@ -492,7 +591,7 @@ async function main() {
   log(`run-article pipeline starting`);
   log(`  slug:        ${opts.slug ?? "(auto-pick next due)"}`);
   log(`  dry:         ${opts.dry}`);
-  log(`  local:       ${opts.local}`);
+  log(`  push:        ${opts.push}`);
   log(`  max-cycles:  ${opts.maxCycles}`);
 
   const entry = pickEntry({ slug: opts.slug });

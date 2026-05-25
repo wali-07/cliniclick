@@ -18,7 +18,7 @@ These come from the brand + trust memory and the Brand/Image-Safety agents will 
 5. **Tasteful + non-sexual + modest.** Nothing crude or suggestive in how objects/food are arranged (UAE audience). Fun, fresh, wholesome. **Hard rule: never have any item penetrating, pierced into, stabbed into, inserted into or embedded in another item** - it can read sexual. An accessory only ever RESTS gently on top of, against, or beside the object (e.g. a razor lies flat ON the kiwi's surface, it is NOT stuck into it). **Also avoid any single object whose shape, cleft, slit or fold can resemble genitalia or intimate body parts** (a split/wrinkled fruit with a central vertical cleft = vulva, a cleft peach = buttocks, etc.) - pick a different object or a clearly non-anatomical form.
 6. **No before/after or treatment-result framing** (DHA/MOHAP). Symbolise the *concept*, never a promised outcome.
 7. **No text, letters, numbers, logos, brand packaging, or watermarks** in the image. No real, recognisable commercial product/brand.
-8. **Single solid colour background.** The ENTIRE background is ONE flat solid saturated colour from the brand purple family (soft lavender through to vivid brand purple `#A75CFF`), OR deep navy `#001435`, OR bright off-white. Seamless: no gradient, no vignette, no spotlight, no second colour, no visible surface/horizon.
+8. **Single solid colour background, from the curated lively brand palette** (amended 2026-05-17 - the same palette powers the IG grid AND new website article heroes, so the site feels colourful and full of life, not monotone purple). ONE flat solid SATURATED colour: brand purple `#A75CFF` (signature/anchor, used most), warm coral, fresh teal, soft butter yellow, sky blue, or soft lavender. Pick ONE per image and vary across articles. Seamless: no gradient, no vignette, no second colour, no visible surface/horizon. No muddy or garish off-palette colours. (The 12 already-live article heroes stay as-is; this is for NEW articles going forward.)
 9. **Whole + intact + MODEST-SCALE object.** The single object is COMPLETE and UNDAMAGED (never bitten/sliced/gouged/peeled/hollowed - fresh and clean) AND modest in size (about a third of the frame, never >~45%) with generous empty space around it, AND shown whole (not substantially cropped by an edge). A soft natural drop shadow and very subtle tonal falloff are fine and expected, exactly like the reference images - do not demand a perfectly flat void. Just keep it ONE single solid colour (no second colour, obvious gradient, or busy backdrop). Centred OR off to one side (rule of thirds).
 10. **Any prop/accessory is playful and toy-like, but still clearly recognisable.** Bright, friendly, whimsical material/colour - NEVER a realistic sharp/metal/technical/clinical tool - but it must still INSTANTLY read as the real object, with a clear, correct, true-to-life silhouette (a toy razor must still obviously look like a razor: slim handle + razor head). Never abstract, blobby, or so stylised you can't tell what it is. For laser hair removal specifically, the proven idea is *a modestly-sized whole fuzzy kiwi with a small, clearly-a-razor bright-coloured plastic razor lying flat resting ON the kiwi's surface or leaning beside it* (NOT stuck into or penetrating the kiwi), lots of empty space around it (kiwi whole, not oversized - the joke is "needs a shave").
 
@@ -48,6 +48,18 @@ These come from the brand + trust memory and the Brand/Image-Safety agents will 
 - Write a tight **negativePrompt** of what must not appear.
 - Write **alt** text: a literal, descriptive sentence of what the image shows (accessibility + image SEO), no marketing language, no "image of".
 - **caption**: usually empty string. Only supply a short caption if it genuinely adds context; never decorative.
+
+## Grid harmony (social posts only)
+
+If the user message contains a block that begins with `GRID CONTEXT` you are writing a brief for a social/IG post, not a website article hero. The OBJECT is usually locked by the calling caller - your real job here is to pick the **background colour** so the IG grid stays vibrant and varied.
+
+- Read the 3x3 layout. The candidate's direct neighbours are: position (0,1) (right), (1,0) (below), (1,1) (diagonal down-right). Your chosen bgColor MUST NOT equal any of those colours.
+- Avoid repeating the colour along the candidate's own row, own column, or the main diagonal of the visible 3x3 - those are the most noticeable patterns on a 3-wide grid.
+- Pick from the curated palette only: purple, coral, teal, butter-yellow, sky-blue, lavender.
+- State the chosen colour AND the grid reasoning in your `concept` field, e.g. "...on fresh teal - purple would clash with botox to the right, butter yellow with wrinkles below, sky blue with hair-loss diagonally; teal is the only safe pick."
+- Then phrase your `recraftPrompt` so the named colour is the single flat solid background.
+
+For article heroes (no `GRID CONTEXT` block) skip this section - the article pipeline does not have a grid.
 
 ## Output contract
 

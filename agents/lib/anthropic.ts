@@ -66,6 +66,29 @@ export async function callAgent(args: {
 }
 
 /**
+ * Parse a reviewer agent's verdict from its full response.
+ *
+ * The Image-Brand / Image-Safety agents are asked to walk through their
+ * checks first and state the FINAL verdict on a line that starts with
+ * `VERDICT:` followed by one of PASS, ISSUES, or BLOCK. We look for the
+ * LAST such line (so an agent that mid-reasoning typed "ISSUES" then
+ * walked itself to a clean PASS still produces a correct verdict).
+ *
+ * Falls back to the legacy "first word = verdict" contract so older
+ * prompts and any not-yet-updated callers still work.
+ */
+export function reviewerPasses(response: string): boolean {
+  const lines = response.split(/\r?\n/);
+  for (let i = lines.length - 1; i >= 0; i--) {
+    const m = /^\s*\**\s*VERDICT\s*:\s*\**\s*(PASS|ISSUES|BLOCK)\b/i.exec(
+      lines[i]
+    );
+    if (m) return m[1].toUpperCase() === "PASS";
+  }
+  return /^PASS\b/i.test(response.trim());
+}
+
+/**
  * Multimodal agent call - the model sees an actual generated image plus a
  * text instruction. Used by the Image-Brand and Image-Safety gates so they
  * judge the real illustration that will ship, not a description of it.

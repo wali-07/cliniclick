@@ -1,0 +1,14 @@
+{
+  "slug": "wrinkles-carousel",
+  "scheduledFor": "2026-05-19",
+  "caption": "Wrinkles, decoded - minus the jargon. What they actually are and what genuinely helps. Not medical advice, just the honest basics. Learn more at cliniclick.ae",
+  "hashtags": ["#wrinkles", "#antiaging", "#dubaiskincare", "#skinhealth", "#cliniclick"],
+  "slides": [
+    { "title": "Wrinkles", "source": "social-crawl/wrinkles.base.webp" },
+    { "bg": "lavender", "headline": "They're not damage", "sub": "Just movement, sun and time doing their thing." },
+    { "bg": "teal", "headline": "Sunscreen does the heavy lifting", "sub": "Daily SPF is the single biggest thing you can do for fine lines." },
+    { "bg": "coral", "headline": "What has the most evidence", "sub": "Retinoids and consistency, over time. Gradual changes, not overnight ones." },
+    { "bg": "blue", "headline": "In-clinic options exist too", "sub": "A professional can match them to your skin and your goals." },
+    { "bg": "navy", "headline": "Want the full picture?", "sub": "Learn more at cliniclick.ae" }
+  ]
+}

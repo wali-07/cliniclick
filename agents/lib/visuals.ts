@@ -1,4 +1,4 @@
-/**
+3/**
  * The Visuals stage, shared by the editorial pipeline (run-article.ts) and
  * the one-off backfill (backfill-images.ts).
  *
@@ -15,7 +15,7 @@
 
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
-import { callAgent, callVisionAgent } from "./anthropic.js";
+import { callAgent, callVisionAgent, reviewerPasses } from "./anthropic.js";
 import { generateImage, optimizeToWebp, recraftConfigured } from "./recraft.js";
 
 const PROMPTS_DIR = resolve(process.cwd(), "agents/prompts");
@@ -136,8 +136,8 @@ export async function runVisualsStage(args: {
       }),
     ]);
 
-    const brandOk = /^PASS\b/i.test(brandVerdict.trim());
-    const safetyOk = /^PASS\b/i.test(safetyVerdict.trim());
+    const brandOk = reviewerPasses(brandVerdict);
+    const safetyOk = reviewerPasses(safetyVerdict);
     if (!brandOk) {
       log(`[Visuals]   Image-Brand says: ${brandVerdict.trim().slice(0, 500)}`);
     }

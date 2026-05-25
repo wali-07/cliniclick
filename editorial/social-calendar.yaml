@@ -1,69 +1,183 @@
 # Social (Instagram) content calendar - source of truth for the admin
-# dashboard's Social view. Crawl-stage: maintained here as posts are
-# produced + delivered to Telegram. status: draft | delivered | posted | skipped
-#  - draft     = concept only
-#  - delivered = image + caption produced and sent to Telegram, awaiting manual post
-#  - posted    = live on Instagram
+# dashboard's Social view. status: draft | delivered | posted | skipped
+#  - draft     = concept only, not yet produced
+#  - delivered = FINISHED asset(s) produced + sent to Telegram, awaiting post
+#  - posted    = live on Instagram (verified on the @clini.click grid)
+#
+# MODEL (Abdullah 2026-05-18, confirmed against the live grid screenshot):
+#  - Each post = ONE concept. The grid stays the catchy, vibrant
+#    object-pun tile set we built; every tile (single OR carousel cover)
+#    is the approved object-pun + title. Do not lose it.
+#  - FORMAT MIX for organic growth (NOT all carousels):
+#      SINGLE  = the witty object-pun tile only. Fast, grows the vibrant
+#                grid, low lift. Use for punchy concept tiles.
+#      CAROUSEL = same object-pun cover + fun vibrant info slides. Use
+#                for save-worthy meatier topics (what-helps, decoders,
+#                myth-busts). ~2 carousels + ~3 singles per week.
+#  - NO TOPIC REPEATS (Abdullah 2026-05-21): every post is a DISTINCT
+#    topic. Never re-run a concern/treatment already posted - not even
+#    as a "different angle/format" (that is what got dark spots posted
+#    twice). Grow the pool with new evergreen, seasonal and decoder
+#    topics instead. See feedback memory feedback_no_social_repeats.
+#  - NO PRICING CONTENT until booking launches (Abdullah 2026-05-21):
+#    pricing is a booking-era topic. Keep it off the calendar entirely
+#    for now - revisit only when booking goes live.
+#  - Finished assets only, never briefs. NO booking language. Educational,
+#    relaxed/witty captions, no "plain-English", criteria mode, not
+#    medical advice, no clinic names, no attacking ads. Reels deferred.
+#  - Render: carousel = social-carousel.ts (spec social-briefs/<slug>.json);
+#    single = social-post.ts --source=<approved object-pun> (+ <slug>.json
+#    for caption + 5 hashtags). ~5 posts/week + Stories daily; Sun off.
 posts:
+  # bgColor is structured (one of: purple, coral, teal, butter-yellow,
+  # sky-blue, lavender) so agents/lib/social-grid.ts can compute the live
+  # IG-grid layout and pass it to the Visuals + Image-Brand agents. Add
+  # bgColor for every entry that has been (or is about to be) produced.
   - topic: "Dark spots"
     slug: dark-spots
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-05-17"
     status: posted
-    notes: First content batch (posted by Abdullah for initial page content)
-  - topic: "Laser hair removal"
+    bgColor: coral
+    notes: SINGLE | speckled egg on coral. On the live grid.
+  - topic: "Hair removal"
     slug: laser-hair-removal
     article: /treatments/laser-hair-removal/what-is-laser-hair-removal
     scheduledFor: "2026-05-17"
     status: posted
-    notes: First content batch
+    bgColor: purple
+    notes: SINGLE | kiwi + razor on purple. On the live grid.
   - topic: "Acne"
     slug: acne
     article: /concerns/acne/what-is-acne
     scheduledFor: "2026-05-17"
     status: posted
-    notes: First content batch
+    bgColor: teal
+    notes: SINGLE | pineapple + sunglasses on teal. On the live grid.
   - topic: "Hair loss"
     slug: hair-loss
     article: /concerns/hair-loss/what-is-hair-loss
     scheduledFor: "2026-05-18"
-    status: delivered
-    notes: Week 1 - in Telegram, awaiting post
+    status: posted
+    bgColor: sky-blue
+    notes: SINGLE | lychee + stray hairs on sky blue. On the live grid.
+  - topic: "Wrinkles"
+    slug: wrinkles-carousel
+    article: /concerns/wrinkles-and-fine-lines/what-is-wrinkles-and-fine-lines
+    scheduledFor: "2026-05-19"
+    status: posted
+    bgColor: butter-yellow
+    notes: "TUE CAROUSEL | walnut cover on butter yellow + 5 info slides (what they are / SPF / miracle-cream myth / in-clinic / learn more). On the live grid."
   - topic: "Under-eye"
-    slug: under-eye
+    slug: under-eye-single
     article: /concerns/under-eye-concerns/what-is-under-eye-concerns
     scheduledFor: "2026-05-20"
-    status: delivered
-    notes: Week 1 - in Telegram, awaiting post
-  - topic: "Wrinkles"
-    slug: wrinkles
-    article: /concerns/wrinkles-and-fine-lines/what-is-wrinkles-and-fine-lines
-    scheduledFor: "2026-05-23"
-    status: delivered
-    notes: Week 1 - in Telegram, awaiting post
-  # --- Forward plan: rolling 2-week+ queue (top up every session). draft =
-  #     concept only, not yet produced. Each ties to a live article. ---
+    status: posted
+    bgColor: coral
+    notes: "WED SINGLE | tea-bag + googly-eyes on coral + title. On the live grid."
+  - topic: "Botox: what it actually is"
+    slug: botox-single
+    article: /treatments/botox/what-is-botox
+    scheduledFor: "2026-05-21"
+    status: posted
+    bgColor: purple
+    notes: "THU SINGLE | rolling-pin hero on purple + 'Botox' title. Criteria mode, not advice. On the live grid - last post before the 3-day slip (Abdullah moved laptop)."
+  # === REWORKED 2026-05-21 (Abdullah: "we already did dark spots" -
+  #     grow the topic pool, NO repeats; and NO pricing content until
+  #     booking launches). The dark-spots carousel AND the UAE-pricing
+  #     carousel that were queued for 5-21 are both PULLED. Every entry
+  #     below is a DISTINCT, non-pricing topic. Library topics reuse
+  #     approved object-pun heroes; topics marked NEW need a new
+  #     object-pun image (Recraft + Image-Brand/Safety gates).
+  # === SLIP 2026-05-25 (Abdullah: moved laptop; nothing posted between
+  #     botox 5-21 and 5-25). Calendar shifted forward 3 days while
+  #     preserving Sun-off. Body-fat takes today's MON slot; runway
+  #     extends to Tue 6-09. Posting order is unchanged.
+  # --- This week: Mon 5-25 -> Sat 5-30
   - topic: "Body fat"
-    slug: body-fat
+    slug: body-fat-single
     article: /concerns/body-fat/what-is-body-fat
     scheduledFor: "2026-05-25"
-    status: draft
-    notes: Week 2 - concept, not yet produced
+    status: delivered
+    bgColor: teal
+    notes: "MON SINGLE | approved butter hero, background HUE-ROTATED purple -> fresh teal (hue 175) via agents/social-recolor.ts. Title at the locked Selfologi mid-height (yFrac=0.47) for grid consistency with botox/under-eye/wrinkles. Image-Brand + Image-Safety PASS. Grid-position analysis: body-fat lands top-left, pushes botox(purple)/under-eye(coral) into row 1, wrinkles(yellow)/hair-loss(sky)/acne(teal) into row 2, hair-removal(lavender)/dark-spots(coral) into row 3. Eliminated picks: purple (botox neighbour), yellow (wrinkles below + butter is yellow), sky blue (diagonal clash with hair-loss), coral (under-eye row + dark-spots column), lavender (hair-removal column). Teal = only safe pick, one diagonal removed from Acne. (Was FRI 5-22 pre-slip.)"
   - topic: "Unwanted hair"
-    slug: unwanted-hair
+    slug: unwanted-hair-single
     article: /concerns/unwanted-hair/what-is-unwanted-hair
+    scheduledFor: "2026-05-26"
+    status: draft
+    notes: "TUE SINGLE | coconut + razor (reuse approved hero). Distinct from the 5-17 laser-treatment post: this is the concern. To produce."
+  - topic: "Dermal fillers"
+    slug: dermal-fillers-single
+    article: /treatments/dermal-fillers/what-is-dermal-fillers
+    scheduledFor: "2026-05-27"
+    status: draft
+    notes: "WED SINGLE | approved fillers (green grape) hero. To produce."
+  - topic: "Retinol, explained"
+    slug: retinol-single
+    article: /
     scheduledFor: "2026-05-28"
     status: draft
-    notes: Week 2 - concept, not yet produced
-  - topic: "Botox"
-    slug: botox
-    article: /treatments/botox/what-is-botox
+    notes: "THU SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Botox vs fillers"
+    slug: botox-vs-fillers-carousel
+    article: /treatments/dermal-fillers/vs-botox
+    scheduledFor: "2026-05-29"
+    status: draft
+    notes: "FRI CAROUSEL | approved vs-botox (balloon/raisin) cover + neutral 'what each does'. No rec/names. To produce."
+  - topic: "What 'medical-grade' actually means"
+    slug: medical-grade-carousel
+    article: /
     scheduledFor: "2026-05-30"
     status: draft
-    notes: Week 2 - concept, not yet produced
-  - topic: "Dermal fillers"
-    slug: dermal-fillers
-    article: /treatments/dermal-fillers/what-is-dermal-fillers
+    notes: "SAT CAROUSEL | NEW decoder topic - NEEDS NEW object-pun image. Criteria mode, empowering, NOT about pricing. To produce. (Sun 5-31 Stories only.)"
+  # --- Next week: Mon 6-01 -> Sat 6-06
+  - topic: "Summer SPF in the UAE heat"
+    slug: summer-spf-single
+    article: /concerns/pigmentation/what-is-pigmentation
+    scheduledFor: "2026-06-01"
+    status: draft
+    notes: "MON SINGLE | NEW seasonal topic (UAE summer) - NEEDS NEW object-pun image. SPF basics, not advice. To produce."
+  - topic: "Reading before & after photos"
+    slug: before-after-single
+    article: /
     scheduledFor: "2026-06-02"
     status: draft
-    notes: Week 2 - concept, not yet produced
+    notes: "TUE SINGLE | NEW decoder topic - NEEDS NEW object-pun image. Empowering, NO attacking ads. To produce."
+  - topic: "Questions worth asking before any treatment"
+    slug: questions-to-ask-carousel
+    article: /
+    scheduledFor: "2026-06-03"
+    status: draft
+    notes: "WED CAROUSEL | NEW decoder topic - NEEDS NEW object-pun image. Criteria mode, empowering. To produce."
+  - topic: "AC, dry air & your skin"
+    slug: ac-dry-skin-single
+    article: /
+    scheduledFor: "2026-06-04"
+    status: draft
+    notes: "THU SINGLE | NEW UAE-climate topic (indoor AC) - NEEDS NEW object-pun image. To produce."
+  - topic: "Your skin barrier, explained"
+    slug: skin-barrier-carousel
+    article: /
+    scheduledFor: "2026-06-05"
+    status: draft
+    notes: "FRI CAROUSEL | NEW educational topic - NEEDS NEW object-pun image. To produce."
+  - topic: "What 'downtime' really means"
+    slug: downtime-single
+    article: /
+    scheduledFor: "2026-06-06"
+    status: draft
+    notes: "SAT SINGLE | NEW decoder topic - NEEDS NEW object-pun image. To produce. (Sun 6-07 Stories only.)"
+  # --- Following week: Mon 6-08 -> Tue 6-09 (top up before this runs out)
+  - topic: "Why patch testing matters"
+    slug: patch-testing-single
+    article: /
+    scheduledFor: "2026-06-08"
+    status: draft
+    notes: "MON SINGLE | NEW educational/safety topic - NEEDS NEW object-pun image. To produce."
+  - topic: "Why skin results take time"
+    slug: results-take-time-single
+    article: /
+    scheduledFor: "2026-06-09"
+    status: draft
+    notes: "TUE SINGLE | NEW decoder topic - NEEDS NEW object-pun image. NO attacking ads/marketing. To produce."

@@ -26,6 +26,8 @@ const eyebrowFromKind: Record<Article["kind"], string> = {
   comparison: "Comparison",
   "cost-guide": "Cost guide",
   questions: "What to ask",
+  "treatment-guide": "Treatment guide",
+  "safety-guide": "Safety guide",
 };
 
 type ParentInfo = {
