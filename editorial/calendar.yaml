@@ -142,13 +142,18 @@ articles:
       - is this clinic licensed dubai
       - aesthetic clinic licensing uae
     dueDate: "2026-05-25"
-    status: awaiting-approval
+    status: published
+    publishedDate: "2026-05-28"
     brief: |
       Guide. Walk reader through how DHA / MOHAP / Emirates Health Services
       licensing works for clinics and individual practitioners. How to look up
       a license number, what each license type covers, what to do if you
       cannot verify. Most UAE-specific guide we have - high credibility
       builder.
+    notes: >-
+      Live at /learn/dha-mohap-licensing-how-to-verify-your-clinic - verified 200 + title + H1 +
+      hero on 2026-05-28. Was committed in 6aa0d9f; calendar status lagged at awaiting-approval
+      until today's flip.
   - slug: what-is-body-fat
     parentType: concern
     parentSlug: body-fat
@@ -246,12 +251,19 @@ articles:
       - botox per unit price uae
       - botox packages dubai
     dueDate: "2026-05-27"
-    status: queued
+    status: awaiting-approval
     brief: |
       Commercial spoke under the botox pillar. Per-unit and per-area AED
       ranges, what drives price (units used, practitioner tier, brand of
       toxin), package vs single-session economics. Cross-link to What is
       botox and the UAE pricing guide. No clinic naming.
+    notes: >-
+      Pipeline 2026-05-28: brand/legal/compliance/seo-qa PASS, editor flagged 3
+      surgical issues at cycle 3 (eyebrow casing + softening two clinic-adjacent
+      lines) which were hand-applied. Visuals stage then ran standalone -
+      Image-Brand + Image-Safety PASS on cycle 1 (rolling pin on brand purple,
+      same visual identity as the 5-21 botox IG single). Article + hero on disk,
+      awaiting Abdullah's review before any commit.
   - slug: acne-scars-treatment
     parentType: concern
     parentSlug: acne
