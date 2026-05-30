@@ -4,6 +4,8 @@
   "private": true,
   "scripts": {
     "dev": "next dev --turbopack",
+    "build-prompts": "tsx agents/build-prompts.ts",
+    "prebuild": "npm run build-prompts",
     "build": "next build",
     "start": "next start",
     "lint": "next lint",

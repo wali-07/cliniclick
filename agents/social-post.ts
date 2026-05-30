@@ -9,8 +9,8 @@
  *   npm run social-post -- --slug=dark-spots --title="Dark spots" \
  *     --bg="warm coral" --object="a single speckled brown egg"
  *
- * Output: ./social-crawl/<slug>.webp (gitignored scratch, for approval).
- * Nothing is published. Crawl stage = Claude acts as the pod manually.
+ * Output: ./public/social-renders/<slug>.webp (TRACKED so the IG cron can
+ * read it from main and send to Telegram on the scheduled day).
  */
 
 import "dotenv/config";
@@ -19,7 +19,7 @@ import { resolve } from "node:path";
 import sharp from "sharp";
 import { generateImage, recraftConfigured } from "./lib/recraft.js";
 
-const OUT = resolve(process.cwd(), "social-crawl");
+const OUT = resolve(process.cwd(), "public/social-renders");
 const SIZE = 1024; // 1:1 grid unit (valid Recraft V4 size)
 
 function arg(name: string): string | undefined {

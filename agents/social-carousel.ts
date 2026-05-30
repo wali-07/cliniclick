@@ -18,7 +18,8 @@
  *   slides[1..] : { bg: <palette key>, headline, sub? }
  *
  * Usage:  npx tsx agents/social-carousel.ts --slug=<slug>
- * Output: social-crawl/<slug>/slide-01.png ...  (gitignored scratch)
+ * Output: public/social-renders/<slug>/slide-01.png ...  (TRACKED so the
+ * IG cron can read from main and send to Telegram on the scheduled day)
  */
 
 import { mkdirSync, readFileSync, existsSync } from "node:fs";
@@ -303,7 +304,7 @@ async function main() {
     );
     process.exit(1);
   }
-  const outDir = resolve(process.cwd(), "social-crawl", slug);
+  const outDir = resolve(process.cwd(), "public/social-renders", slug);
   mkdirSync(outDir, { recursive: true });
 
   // slide 1 = locked object-pun cover (throws if off-system)

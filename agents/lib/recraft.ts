@@ -200,10 +200,41 @@ export async function generateImage(
   return out;
 }
 
+export type OptimizedImage = {
+  /** Optimised WebP buffer. */
+  buffer: Buffer;
+  /** Final pixel width after sharp processing. */
+  width: number;
+  /** Final pixel height. */
+  height: number;
+  /** Byte length of the optimised buffer. */
+  bytes: number;
+};
+
 /**
- * Resize + convert a generated image to an optimised WebP under
- * /public/article-images/<slug>.webp. Returns the site-relative src and
- * final pixel dimensions for schema.org/ImageObject + OG tags.
+ * Pure (no I/O) buffer-in -> buffer-out WebP optimisation. Returns the
+ * processed buffer plus dimensions for schema.org/OG metadata. Use this
+ * in the serverless pipeline where we don't want disk I/O - the hero
+ * is then committed to the preview branch via github-storage.
+ */
+export async function optimizeBuffer(source: Buffer): Promise<OptimizedImage> {
+  const { data, info } = await sharp(source)
+    .webp({ quality: 82, effort: 5 })
+    .toBuffer({ resolveWithObject: true });
+  return {
+    buffer: data,
+    width: info.width,
+    height: info.height,
+    bytes: data.length,
+  };
+}
+
+/**
+ * Local-pipeline convenience: optimise and write the hero to
+ * /public/article-images/<slug>.webp. Returns the site-relative src
+ * (for the article's heroImage.src field) plus dimensions. Thin wrapper
+ * over optimizeBuffer + writeFileSync, kept for backward compatibility
+ * with backfill-images.ts and the existing local pipeline.
  */
 export async function optimizeToWebp(args: {
   buffer: Buffer;
@@ -211,16 +242,12 @@ export async function optimizeToWebp(args: {
 }): Promise<{ src: string; width: number; height: number; bytes: number }> {
   mkdirSync(PUBLIC_IMAGE_DIR, { recursive: true });
   const filePath = resolve(PUBLIC_IMAGE_DIR, `${args.slug}.webp`);
-
-  const { data, info } = await sharp(args.buffer)
-    .webp({ quality: 82, effort: 5 })
-    .toBuffer({ resolveWithObject: true });
-  writeFileSync(filePath, data);
-
+  const opt = await optimizeBuffer(args.buffer);
+  writeFileSync(filePath, opt.buffer);
   return {
     src: `/article-images/${args.slug}.webp`,
-    width: info.width,
-    height: info.height,
-    bytes: data.length,
+    width: opt.width,
+    height: opt.height,
+    bytes: opt.bytes,
   };
 }

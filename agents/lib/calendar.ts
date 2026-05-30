@@ -84,3 +84,39 @@ export function updateEntry(
   );
   writeFileSync(CALENDAR_PATH, yamlOut, "utf-8");
 }
+
+/**
+ * Pure string-in / string-out variant of updateEntry. Used by the
+ * serverless pipeline where the calendar.yaml content is fetched from
+ * GitHub and the updated YAML is committed back via the Trees API
+ * (never written to disk). Validates the parsed source against the
+ * same schema as loadCalendar() so corrupt input fails loudly.
+ */
+export function applyEntryUpdate(args: {
+  yaml: string;
+  slug: string;
+  updates: Partial<Pick<CalendarEntry, "status" | "publishedDate" | "rejectionNotes" | "notes">>;
+}): string {
+  const parsed = yaml_load_validated(args.yaml);
+  const idx = parsed.findIndex((e) => e.slug === args.slug);
+  if (idx === -1) throw new Error(`Calendar entry not found: ${args.slug}`);
+  parsed[idx] = { ...parsed[idx], ...args.updates };
+  return yaml.dump(
+    { articles: parsed },
+    { lineWidth: 100, noRefs: true, quotingType: '"' }
+  );
+}
+
+function yaml_load_validated(text: string): CalendarEntry[] {
+  const raw = yaml.load(text);
+  return calendarSchema.parse(raw).articles;
+}
+
+/**
+ * Parse a calendar YAML string into CalendarEntry[]. Pure - no I/O.
+ * Used by the serverless pipeline to inspect the calendar fetched from
+ * GitHub before deciding what to draft.
+ */
+export function parseCalendar(text: string): CalendarEntry[] {
+  return yaml_load_validated(text);
+}

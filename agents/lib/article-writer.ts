@@ -158,23 +158,21 @@ export function writeArticle(args: {
 }
 
 /**
- * Add the article to src/content/articles/index.ts. Inserts a new import line
- * at the top of the imports section and adds the binding to the allArticles
- * array. Skips both edits if already present.
+ * Pure string-in / string-out variant of registerInIndex. Takes the
+ * current barrel-index TS source and returns the updated source with
+ * the new import + binding spliced in. Idempotent: re-registering an
+ * already-present binding is a no-op. Used by the serverless pipeline
+ * which commits the new index content via github-storage rather than
+ * writing to disk.
  */
-function registerInIndex(args: { binding: string; importPath: string }): void {
-  if (!existsSync(ARTICLES_INDEX)) {
-    throw new Error(
-      `Articles index missing at ${ARTICLES_INDEX} - cannot register new article`
-    );
-  }
-  let source = readFileSync(ARTICLES_INDEX, "utf-8");
-
+export function applyIndexRegistration(args: {
+  source: string;
+  binding: string;
+  importPath: string;
+}): string {
+  let source = args.source;
   const importLine = `import { ${args.binding} } from "${args.importPath}";`;
   if (!source.includes(importLine)) {
-    // Match the consecutive import block at file top. Handles both LF and
-    // CRLF line endings (the file lives in git which auto-converts on
-    // Windows checkout).
     const lastImportMatch = source.match(/^(import .+;\r?\n)+/m);
     if (!lastImportMatch) {
       throw new Error(
@@ -182,19 +180,13 @@ function registerInIndex(args: { binding: string; importPath: string }): void {
       );
     }
     const insertAt = lastImportMatch.index! + lastImportMatch[0].length;
-    // Match the line ending used in the surrounding file (CRLF or LF).
     const eol = source.includes("\r\n") ? "\r\n" : "\n";
     source = source.slice(0, insertAt) + importLine + eol + source.slice(insertAt);
   }
-
   if (!new RegExp(`\\b${args.binding}\\b`).test(source.split("export const allArticles")[1] ?? "")) {
     source = source.replace(
       /export const allArticles: Article\[\] = \[([\s\S]*?)\];/,
       (_, current: string) => {
-        // Split on comma + filter empties so any combination of trailing
-        // commas, blank lines, or whitespace can't produce a sparse-array
-        // hole (which crashes .find() at runtime with "Cannot read
-        // properties of undefined").
         const bindings = current
           .split(",")
           .map((s) => s.trim())
@@ -204,6 +196,24 @@ function registerInIndex(args: { binding: string; importPath: string }): void {
       }
     );
   }
+  return source;
+}
 
-  writeFileSync(ARTICLES_INDEX, source, "utf-8");
+/**
+ * Add the article to src/content/articles/index.ts. Inserts a new import line
+ * at the top of the imports section and adds the binding to the allArticles
+ * array. Skips both edits if already present.
+ *
+ * Delegates the actual string manipulation to applyIndexRegistration so the
+ * local (fs) and serverless (github-storage) paths share one implementation.
+ */
+function registerInIndex(args: { binding: string; importPath: string }): void {
+  if (!existsSync(ARTICLES_INDEX)) {
+    throw new Error(
+      `Articles index missing at ${ARTICLES_INDEX} - cannot register new article`
+    );
+  }
+  const source = readFileSync(ARTICLES_INDEX, "utf-8");
+  const updated = applyIndexRegistration({ source, ...args });
+  writeFileSync(ARTICLES_INDEX, updated, "utf-8");
 }

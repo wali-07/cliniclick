@@ -43,8 +43,7 @@
  */
 
 import "dotenv/config";
-import { readFileSync, writeFileSync } from "node:fs";
-import { resolve } from "node:path";
+import { writeFileSync } from "node:fs";
 import { pickEntry, updateEntry, type CalendarEntry } from "./lib/calendar.js";
 import {
   callAgent,
@@ -68,6 +67,7 @@ import {
   checkoutMain,
 } from "./lib/git.js";
 import { openPr, vercelPreviewUrl } from "./lib/github.js";
+import { loadPrompt } from "./lib/prompts.js";
 
 // ---------------------------------------------------------------------------
 // CLI args
@@ -109,13 +109,11 @@ function parseArgs(): {
 // Prompt loading
 // ---------------------------------------------------------------------------
 
-const PROMPTS_DIR = resolve(process.cwd(), "agents/prompts");
 const ARTICLES_INDEX_REL = "src/content/articles/index.ts";
 const CALENDAR_REL = "editorial/calendar.yaml";
 
-function loadPrompt(name: AgentName): string {
-  return readFileSync(resolve(PROMPTS_DIR, `${name}.md`), "utf-8");
-}
+// loadPrompt now imported from ./lib/prompts.js (bundled at build time
+// from agents/prompts/*.md so the same code runs locally and serverless).
 
 // ---------------------------------------------------------------------------
 // Brief construction

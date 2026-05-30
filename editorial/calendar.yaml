@@ -333,3 +333,196 @@ articles:
       Spoke under the hair loss pillar. Evidence-graded rundown (minoxidil,
       finasteride, PRP, low-level laser, transplant) - what works for which
       pattern, realistic timelines. Cross-link to What is hair loss.
+  # === 3-WEEK EXPANSION 2026-05-30 ===
+  # Phase 1 of filling the ~30 expected-but-empty article slots. Order:
+  # 5 missing treatment overviews (pillar pages) -> cost guides for the
+  # high-volume ones -> 2 highest-volume concern sub-spokes. Mon/Wed/Fri
+  # cadence, Sun off. Leaves machine overviews and the remaining 12+
+  # concern sub-spokes for a follow-up expansion.
+  - slug: what-is-microneedling
+    parentType: treatment
+    parentSlug: microneedling
+    kind: overview
+    title: What is microneedling
+    keywords:
+      - what is microneedling
+      - microneedling explained
+      - rf microneedling dubai
+      - microneedling for acne scars
+      - microneedling dark skin
+    dueDate: "2026-06-08"
+    status: queued
+    brief: |
+      Pillar overview. How it works (controlled micro-injuries trigger
+      collagen remodeling), the difference between manual derma-rolling,
+      motorised pens, and RF microneedling. What it treats (acne scars,
+      pore size, fine lines, stretch marks) and what it doesn't. Sessions,
+      downtime, expectations, dark-skin safety notes (PIH risk in higher
+      Fitzpatrick). Cross-link to acne-scars-treatment.
+  - slug: what-is-hydrafacial
+    parentType: treatment
+    parentSlug: hydrafacial
+    kind: overview
+    title: What is HydraFacial
+    keywords:
+      - what is hydrafacial
+      - hydrafacial explained
+      - hydrafacial dubai
+      - hydrafacial vs regular facial
+      - hydrafacial benefits
+    dueDate: "2026-06-10"
+    status: queued
+    brief: |
+      Pillar overview. The three-step protocol (cleanse+peel, extract+hydrate,
+      fuse+protect), realistic expectations (immediate-glow facial, not
+      anti-aging therapy), maintenance cadence, who suits it, who doesn't
+      (active acne, rosacea flares). Distinguish from medical treatments.
+      No clinic naming.
+  - slug: what-is-prp
+    parentType: treatment
+    parentSlug: prp
+    kind: overview
+    title: What is PRP
+    keywords:
+      - what is prp
+      - prp explained
+      - prp for hair loss
+      - prp for skin rejuvenation
+      - prp dubai
+    dueDate: "2026-06-12"
+    status: queued
+    brief: |
+      Pillar overview of platelet-rich plasma. How the blood-spin process
+      produces growth-factor-rich plasma, what the science actually supports
+      (hair-loss adjunct, skin rejuvenation, scarring) vs over-claims.
+      Sessions, expectations, what 'response' looks like, who shouldn't do
+      it. Cross-link to hair-loss-treatments.
+  - slug: what-is-chemical-peels
+    parentType: treatment
+    parentSlug: chemical-peels
+    kind: overview
+    title: What are chemical peels
+    keywords:
+      - what are chemical peels
+      - chemical peels explained
+      - glycolic peel
+      - tca peel
+      - chemical peel dark skin
+    dueDate: "2026-06-15"
+    status: queued
+    brief: |
+      Pillar overview. The three depth tiers (superficial AHA/BHA, medium
+      TCA, deep phenol), which concerns each suits, and why dark skin tones
+      need careful peel selection (PIH risk). Aftercare, downtime, results
+      timing. Cross-link to pigmentation overview and to microneedling
+      (peels-vs-microneedling territory).
+  - slug: what-is-coolsculpting
+    parentType: treatment
+    parentSlug: coolsculpting
+    kind: overview
+    title: What is CoolSculpting
+    keywords:
+      - what is coolsculpting
+      - coolsculpting explained
+      - cryolipolysis
+      - fat freezing dubai
+      - coolsculpting risks
+    dueDate: "2026-06-17"
+    status: queued
+    brief: |
+      Pillar overview of cryolipolysis. How fat freezing works (selective
+      destruction of fat cells via controlled cooling), what it treats
+      (stubborn pockets, not weight loss), realistic timeline (results
+      2-3 months), session expectations, side effects. Mention paradoxical
+      adipose hyperplasia briefly + soberly. Cross-link to what-is-body-fat.
+  - slug: cost-of-microneedling-in-dubai
+    parentType: treatment
+    parentSlug: microneedling
+    kind: cost-guide
+    title: Cost of microneedling in Dubai
+    keywords:
+      - microneedling cost dubai
+      - microneedling price uae
+      - rf microneedling cost dubai
+      - microneedling package price
+    dueDate: "2026-06-19"
+    status: queued
+    brief: |
+      Commercial spoke. Per-session AED ranges for standard pen, RF
+      microneedling (Morpheus8-class), and combined PRP+microneedling.
+      Package economics. What drives cost (device tier, practitioner
+      credentialing). Cross-link to What is microneedling.
+  - slug: cost-of-hydrafacial-in-dubai
+    parentType: treatment
+    parentSlug: hydrafacial
+    kind: cost-guide
+    title: Cost of HydraFacial in Dubai
+    keywords:
+      - hydrafacial cost dubai
+      - hydrafacial price uae
+      - hydrafacial package dubai
+      - hydrafacial booster cost
+    dueDate: "2026-06-22"
+    status: queued
+    brief: |
+      Commercial spoke. Per-session AED ranges, add-ons (boosters, LED,
+      neck/back), package economics for maintenance cadence (typical
+      monthly). What drives price (location overhead, booster choice).
+      Cross-link to What is HydraFacial.
+  - slug: melasma
+    parentType: concern
+    parentSlug: pigmentation
+    kind: overview
+    title: What is melasma
+    keywords:
+      - what is melasma
+      - melasma treatment dubai
+      - melasma dark skin
+      - melasma hormonal causes
+      - melasma vs sun spots
+    dueDate: "2026-06-24"
+    status: queued
+    brief: |
+      Sub-concern guide under pigmentation. Hormone-driven brown patches;
+      why it's particularly common in the Gulf (sun + hormones + genetics);
+      why it's stubborn (deep dermal vs epidermal pigment); what treatments
+      help (topicals: tranexamic acid, hydroquinone, kojic; in-clinic:
+      gentle peels, careful laser) and what makes it worse (aggressive
+      lasers in higher Fitzpatrick). Cross-link to pigmentation overview.
+  - slug: dark-circles
+    parentType: concern
+    parentSlug: under-eye-concerns
+    kind: overview
+    title: What causes dark circles
+    keywords:
+      - what causes dark circles
+      - dark circles treatment dubai
+      - tear trough fillers
+      - dark circles dark skin
+      - under-eye pigmentation
+    dueDate: "2026-06-26"
+    status: queued
+    brief: |
+      Sub-concern guide. Why dark circles happen (pigmentation, vascular
+      visibility, tear-trough shadow, allergic shiners) - and why the
+      treatment is completely different per cause. Decoder for each cause,
+      what helps (filler vs laser vs topicals vs nothing), what to ask
+      before any procedure. Cross-link to under-eye overview.
+  - slug: cost-of-prp-in-dubai
+    parentType: treatment
+    parentSlug: prp
+    kind: cost-guide
+    title: Cost of PRP in Dubai
+    keywords:
+      - prp cost dubai
+      - prp price uae
+      - prp hair loss cost
+      - prp skin cost dubai
+      - prp package dubai
+    dueDate: "2026-06-29"
+    status: queued
+    brief: |
+      Commercial spoke. Per-session AED ranges for hair-loss vs skin-
+      rejuvenation indications. Package economics for the typical 3-4
+      session protocol. What drives price (centrifuge tier, practitioner,
+      combination with microneedling). Cross-link to What is PRP.

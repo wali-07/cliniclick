@@ -8,8 +8,8 @@
  * approves + posts.
  *
  * Asset resolution per scheduled slug:
- *   - carousel: social-crawl/<slug>/slide-*.png  -> sendMediaGroup
- *   - single  : social-crawl/<slug>.(webp|jpg)   -> sendPhoto
+ *   - carousel: public/social-renders/<slug>/slide-*.png  -> sendMediaGroup
+ *   - single  : public/social-renders/<slug>.(webp|jpg)   -> sendPhoto
  *   caption + 5 hashtags come from editorial/social-briefs/<slug>.json.
  * If the finished asset is missing, it sends a one-line "not yet
  * produced - holding" notice (no brief), so there is never dead air.
@@ -92,8 +92,8 @@ function ensureRendered(slug: string) {
   const specPath = resolve(ROOT, `editorial/social-briefs/${slug}.json`);
   if (!existsSync(specPath)) return; // no spec -> handled as "not produced"
   const spec = JSON.parse(readFileSync(specPath, "utf-8")) as Spec;
-  const dir = resolve(ROOT, "social-crawl", slug);
-  const single = resolve(ROOT, "social-crawl", `${slug}.webp`);
+  const dir = resolve(ROOT, "public/social-renders", slug);
+  const single = resolve(ROOT, "public/social-renders", `${slug}.webp`);
   const run = (cmd: string) =>
     execSync(cmd, { cwd: ROOT, stdio: "pipe" });
 
@@ -175,7 +175,7 @@ async function main() {
       );
       continue;
     }
-    const dir = resolve(ROOT, "social-crawl", p.slug);
+    const dir = resolve(ROOT, "public/social-renders", p.slug);
     const slides = existsSync(dir)
       ? readdirSync(dir)
           .filter((f) => /^slide-\d+\.png$/.test(f))
@@ -183,7 +183,7 @@ async function main() {
           .map((f) => resolve(dir, f))
       : [];
     const single = ["webp", "jpg"]
-      .map((e) => resolve(ROOT, "social-crawl", `${p.slug}.${e}`))
+      .map((e) => resolve(ROOT, "public/social-renders", `${p.slug}.${e}`))
       .find((f) => existsSync(f));
 
     if (slides.length === 0 && !single) {

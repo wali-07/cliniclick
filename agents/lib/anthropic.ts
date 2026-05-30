@@ -32,6 +32,9 @@ export const MODEL_FOR = {
   visuals: "claude-sonnet-4-6",
   "image-brand": "claude-sonnet-4-6",
   "image-safety": "claude-sonnet-4-6",
+  // Social pipeline. Writes title + caption + 5 hashtags + (for carousels)
+  // 3-5 info slides from a calendar entry's topic + article reference.
+  "social-briefer": "claude-sonnet-4-6",
 } as const;
 
 export type AgentName = keyof typeof MODEL_FOR;

@@ -44,19 +44,15 @@ import {
   PALETTE,
   type PaletteColour,
 } from "./lib/social-grid.js";
+import { loadPrompt } from "./lib/prompts.js";
 
 const ROOT = process.cwd();
-const PROMPTS = resolve(ROOT, "agents/prompts");
-const OUT = resolve(ROOT, "social-crawl");
+const OUT = resolve(ROOT, "public/social-renders");
 const SIZE = 1024;
 
 function arg(name: string): string | undefined {
   const a = process.argv.find((x) => x.startsWith(`--${name}=`));
   return a ? a.slice(name.length + 3) : undefined;
-}
-
-function loadPrompt(name: "image-brand" | "image-safety"): string {
-  return readFileSync(resolve(PROMPTS, `${name}.md`), "utf-8");
 }
 
 function rgbToHsl(r: number, g: number, b: number): [number, number, number] {

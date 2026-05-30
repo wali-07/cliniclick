@@ -16,13 +16,13 @@
 import { readFileSync } from "node:fs";
 import { resolve } from "node:path";
 import { callAgent, callVisionAgent, reviewerPasses } from "./anthropic.js";
-import { generateImage, optimizeToWebp, recraftConfigured } from "./recraft.js";
-
-const PROMPTS_DIR = resolve(process.cwd(), "agents/prompts");
-
-function loadPrompt(name: "visuals" | "image-brand" | "image-safety"): string {
-  return readFileSync(resolve(PROMPTS_DIR, `${name}.md`), "utf-8");
-}
+import {
+  generateImage,
+  optimizeToWebp,
+  optimizeBuffer,
+  recraftConfigured,
+} from "./recraft.js";
+import { loadPrompt } from "./prompts.js";
 
 export type HeroImage = {
   src: string;
@@ -171,6 +171,132 @@ export async function runVisualsStage(args: {
     }
 
     // Feed the critique back to the Visuals Agent for a revised brief.
+    const critique = [
+      !brandOk ? `IMAGE-BRAND said:\n${brandVerdict}` : "",
+      !safetyOk ? `IMAGE-SAFETY said:\n${safetyVerdict}` : "",
+    ]
+      .filter(Boolean)
+      .join("\n\n");
+    log("[Visuals]   Revising the brief from reviewer feedback...");
+    briefRaw = await callAgent({
+      agent: "visuals",
+      systemPrompt: visualsPrompt,
+      userMessage: `Your previous hero image was rejected. Produce a NEW JSON brief that fixes every issue below. Keep the concept relevant to the article.\n\nPREVIOUS BRIEF:\n${JSON.stringify(
+        brief,
+        null,
+        2
+      )}\n\nREVIEWER FEEDBACK:\n${critique}\n\nARTICLE:\n\`\`\`ts\n${args.articleContext}\n\`\`\``,
+      maxTokens: 1500,
+    });
+    brief = parseBrief(briefRaw);
+  }
+
+  return null;
+}
+
+/**
+ * In-memory variant of runVisualsStage. Returns the optimised hero buffer
+ * + the HeroImage metadata (no disk write), so the serverless pipeline
+ * can commit the hero to a preview branch via github-storage instead of
+ * persisting locally.
+ *
+ * Same Visuals -> Recraft -> Image-Brand + Image-Safety chain with the
+ * same up-to-maxCycles retry; only the I/O changes. Returns null if
+ * Recraft is unconfigured or the chain doesn't converge.
+ */
+export async function runVisualsStageBuffer(args: {
+  articleContext: string;
+  slug: string;
+  maxCycles?: number;
+  log?: (msg: string) => void;
+}): Promise<(HeroImage & { buffer: Buffer }) | null> {
+  const log = args.log ?? noop;
+  const maxCycles = args.maxCycles ?? 3;
+
+  if (!recraftConfigured()) {
+    log("[Visuals] RECRAFT_API_KEY not set - skipping image generation.");
+    return null;
+  }
+
+  const visualsPrompt = loadPrompt("visuals");
+  const brandPrompt = loadPrompt("image-brand");
+  const safetyPrompt = loadPrompt("image-safety");
+
+  log("[Visuals] Asking Visuals Agent for a hero concept...");
+  let briefRaw = await callAgent({
+    agent: "visuals",
+    systemPrompt: visualsPrompt,
+    userMessage: `Decide the hero illustration for this article and output the JSON brief.\n\n\`\`\`ts\n${args.articleContext}\n\`\`\``,
+    maxTokens: 1500,
+  });
+  let brief = parseBrief(briefRaw);
+  log(`[Visuals] Concept: ${brief.concept}`);
+
+  for (let cycle = 1; cycle <= maxCycles; cycle++) {
+    log(`[Visuals] Cycle ${cycle}/${maxCycles}: generating with Recraft...`);
+    const [img] = await generateImage({
+      prompt: brief.recraftPrompt,
+      negativePrompt: brief.negativePrompt,
+      n: 1,
+    });
+    const opt = await optimizeBuffer(img.buffer);
+    log(
+      `[Visuals]   buffer ${opt.width}x${opt.height} (${Math.round(opt.bytes / 1024)}KB)`
+    );
+
+    const b64 = opt.buffer.toString("base64");
+    const reviewMsg = `Article concept: ${brief.concept}\nIntended alt text: ${brief.alt}\n\nJudge the attached generated hero illustration against your rules.`;
+
+    const [brandVerdict, safetyVerdict] = await Promise.all([
+      callVisionAgent({
+        agent: "image-brand",
+        systemPrompt: brandPrompt,
+        userMessage: reviewMsg,
+        image: { base64: b64, mediaType: "image/webp" },
+      }),
+      callVisionAgent({
+        agent: "image-safety",
+        systemPrompt: safetyPrompt,
+        userMessage: reviewMsg,
+        image: { base64: b64, mediaType: "image/webp" },
+      }),
+    ]);
+
+    const brandOk = reviewerPasses(brandVerdict);
+    const safetyOk = reviewerPasses(safetyVerdict);
+    if (!brandOk) {
+      log(`[Visuals]   Image-Brand says: ${brandVerdict.trim().slice(0, 500)}`);
+    }
+    if (!safetyOk) {
+      log(`[Visuals]   Image-Safety says: ${safetyVerdict.trim().slice(0, 400)}`);
+    }
+    log(
+      `[Visuals]   Image-Brand: ${brandOk ? "PASS" : "ISSUES"} · Image-Safety: ${
+        safetyOk ? "PASS" : "BLOCK"
+      }`
+    );
+
+    if (brandOk && safetyOk) {
+      log("[Visuals] Image cleared by both gates.");
+      return {
+        src: `/article-images/${args.slug}.webp`,
+        alt: brief.alt,
+        caption: brief.caption || undefined,
+        width: opt.width,
+        height: opt.height,
+        prompt: brief.recraftPrompt,
+        generatedBy: img.via,
+        buffer: opt.buffer,
+      };
+    }
+
+    if (cycle === maxCycles) {
+      log(
+        "[Visuals] Did not converge within maxCycles. Shipping article WITHOUT a hero image."
+      );
+      return null;
+    }
+
     const critique = [
       !brandOk ? `IMAGE-BRAND said:\n${brandVerdict}` : "",
       !safetyOk ? `IMAGE-SAFETY said:\n${safetyVerdict}` : "",

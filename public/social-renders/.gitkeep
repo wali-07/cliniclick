@@ -1,0 +1,7 @@
+# Tracked output directory for Instagram-asset renders.
+# Local social-* scripts write here. The IG cron reads from this path
+# (on origin/main) and sends to Telegram on the scheduled day.
+#
+# Files: <slug>.webp (single) + <slug>.base.webp (untitled, for --retitle),
+#        <slug>.jpg (Telegram-safe fallback),
+#        <slug>/slide-NN.png (carousel slides).

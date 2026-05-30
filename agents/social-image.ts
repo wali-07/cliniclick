@@ -3,7 +3,7 @@
  * social asset that needs a FRESH Recraft image (not a reused approved
  * hero). Runs the full agent chain so every IG-grid post is on-brand
  * AND on-palette - exactly the same gates the article hero pipeline
- * uses, just routed to social-crawl/ instead of /public/article-images/.
+ * uses, just routed to /public/social-renders/ instead of /public/article-images/.
  *
  * Flow:
  *   Visuals Agent (object + palette colour + Recraft prompt)
@@ -13,7 +13,7 @@
  *
  * Then composites the locked Selfologi title overlay via sharp.
  *
- * Output: social-crawl/<slug>.base.webp + <slug>.webp + <slug>.jpg
+ * Output: public/social-renders/<slug>.base.webp + <slug>.webp + <slug>.jpg
  *
  * Usage:
  *   npx tsx agents/social-image.ts \
@@ -35,19 +35,15 @@ import sharp from "sharp";
 import { generateImage, recraftConfigured } from "./lib/recraft.js";
 import { callAgent, callVisionAgent, reviewerPasses } from "./lib/anthropic.js";
 import { buildGridContext } from "./lib/social-grid.js";
+import { loadPrompt } from "./lib/prompts.js";
 
 const ROOT = process.cwd();
-const PROMPTS = resolve(ROOT, "agents/prompts");
-const OUT = resolve(ROOT, "social-crawl");
+const OUT = resolve(ROOT, "public/social-renders");
 const SIZE = 1024;
 
 function arg(name: string): string | undefined {
   const a = process.argv.find((x) => x.startsWith(`--${name}=`));
   return a ? a.slice(name.length + 3) : undefined;
-}
-
-function loadPrompt(name: "visuals" | "image-brand" | "image-safety"): string {
-  return readFileSync(resolve(PROMPTS, `${name}.md`), "utf-8");
 }
 
 type Brief = {
