@@ -251,19 +251,21 @@ articles:
       - botox per unit price uae
       - botox packages dubai
     dueDate: "2026-05-27"
-    status: awaiting-approval
+    status: published
+    publishedDate: "2026-05-28"
     brief: |
       Commercial spoke under the botox pillar. Per-unit and per-area AED
       ranges, what drives price (units used, practitioner tier, brand of
       toxin), package vs single-session economics. Cross-link to What is
       botox and the UAE pricing guide. No clinic naming.
     notes: >-
-      Pipeline 2026-05-28: brand/legal/compliance/seo-qa PASS, editor flagged 3
-      surgical issues at cycle 3 (eyebrow casing + softening two clinic-adjacent
-      lines) which were hand-applied. Visuals stage then ran standalone -
-      Image-Brand + Image-Safety PASS on cycle 1 (rolling pin on brand purple,
-      same visual identity as the 5-21 botox IG single). Article + hero on disk,
-      awaiting Abdullah's review before any commit.
+      Pipeline 2026-05-28: brand/legal/compliance/seo-qa PASS, editor flagged 3 surgical issues at
+      cycle 3 (eyebrow casing + softening two clinic-adjacent lines) which were hand-applied.
+      Visuals stage then ran standalone - Image-Brand + Image-Safety PASS on cycle 1 (rolling pin on
+      brand purple, same visual identity as the 5-21 botox IG single). Committed in 73c611b and
+      auto-deployed; calendar status lagged at awaiting-approval until today's flip. Verified
+      2026-05-30: 200 at /treatments/botox/cost-of-botox-in-dubai, title + H1 + hero rendering on
+      prod (cliniclick.ae).
   - slug: acne-scars-treatment
     parentType: concern
     parentSlug: acne
@@ -275,7 +277,7 @@ articles:
       - acne scarring dark skin
       - microneedling vs laser acne scars
     dueDate: "2026-05-29"
-    status: queued
+    status: awaiting-approval
     brief: |
       Spoke under the acne pillar. Scar types (boxcar, rolling, ice-pick,
       PIE/PIH), which treatments suit which, special care for darker skin

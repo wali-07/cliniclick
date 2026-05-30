@@ -189,11 +189,18 @@ function registerInIndex(args: { binding: string; importPath: string }): void {
 
   if (!new RegExp(`\\b${args.binding}\\b`).test(source.split("export const allArticles")[1] ?? "")) {
     source = source.replace(
-      /export const allArticles: Article\[\] = \[([^\]]*)\];/,
+      /export const allArticles: Article\[\] = \[([\s\S]*?)\];/,
       (_, current: string) => {
-        const trimmed = current.trim();
-        const next = trimmed.length > 0 ? `${trimmed}, ${args.binding}` : args.binding;
-        return `export const allArticles: Article[] = [${next}];`;
+        // Split on comma + filter empties so any combination of trailing
+        // commas, blank lines, or whitespace can't produce a sparse-array
+        // hole (which crashes .find() at runtime with "Cannot read
+        // properties of undefined").
+        const bindings = current
+          .split(",")
+          .map((s) => s.trim())
+          .filter((s) => s.length > 0);
+        bindings.push(args.binding);
+        return `export const allArticles: Article[] = [\n  ${bindings.join(",\n  ")},\n];`;
       }
     );
   }

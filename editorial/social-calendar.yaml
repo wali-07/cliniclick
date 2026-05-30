@@ -112,8 +112,9 @@ posts:
     slug: dermal-fillers-single
     article: /treatments/dermal-fillers/what-is-dermal-fillers
     scheduledFor: "2026-05-27"
-    status: draft
-    notes: "WED SINGLE | approved fillers (green grape) hero. To produce."
+    status: delivered
+    bgColor: butter-yellow
+    notes: "WED SINGLE | approved fillers (green grape) hero, background HUE-ROTATED purple -> butter-yellow (hue 48) via agents/social-recolor.ts. Grid-position analysis (after 5-26 unwanted-hair delivery): dermal-fillers lands top-left; direct neighbours are unwanted-hair(lavender) right, botox-single(purple) below, under-eye(coral) diagonal. Row 0 also contains body-fat(teal); Col 0 also contains hair-loss(sky-blue). Banned by direct-clash: lavender/purple/coral. Banned by same-line repeat: teal/sky-blue. Butter-yellow = only safe pick. Image-Brand + Image-Safety PASS. Title at locked Selfologi mid-height (yFrac=0.47)."
   - topic: "Retinol, explained"
     slug: retinol-single
     article: /

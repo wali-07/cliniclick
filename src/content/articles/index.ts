@@ -14,6 +14,7 @@ import { whatIsLaserHairRemoval } from "./treatments/laser-hair-removal/what-is-
 import { costOfLaserHairRemovalInDubai } from "./treatments/laser-hair-removal/cost-in-dubai";
 import { howToVerifyClinicLicenseUae } from "./guides/dha-mohap-licensing-how-to-verify-your-clinic";
 import { costOfBotoxInDubai } from "./treatments/botox/cost-of-botox-in-dubai";
+import { acneScarsTreatment } from "./concerns/acne/acne-scars-treatment";
 
 export const allArticles: Article[] = [whatIsAcne,
   whatIsBodyFat,
@@ -30,4 +31,5 @@ export const allArticles: Article[] = [whatIsAcne,
   costOfLaserHairRemovalInDubai,
   howToVerifyClinicLicenseUae,
   costOfBotoxInDubai,
+  acneScarsTreatment,
 ];
