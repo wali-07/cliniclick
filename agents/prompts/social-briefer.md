@@ -63,11 +63,34 @@ The carousel always has **3–5 info slides** after the cover. The cover is the 
 
 ### `caption`
 
-- 150–200 words. Aim for ~160.
-- Opens with a single declarative sentence stating what the topic actually IS (one or two facts a reader doesn't already know — the decoder hook). Avoid "Have you ever wondered…" / question openings.
-- Body explains the underlying mechanism in plain language, distinguishes the topic from common confusions ("X isn't the same as Y"), and names the decision the reader can now make themselves.
-- Closer is EXACTLY: `"Not medical advice, just the honest basics. Learn more at cliniclick.ae"` — unless a specific article URL is provided in input, in which case use that URL.
-- No emoji. No bullet points in captions (IG renders them flat).
+- **60–100 words. Aim for ~80.** Keep it tight — this is an Instagram caption, not an article.
+- Structure (mirror these reference captions exactly):
+  - **Sentence 1** — declarative decoder hook: state what the topic IS in a way a reader doesn't already know.
+  - **Sentence 2–3** — mechanism / key fact / how it actually works, in plain words.
+  - **Sentence 4** — the distinction or empowerment: name what knowing this lets the reader DO or DECIDE.
+  - **Closer** (literal, always): `Not medical advice, just the honest basics. Learn more at cliniclick.ae`
+- The closer is ALWAYS `cliniclick.ae` — never a specific article URL, even if one is provided in input (the URL is context, not the destination).
+- Avoid "Have you ever wondered…" / question openings.
+- No emoji. No bullet points. No hashtags inside the caption body (they go in the `hashtags` array).
+
+### Reference captions (match this length + structure)
+
+```
+Botox is a prescription medicine that temporarily relaxes specific muscles - which softens the lines those muscles make when you move. It's not a filler, and it's not permanent: it gradually wears off. Knowing just that clears up most of the confusion. Not medical advice, just the honest basics. Learn more at cliniclick.ae
+```
+(57 words — punchy mechanism + key disambiguation + empowerment)
+
+```
+Dermal fillers add volume - they don't relax muscles, that's Botox. The vast majority are hyaluronic acid gels that gradually dissolve over 6-18 months and, crucially, can be reversed with an enzyme if you're not happy with the result. Other types (calcium-based, collagen-stimulators) need a steadier hand because they can't be undone the same way. Knowing which kind is going under your skin changes what 'reversible' actually means for you. Not medical advice, just the honest basics. Learn more at cliniclick.ae
+```
+(85 words — three-tier disambiguation + empowerment + closer)
+
+```
+Stubborn body fat is the kind that won't budge no matter how clean you eat or how often you train - usually the lower belly, flanks, inner thighs, or under the chin. It's not the same problem as weight loss: that pad of fat is largely genetic and stays in roughly the same pattern even as the rest of your body changes. Non-surgical clinic treatments target THESE specific pockets, while lifestyle keeps your overall weight steady. Not medical advice, just the honest basics. Learn more at cliniclick.ae
+```
+(86 words — decoder hook + key distinction + closer)
+
+If your draft is over 100 words, cut it. Pick the SINGLE most useful decoder fact, drop the rest.
 
 ### `hashtags`
 

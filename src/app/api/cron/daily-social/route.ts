@@ -1,14 +1,16 @@
 /**
  * Vercel cron handler - daily Instagram-asset sender (fully automatic).
  *
- * Fires daily at 02:00 UTC (= 06:00 UAE) per vercel.json cron config.
- * Day-before model: the run prepares TOMORROW's scheduled draft so
- * Abdullah has ~24h to approve before the post's scheduledFor date.
+ * Fires daily at 04:00 UTC (= 08:00 UAE) per vercel.json cron config.
+ * Same-day model: the run prepares the draft scheduled for TODAY so it's
+ * in Abdullah's Telegram by morning - he posts to IG and taps Mark posted
+ * the same day. Pass ?date=YYYY-MM-DD on the URL to override "today" for
+ * manual re-runs / catch-up.
  *
  *   1. Verify caller via Vercel's CRON_SECRET.
- *   2. Compute tomorrow's date in UAE timezone.
+ *   2. Compute today's date in UAE timezone (or use ?date= override).
  *   3. Fetch editorial/social-calendar.yaml from origin/main.
- *   4. Find tomorrow's draft entry. If none, exit cleanly.
+ *   4. Find today's draft entry. If none, exit cleanly.
  *   5. Decide format from slug suffix: ends with "-carousel" -> carousel,
  *      else -> single.
  *   6. If brief + assets already exist on main (pre-rendered locally),
@@ -58,10 +60,18 @@ type SocialPost = {
   status: "draft" | "delivered" | "posted" | "skipped";
 };
 
-function uaeDate(daysAhead: number): string {
+function uaeDate(daysAhead: number = 0): string {
   const now = new Date();
   const uaeMs = now.getTime() + (4 + daysAhead * 24) * 60 * 60 * 1000;
   return new Date(uaeMs).toISOString().slice(0, 10);
+}
+
+/** Resolve the "today" the run targets - either the natural UAE date or
+ *  an explicit ?date=YYYY-MM-DD override for manual catch-up runs. */
+function resolveTargetDate(req: NextRequest): string {
+  const override = req.nextUrl.searchParams.get("date");
+  if (override && /^\d{4}-\d{2}-\d{2}$/.test(override)) return override;
+  return uaeDate(0);
 }
 
 function isAuthorized(req: NextRequest): boolean {
@@ -176,20 +186,20 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, reason: "unauthorized" }, { status: 401 });
   }
 
-  const tomorrow = uaeDate(1);
+  const targetDate = resolveTargetDate(req);
   const log = (m: string) => console.log(m);
 
   try {
-    // ----- Find tomorrow's draft -----
+    // ----- Find today's draft -----
     const calRes = await getFileContent({ path: SOCIAL_CALENDAR_PATH, ref: "main" });
     const posts = parseSocialCalendar(calRes.content);
-    const due = posts.find((p) => p.scheduledFor === tomorrow && p.status === "draft");
+    const due = posts.find((p) => p.scheduledFor === targetDate && p.status === "draft");
     if (!due) {
-      log(`[daily-social] ${tomorrow}: no draft due. Exiting.`);
-      return NextResponse.json({ ok: true, tomorrow, sent: null });
+      log(`[daily-social] ${targetDate}: no draft due. Exiting.`);
+      return NextResponse.json({ ok: true, date: targetDate, sent: null });
     }
     const format = inferFormat(due.slug);
-    log(`[daily-social] preparing ${due.slug} (${format}) for ${tomorrow}`);
+    log(`[daily-social] preparing ${due.slug} (${format}) for ${targetDate}`);
 
     // ----- Use pre-rendered assets if present, otherwise auto-generate -----
     let brief: SocialBrief;
@@ -278,7 +288,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // follow-up sendMessage (4096-char limit, easy fit). UX: the user
     // copies the caption from the text message, which is also easier than
     // copying from a photo caption.
-    const shortHeader = `📸 ${due.topic} — for ${tomorrow}`;
+    const shortHeader = `📸 ${due.topic} — for ${targetDate}`;
     if (format === "carousel" && slides.length > 0) {
       const all = [coverWebp, ...slides];
       await sendMediaGroupTelegram({ slides: all, caption: shortHeader });
@@ -293,7 +303,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     // Follow-up message with the FULL caption + 5 hashtags + buttons. The
     // user copies this entire block into IG when posting.
     const followText = [
-      `*${escapeMd(brief.title)}* \\— for ${escapeMd(tomorrow)}`,
+      `*${escapeMd(brief.title)}* \\— for ${escapeMd(targetDate)}`,
       ``,
       escapeMd(brief.caption),
       ``,
@@ -321,7 +331,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
 
     return NextResponse.json({
       ok: true,
-      tomorrow,
+      date: targetDate,
       sent: due.slug,
       format,
       generated: didGenerate,

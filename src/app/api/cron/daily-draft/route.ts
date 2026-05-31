@@ -62,6 +62,14 @@ function uaeToday(): string {
   return new Date(uaeMs).toISOString().slice(0, 10);
 }
 
+/** Resolve the "today" the run targets - either the natural UAE date or
+ *  an explicit ?date=YYYY-MM-DD override for manual catch-up runs. */
+function resolveToday(req: NextRequest): string {
+  const override = req.nextUrl.searchParams.get("date");
+  if (override && /^\d{4}-\d{2}-\d{2}$/.test(override)) return override;
+  return uaeToday();
+}
+
 function isAuthorized(req: NextRequest): boolean {
   // Vercel cron auto-attaches Authorization: Bearer <CRON_SECRET>. We
   // accept it OR a manual run with the same secret in a query string
@@ -79,7 +87,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     return NextResponse.json({ ok: false, reason: "unauthorized" }, { status: 401 });
   }
 
-  const today = uaeToday();
+  const today = resolveToday(req);
   const log = (m: string) => console.log(m); // surfaces in Vercel function logs
 
   try {

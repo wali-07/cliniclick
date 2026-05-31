@@ -1,27 +1,61 @@
 /**
- * The Selfologi-style title SVG compositor used by every IG post (single
- * and carousel cover). Extracted from social-post.ts so both the local
- * scripts and the serverless cron use the SAME compositor and produce
- * pixel-identical overlays.
+ * Selfologi-style title overlay + carousel info-slide rendering.
  *
- * The 2-word title stacks light first / bold second (the Selfologi
- * signature); 1-word titles render as a single bold word. yFrac controls
- * vertical placement; default 0.47 is the locked mid-height — see
- * feedback_locked_title_position memory.
+ * Originally used sharp's built-in SVG rendering (via librsvg), which
+ * silently produces text-less output on Vercel because the serverless
+ * container has no system fonts. Now uses @resvg/resvg-js with the Inter
+ * variable font bundled from @fontsource-variable/inter, so text renders
+ * identically in local + serverless.
+ *
+ * Returns transparent PNG buffers the caller composites onto a base
+ * image via sharp.
  */
+import { resolve } from "node:path";
+import { Resvg } from "@resvg/resvg-js";
 
-const DEFAULT_SIZE = 1024;
+const SIZE_DEFAULT = 1024;
 
 /**
- * Build an SVG buffer with the title typography centred at yFrac.
- * Pass the buffer to sharp.composite() to overlay on a 1024x1024 base.
+ * Path to the Inter variable-weight font shipped by @fontsource-variable.
+ * One WOFF2 file covers weights 100..900. We rely on this path existing
+ * at runtime on Vercel via next.config.mjs outputFileTracingIncludes
+ * (added for /api/cron/daily-draft + /api/cron/daily-social).
+ */
+const INTER_FONT_PATH = resolve(
+  process.cwd(),
+  "node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+);
+
+/**
+ * Render an SVG string to a transparent PNG buffer with Inter loaded as
+ * the font. Encapsulates the resvg-js config so every overlay in this
+ * project ships pixel-identical text rendering.
+ */
+function renderSvgToPng(svg: string, size: number): Buffer {
+  const resvg = new Resvg(svg, {
+    background: "rgba(0,0,0,0)",
+    fitTo: { mode: "width", value: size },
+    font: {
+      fontFiles: [INTER_FONT_PATH],
+      defaultFontFamily: "Inter",
+      loadSystemFonts: false, // serverless has none anyway; deterministic
+    },
+  });
+  return resvg.render().asPng();
+}
+
+/**
+ * Selfologi-style title overlay. 1 word renders as a single bold word;
+ * 2+ words stack as light first / bold second (the brand signature).
+ * yFrac defaults to 0.47 (locked mid-height per feedback memory).
+ * Returns a 1024x1024 transparent PNG.
  */
 export function titleSvg(
   title: string,
   opts: { yFrac?: number; size?: number } = {}
 ): Buffer {
   const yFrac = opts.yFrac ?? 0.47;
-  const SIZE = opts.size ?? DEFAULT_SIZE;
+  const SIZE = opts.size ?? SIZE_DEFAULT;
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
   let BIG = 156;
   let SMALL = 118;
@@ -50,8 +84,8 @@ export function titleSvg(
     ];
   }
 
-  // Shrink uniformly only if the widest line overflows the grid-safe
-  // zone (76% of width; IG's profile-grid crop is ~10-12% off each side).
+  // Shrink uniformly if the widest line overflows the IG profile-grid
+  // safe zone (76% of width to clear the ~12% crop each side).
   const maxEst = Math.max(...lines.map((l) => wEst(l.t, l.sz)));
   if (maxEst > maxW) {
     const f = maxW / maxEst;
@@ -71,14 +105,13 @@ export function titleSvg(
       if (i > 0) y += gap;
       return `<text x="${SIZE / 2}" y="${y}" fill="#FFFFFF"
         text-anchor="middle"
-        font-family="Inter, Montserrat, Arial, sans-serif"
+        font-family="Inter"
         font-size="${l.sz}" font-weight="${l.w}"
-        style="letter-spacing:-3px;">${esc(l.t)}</text>`;
+        letter-spacing="-3">${esc(l.t)}</text>`;
     })
     .join("\n      ");
 
-  return Buffer.from(
-    `<svg width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
+  const svg = `<svg width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
       <defs>
         <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
           <feDropShadow dx="0" dy="2" stdDeviation="7"
@@ -88,15 +121,13 @@ export function titleSvg(
       <g filter="url(#soft)">
       ${texts}
       </g>
-    </svg>`
-  );
+    </svg>`;
+  return renderSvgToPng(svg, SIZE);
 }
 
 /**
- * Carousel info-slide compositor. Renders a typographic slide on a
- * solid palette colour (no Recraft image). 6-word headline stack +
- * 14-word sub. Used for slides 2..N of an IG carousel; slide 1 (cover)
- * uses titleSvg() over an object-pun image instead.
+ * Carousel info-slide compositor. Solid palette background with a stacked
+ * headline + optional sub line. Returns a 1024x1024 PNG.
  */
 export function infoSlideSvg(args: {
   headline: string;
@@ -105,11 +136,10 @@ export function infoSlideSvg(args: {
   textHex?: string;
   size?: number;
 }): Buffer {
-  const SIZE = args.size ?? DEFAULT_SIZE;
+  const SIZE = args.size ?? SIZE_DEFAULT;
   const text = args.textHex ?? "#FFFFFF";
   const esc = (s: string) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 
-  // Wrap headline at ~16 chars per line, then size to fit.
   const wrap = (s: string, max: number): string[] => {
     const words = s.trim().split(/\s+/);
     const out: string[] = [];
@@ -142,9 +172,9 @@ export function infoSlideSvg(args: {
       const y = startY + i * headLineH;
       return `<text x="${SIZE / 2}" y="${y}" fill="${text}"
         text-anchor="middle"
-        font-family="Inter, Montserrat, Arial, sans-serif"
+        font-family="Inter"
         font-size="${HEAD_SIZE}" font-weight="800"
-        style="letter-spacing:-2px;">${esc(line)}</text>`;
+        letter-spacing="-2">${esc(line)}</text>`;
     })
     .join("\n");
   const subTexts = sub
@@ -152,25 +182,19 @@ export function infoSlideSvg(args: {
       const y = startY + head.length * headLineH + 32 + i * subLineH + SUB_SIZE * 0.4;
       return `<text x="${SIZE / 2}" y="${y}" fill="${text}" opacity="0.92"
         text-anchor="middle"
-        font-family="Inter, Montserrat, Arial, sans-serif"
+        font-family="Inter"
         font-size="${SUB_SIZE}" font-weight="400">${esc(line)}</text>`;
     })
     .join("\n");
 
-  return Buffer.from(
-    `<svg width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
+  const svg = `<svg width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
       <rect width="${SIZE}" height="${SIZE}" fill="${args.bgHex}"/>
       ${headTexts}
       ${subTexts}
-    </svg>`
-  );
+    </svg>`;
+  return renderSvgToPng(svg, SIZE);
 }
 
-/**
- * Hex values for each curated palette colour. Used by infoSlideSvg to
- * render the solid backgrounds; mirrors the saturated tones the Recraft
- * BRAND_STYLE_SPEC produces.
- */
 export const PALETTE_HEX = {
   purple: "#A75CFF",
   coral: "#FF7A6B",
