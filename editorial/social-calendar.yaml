@@ -138,8 +138,8 @@ posts:
     slug: summer-spf-single
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-06-01"
-    status: delivered
-    notes: "MON SINGLE | NEW seasonal topic. Third reset for full regen: prior runs delivered title-less images because the loaded variable-WOFF2's internal font family was 'Inter Variable' not 'Inter' (resvg couldn't match SVG font-family='Inter' against it and silently rendered text-less PNGs). Now bundling @fontsource/inter Regular (400) + Bold (800) WOFF2s separately, internal family literally 'Inter'. Title-overlay.ts uses weights 400+800 only (mapping exactly to the two loaded files). Visuals prompt also re-strengthened: razor is now BANNED for any non-hair-removal topic in an explicit HARD STOP block, and SPF locked to a single umbrella with no accessory of any kind. Brief + assets deleted; next manual cron trigger regenerates."
+    status: draft
+    notes: "MON SINGLE | NEW seasonal topic. Fourth reset for full regen: 5-31 08:33 run had fonts loading at runtime (per [title-overlay] fonts ready log) AND the SPF concept correctly was a single umbrella - title STILL missing. Likely cause: the wrapping <g filter='url(#soft)'> for the drop shadow used feDropShadow which resvg-js does NOT fully support, suppressing the inner <text> elements. title-overlay.ts now emulates the soft shadow with three offset black text layers behind the white text (no filter element). Added a PNG-size log line so a near-empty render (<5KB) flags as a clear warning in Vercel logs. Brief + assets deleted; next manual cron trigger regenerates."
   - topic: "Reading before & after photos"
     slug: before-after-single
     article: /

@@ -59,7 +59,16 @@ function renderSvgToPng(svg: string, size: number): Buffer {
       loadSystemFonts: false, // deterministic + matches local-host font set
     },
   });
-  return resvg.render().asPng();
+  const png = resvg.render().asPng();
+  // A title overlay PNG with rendered text averages ~30-80KB. A near-empty
+  // result (< 5KB) means resvg rendered the SVG but no text actually drew -
+  // typically because the font family didn't match or a filter suppressed
+  // the content. Surfaces in Vercel logs as a clear signal.
+  // eslint-disable-next-line no-console
+  console.log(
+    `[title-overlay] rendered PNG: ${png.length} bytes${png.length < 5000 ? " ⚠️  (text likely did NOT draw)" : ""}`
+  );
+  return png;
 }
 
 /**
@@ -121,27 +130,29 @@ export function titleSvg(
   const gap = Math.round(BIG * 0.86);
   const blockH = lines.length === 1 ? lines[0].sz : lines[0].sz + gap;
   let y = Math.round(SIZE * yFrac - blockH / 2 + lines[0].sz * 0.82);
-  const texts = lines
-    .map((l, i) => {
-      if (i > 0) y += gap;
-      return `<text x="${SIZE / 2}" y="${y}" fill="#FFFFFF"
-        text-anchor="middle"
-        font-family="Inter"
-        font-size="${l.sz}" font-weight="${l.w}"
-        letter-spacing="-3">${esc(l.t)}</text>`;
-    })
-    .join("\n      ");
+  // resvg-js supports only a small subset of SVG filters - feDropShadow
+  // isn't in it, and a failed filter on a wrapping <g> can suppress the
+  // entire group's content (including the <text> children) silently. We
+  // emulate the soft black drop-shadow with a pair of offset black text
+  // layers behind the white text instead, which renders correctly with
+  // basic SVG support.
+  const lineSvgs: string[] = [];
+  for (let i = 0; i < lines.length; i++) {
+    const l = lines[i];
+    if (i > 0) y += gap;
+    const cx = SIZE / 2;
+    const common = `text-anchor="middle" font-family="Inter" font-size="${l.sz}" font-weight="${l.w}" letter-spacing="-3"`;
+    // Three offset black copies build a soft shadow without feDropShadow.
+    lineSvgs.push(
+      `<text x="${cx}" y="${y + 4}" fill="#000000" fill-opacity="0.10" ${common}>${esc(l.t)}</text>`,
+      `<text x="${cx}" y="${y + 3}" fill="#000000" fill-opacity="0.18" ${common}>${esc(l.t)}</text>`,
+      `<text x="${cx}" y="${y + 2}" fill="#000000" fill-opacity="0.22" ${common}>${esc(l.t)}</text>`,
+      `<text x="${cx}" y="${y}" fill="#FFFFFF" ${common}>${esc(l.t)}</text>`
+    );
+  }
 
   const svg = `<svg width="${SIZE}" height="${SIZE}" xmlns="http://www.w3.org/2000/svg">
-      <defs>
-        <filter id="soft" x="-20%" y="-20%" width="140%" height="140%">
-          <feDropShadow dx="0" dy="2" stdDeviation="7"
-            flood-color="#000000" flood-opacity="0.28"/>
-        </filter>
-      </defs>
-      <g filter="url(#soft)">
-      ${texts}
-      </g>
+      ${lineSvgs.join("\n      ")}
     </svg>`;
   return renderSvgToPng(svg, SIZE);
 }
