@@ -138,8 +138,8 @@ posts:
     slug: summer-spf-single
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-06-01"
-    status: delivered
-    notes: "MON SINGLE | NEW seasonal topic. Fourth reset for full regen: 5-31 08:33 run had fonts loading at runtime (per [title-overlay] fonts ready log) AND the SPF concept correctly was a single umbrella - title STILL missing. Likely cause: the wrapping <g filter='url(#soft)'> for the drop shadow used feDropShadow which resvg-js does NOT fully support, suppressing the inner <text> elements. title-overlay.ts now emulates the soft shadow with three offset black text layers behind the white text (no filter element). Added a PNG-size log line so a near-empty render (<5KB) flags as a clear warning in Vercel logs. Brief + assets deleted; next manual cron trigger regenerates."
+    status: draft
+    notes: "MON SINGLE | NEW seasonal topic. Final reset before natural cron tick: prior resvg-based runs delivered title-less images and left the entry stuck at delivered. After switching IG title rendering to @vercel/og (Satori), before-after-single rendered cleanly with a visible title. Resetting summer-spf-single + deleting the title-less assets so Mon 6-01 08:00 UAE natural cron picks it up and regenerates with the working overlay."
   - topic: "Reading before & after photos"
     slug: before-after-single
     article: /
