@@ -138,7 +138,7 @@ posts:
     slug: summer-spf-single
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-06-01"
-    status: draft
+    status: delivered
     notes: "MON SINGLE | NEW seasonal topic. Reset for full regen: prior auto-generated brief had a too-long article-style caption AND the title overlay was missing (sharp+librsvg cannot render text on Vercel without system fonts). Cron now uses @resvg/resvg-js with bundled Inter, and the social-briefer prompt targets ~80-word captions matching the hand-written reference set. Brief + assets deleted; next cron run regenerates everything."
   - topic: "Reading before & after photos"
     slug: before-after-single
