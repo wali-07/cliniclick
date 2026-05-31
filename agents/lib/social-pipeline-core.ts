@@ -172,18 +172,36 @@ function parseVisualsBrief(raw: string): VisualsBrief {
   };
 }
 
-/** Try to infer the palette key from the Visuals Agent's chosen bgColor.
- *  Used to drive both the carousel slide bg rotation and to record which
- *  colour landed in the calendar's bgColor field. */
+/** Resolve the palette key from the Visuals Agent's brief. Prefers the
+ *  agent's explicit `bgColor` field (authoritative); only falls back to
+ *  scanning free-text if that field is absent. Free-text scanning is
+ *  fragile because the concept routinely mentions OTHER palette names
+ *  in its grid-reasoning sentence (e.g. "...butter-yellow is a neighbour
+ *  so we chose sky-blue..." - the simple `if includes("butter")` check
+ *  would mis-attribute butter-yellow over the agent's actual sky-blue
+ *  choice). */
 function inferBgColor(visualsBrief: VisualsBrief): PaletteHexKey {
-  const text = (
-    (visualsBrief.bgColor ?? "") +
-    " " +
-    visualsBrief.concept +
-    " " +
-    visualsBrief.recraftPrompt
-  ).toLowerCase();
-  // Order matters - check more specific names first.
+  // 1. Honour the agent's explicit field when set + recognisable.
+  if (visualsBrief.bgColor) {
+    const n = visualsBrief.bgColor.toLowerCase().trim();
+    const palettes: PaletteHexKey[] = [
+      "purple",
+      "coral",
+      "teal",
+      "butter-yellow",
+      "sky-blue",
+      "lavender",
+    ];
+    for (const p of palettes) {
+      if (n === p) return p;
+    }
+    // Tolerate space variants the model sometimes emits.
+    if (n === "butter yellow") return "butter-yellow";
+    if (n === "sky blue") return "sky-blue";
+  }
+  // 2. Fallback: scan only the recraftPrompt (the actual generation
+  // input), not the concept (which contains grid-reasoning noise).
+  const text = visualsBrief.recraftPrompt.toLowerCase();
   if (text.includes("butter")) return "butter-yellow";
   if (text.includes("lavender")) return "lavender";
   if (text.includes("sky")) return "sky-blue";

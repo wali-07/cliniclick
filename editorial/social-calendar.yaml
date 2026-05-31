@@ -138,8 +138,8 @@ posts:
     slug: summer-spf-single
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-06-01"
-    status: delivered
-    notes: "MON SINGLE | NEW seasonal topic. Reset for full regen: prior auto-generated brief had a too-long article-style caption AND the title overlay was missing (sharp+librsvg cannot render text on Vercel without system fonts). Cron now uses @resvg/resvg-js with bundled Inter, and the social-briefer prompt targets ~80-word captions matching the hand-written reference set. Brief + assets deleted; next cron run regenerates everything."
+    status: draft
+    notes: "MON SINGLE | NEW seasonal topic. Second reset for full regen: prior auto-runs delivered title-less images because the Inter font wasn't reaching the function bundle from node_modules. Inter now lives at public/fonts/inter-variable.woff2 (tracked, 48KB) which Vercel always ships; title-overlay.ts has a hard fail-loud existsSync guard so a missing font crashes the function instead of silently producing blank titles. Also: bgColor inference fixed (was picking the first palette name in concept text, even when it appeared only in grid-reasoning); Visuals prompt tightened so SPF maps to a single umbrella (not umbrella+razor). Brief + assets deleted; next cron run regenerates everything."
   - topic: "Reading before & after photos"
     slug: before-after-single
     article: /

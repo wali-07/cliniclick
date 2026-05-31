@@ -10,28 +10,52 @@
  * Returns transparent PNG buffers the caller composites onto a base
  * image via sharp.
  */
+import { existsSync, statSync } from "node:fs";
 import { resolve } from "node:path";
 import { Resvg } from "@resvg/resvg-js";
 
 const SIZE_DEFAULT = 1024;
 
 /**
- * Path to the Inter variable-weight font shipped by @fontsource-variable.
- * One WOFF2 file covers weights 100..900. We rely on this path existing
- * at runtime on Vercel via next.config.mjs outputFileTracingIncludes
- * (added for /api/cron/daily-draft + /api/cron/daily-social).
+ * Path to the Inter variable-weight font. We KEEP a copy in public/fonts/
+ * (tracked, 48KB) rather than reading from node_modules at runtime -
+ * Vercel always ships the public/ directory with each function, whereas
+ * node_modules tracing is brittle for files that aren't explicitly
+ * imported. This is the most reliable path resolution for serverless.
  */
 const INTER_FONT_PATH = resolve(
   process.cwd(),
-  "node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2"
+  "public/fonts/inter-variable.woff2"
 );
+
+let fontProbeLogged = false;
 
 /**
  * Render an SVG string to a transparent PNG buffer with Inter loaded as
  * the font. Encapsulates the resvg-js config so every overlay in this
  * project ships pixel-identical text rendering.
+ *
+ * Fails loud if the font file is missing at runtime - resvg silently
+ * renders text-less PNGs when a font isn't loadable, which produces
+ * invisible titles in production.
  */
 function renderSvgToPng(svg: string, size: number): Buffer {
+  if (!existsSync(INTER_FONT_PATH)) {
+    throw new Error(
+      `[title-overlay] Inter font missing at runtime: ${INTER_FONT_PATH}. ` +
+        `Confirm public/fonts/inter-variable.woff2 is committed AND that ` +
+        `next.config.mjs outputFileTracingIncludes ships public/fonts/** ` +
+        `to the calling route.`
+    );
+  }
+  if (!fontProbeLogged) {
+    const size = statSync(INTER_FONT_PATH).size;
+    // eslint-disable-next-line no-console
+    console.log(
+      `[title-overlay] font ready: ${INTER_FONT_PATH} (${size} bytes)`
+    );
+    fontProbeLogged = true;
+  }
   const resvg = new Resvg(svg, {
     background: "rgba(0,0,0,0)",
     fitTo: { mode: "width", value: size },

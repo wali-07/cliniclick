@@ -16,15 +16,12 @@ const nextConfig = {
   outputFileTracingIncludes: {
     "/admin": ["./editorial/**"],
     "/admin/social": ["./editorial/**"],
-    // The cron + webhook routes import title-overlay.ts which readFileSync's
-    // the Inter font from node_modules. Vercel's static tracing doesn't see
-    // dynamic readFileSync, so we tell it explicitly to ship the font.
-    "/api/cron/daily-social": [
-      "./node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
-    ],
-    "/api/cron/daily-draft": [
-      "./node_modules/@fontsource-variable/inter/files/inter-latin-wght-normal.woff2",
-    ],
+    // The cron routes read Inter from public/fonts/ to composite IG title
+    // overlays. public/ is always shipped by Vercel for static assets, but
+    // it's not implicitly traced into function bundles, so we declare it
+    // explicitly for the routes that readFileSync the font at runtime.
+    "/api/cron/daily-social": ["./public/fonts/**"],
+    "/api/cron/daily-draft": ["./public/fonts/**"],
   },
   // The agents/lib modules use ESM-style ".js" extensions in their relative
   // imports (so tsx + tsc happy on local CLI). Webpack doesn't resolve

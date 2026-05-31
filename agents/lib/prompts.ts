@@ -848,12 +848,32 @@ These come from the brand + trust memory and the Brand/Image-Safety agents will 
   - dark spots / pigmentation → a speckled brown egg
   - acne → a bumpy-textured pineapple (optionally wearing tiny sunglasses, cheeky)
   - thread lift → a single spool of thread
-- Apply the same one-object thinking to our topics. For the named topics below these picks are **BINDING - use exactly the specified object, do not substitute** (they were chosen to avoid specific failures). For any topic not listed, invent your own witty single-object pun.
+
+### Accessory rule (READ THIS — common failure mode)
+
+An accessory is **OPTIONAL** and **MUST** directly reinforce the topic's mechanism. A razor on a fuzzy coconut works for *unwanted hair* because razors remove hair. A razor on an umbrella for *SPF* is **nonsense** — razors have nothing to do with sun protection.
+
+- Add an accessory ONLY if it makes the pun *more* obvious than the object alone.
+- If unsure, **ship a single object with no accessory**. Single-object always beats confused-combination.
+- NEVER carry an accessory across to an unrelated topic just because it "worked before". The accessory must answer "how does this object relate to *THIS* topic?". If the answer isn't immediate, drop it.
+- Concrete don'ts: razor unless topic is hair/shaving; sunglasses unless topic is sun/eye/face; umbrella unless topic is sun/rain.
+
+### Binding object picks (use exactly the specified object, do not substitute)
+
+For any topic not listed below, invent your own witty single-object pun (preferring NO accessory). For the named topics here, the picks are **BINDING** — they were chosen to avoid specific failures.
+
   - botox → a single **rolling pin** (Botox *smooths*; a rolling pin smooths/flattens) - clean, instantly readable, renders well; exactly ONE object, no second prop. NOT an iron (renders deformed), NOT a lone raisin.
   - dermal fillers → a single **plump, juicy, glossy fresh green grape** (fillers *add plumpness / volume* - a taut full grape reads instantly as "plump"). One grape only; NOT a cushion/pouch (unclear).
   - body fat → a single clean whole **pat or stick of butter**, intact and fresh (soft fat), modest scale.
+  - laser hair removal → a single fuzzy **kiwi** with a small bright toy razor resting flat on its surface (the canonical pun: kiwi = fuzzy, razor = removal).
   - unwanted hair → a single fuzzy **coconut** with a small bright toy razor resting on it (deliberately a DIFFERENT fruit from laser-hair-removal's kiwi, so the two pages don't look identical).
-  - wrinkles/fine lines → a single whole **walnut in its shell** (its wrinkled surface = wrinkles; safe and instantly readable). Do NOT use a single wrinkled/split dried fruit (raisin/prune/apricot) - a central cleft reads anatomically. pricing → a clear glass jar of coins (NEVER a piggy bank - no pigs); pigmentation → a speckled egg; under-eye → a tea bag (optionally with googly eyes); hair loss → a smooth lychee with a few stray hairs.
+  - wrinkles/fine lines → a single whole **walnut in its shell** (its wrinkled surface = wrinkles; safe and instantly readable). Do NOT use a single wrinkled/split dried fruit (raisin/prune/apricot) - a central cleft reads anatomically.
+  - pricing → a clear glass jar of coins (NEVER a piggy bank - no pigs)
+  - pigmentation → a speckled egg
+  - under-eye → a tea bag (optionally with tiny googly eyes resting on top — googly eyes literally signal "eyes")
+  - hair loss → a smooth lychee with a few stray hairs (lychee = balding head, stray hairs = the loss itself)
+  - acne → a bumpy pineapple (optionally tiny sunglasses — face/sun-protection logic)
+  - SPF / sunscreen / sun protection → a single bright **toy umbrella** (parasol-style, in a cheerful colour) OR a single **wide-brimmed sun hat**. NO razor, NO accessory unrelated to sun. The umbrella IS the pun.
   - "vs" comparison → may use two contrasting objects, kept just as simple.
 - Pick the cleverest single-object idea, never a busy scene.
 - It must read in under 2 seconds, be witty, fun AND simple, stay tasteful, and never imply a clinical result or critique of clinics.
@@ -875,6 +895,7 @@ If the user message contains a block that begins with \`GRID CONTEXT\` you are w
 - Avoid repeating the colour along the candidate's own row, own column, or the main diagonal of the visible 3x3 - those are the most noticeable patterns on a 3-wide grid.
 - Pick from the curated palette only: purple, coral, teal, butter-yellow, sky-blue, lavender.
 - State the chosen colour AND the grid reasoning in your \`concept\` field, e.g. "...on fresh teal - purple would clash with botox to the right, butter yellow with wrinkles below, sky blue with hair-loss diagonally; teal is the only safe pick."
+- ALSO populate the top-level \`bgColor\` field of your JSON output with the EXACT palette key you chose (one of: \`purple\`, \`coral\`, \`teal\`, \`butter-yellow\`, \`sky-blue\`, \`lavender\`). The worker uses this field as the authoritative record; without it, downstream agents and the carousel slide rotator have to guess from your free-text concept (which routinely names OTHER palette colours when explaining grid-clashes).
 - Then phrase your \`recraftPrompt\` so the named colour is the single flat solid background.
 
 For article heroes (no \`GRID CONTEXT\` block) skip this section - the article pipeline does not have a grid.
@@ -889,7 +910,8 @@ Output **exactly one JSON object and nothing else** — no code fence, no preamb
   "recraftPrompt": "<the full generation prompt paragraph>",
   "negativePrompt": "<comma-separated things that must not appear>",
   "alt": "<literal descriptive alt text, <=160 chars>",
-  "caption": ""
+  "caption": "",
+  "bgColor": "<one of: purple, coral, teal, butter-yellow, sky-blue, lavender — REQUIRED for social posts, optional for article heroes>"
 }
 \`\`\`
 
