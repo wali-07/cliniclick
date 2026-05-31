@@ -328,13 +328,14 @@ export async function runCoverImage(
 // Composite + carousel slides
 // ---------------------------------------------------------------------------
 
-/** Composite the title SVG onto the base cover and return webp + jpg buffers. */
+/** Composite the title overlay onto the base cover and return webp + jpg buffers. */
 async function composeTitleOverlay(
   base: Buffer,
   title: string
 ): Promise<{ webp: Buffer; jpg: Buffer }> {
+  const titlePng = await titleSvg(title, { yFrac: 0.47, size: SIZE });
   const composed = sharp(base).composite([
-    { input: titleSvg(title, { yFrac: 0.47, size: SIZE }), top: 0, left: 0 },
+    { input: titlePng, top: 0, left: 0 },
   ]);
   const webp = await composed.clone().webp({ quality: 88 }).toBuffer();
   const jpg = await composed.clone().jpeg({ quality: 92 }).toBuffer();
@@ -373,14 +374,14 @@ async function renderInfoSlides(
   const out: Buffer[] = [];
   for (let i = 0; i < slides.length; i++) {
     const colour = palette[i];
-    const svg = infoSlideSvg({
+    // infoSlideSvg now returns a PNG buffer directly (via @vercel/og),
+    // no need for a sharp roundtrip.
+    const png = await infoSlideSvg({
       headline: slides[i].headline,
       sub: slides[i].sub,
       bgHex: PALETTE_HEX[colour],
       size: SIZE,
     });
-    // Render the SVG to a PNG at the target size.
-    const png = await sharp(svg).png().toBuffer();
     out.push(png);
   }
   return out;
