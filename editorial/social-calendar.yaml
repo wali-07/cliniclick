@@ -138,7 +138,7 @@ posts:
     slug: summer-spf-single
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-06-01"
-    status: draft
+    status: delivered
     notes: "MON SINGLE | NEW seasonal topic. Third reset for full regen: prior runs delivered title-less images because the loaded variable-WOFF2's internal font family was 'Inter Variable' not 'Inter' (resvg couldn't match SVG font-family='Inter' against it and silently rendered text-less PNGs). Now bundling @fontsource/inter Regular (400) + Bold (800) WOFF2s separately, internal family literally 'Inter'. Title-overlay.ts uses weights 400+800 only (mapping exactly to the two loaded files). Visuals prompt also re-strengthened: razor is now BANNED for any non-hair-removal topic in an explicit HARD STOP block, and SPF locked to a single umbrella with no accessory of any kind. Brief + assets deleted; next manual cron trigger regenerates."
   - topic: "Reading before & after photos"
     slug: before-after-single
