@@ -22,17 +22,17 @@ import { ImageResponse } from "next/og";
 
 const SIZE_DEFAULT = 1024;
 
-// Load both Inter weights once at module init. @fontsource/inter ships
-// each weight as a separate WOFF2 with internal family name "Inter"
-// (the variable WOFF2's internal family is "Inter Variable" which
-// caused our earlier rendering failures).
+// Load both Inter weights once at module init. Satori (under
+// @vercel/og) supports OTF, TTF and WOFF font formats - but NOT WOFF2.
+// @fontsource/inter ships both .woff and .woff2 in the same directory;
+// we use the .woff files explicitly.
 const INTER_REGULAR_PATH = resolve(
   process.cwd(),
-  "public/fonts/Inter-Regular.woff2"
+  "public/fonts/Inter-Regular.woff"
 );
 const INTER_BOLD_PATH = resolve(
   process.cwd(),
-  "public/fonts/Inter-Bold.woff2"
+  "public/fonts/Inter-Bold.woff"
 );
 
 let cachedRegular: Buffer | null = null;
