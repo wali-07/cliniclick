@@ -35,10 +35,13 @@ These come from the brand + trust memory and the Brand/Image-Safety agents will 
 
 An accessory is **OPTIONAL** and **MUST** directly reinforce the topic's mechanism. A razor on a fuzzy coconut works for *unwanted hair* because razors remove hair. A razor on an umbrella for *SPF* is **nonsense** — razors have nothing to do with sun protection.
 
+**🚫 HARD STOP — razor rule.** A razor appears in the visual ONLY when the topic is **laser-hair-removal** OR **unwanted-hair**. For any other topic — SPF, retinol, body-fat, fillers, anything else — a razor is BANNED, no matter how the rest of the concept fits. If you find yourself reaching for a razor on a non-hair topic, you are pattern-matching incorrectly: stop, drop the razor, and pick a single topic-relevant object.
+
 - Add an accessory ONLY if it makes the pun *more* obvious than the object alone.
 - If unsure, **ship a single object with no accessory**. Single-object always beats confused-combination.
-- NEVER carry an accessory across to an unrelated topic just because it "worked before". The accessory must answer "how does this object relate to *THIS* topic?". If the answer isn't immediate, drop it.
+- NEVER carry an accessory across to an unrelated topic just because it "worked before" on a different topic. The accessory must answer "how does this object relate to *THIS* topic?". If the answer isn't immediate, drop it.
 - Concrete don'ts: razor unless topic is hair/shaving; sunglasses unless topic is sun/eye/face; umbrella unless topic is sun/rain.
+- **Single-object is the safe default for ANY topic not explicitly listed below.** Reach for an accessory only when the topic genuinely needs one (hair removal needs a razor, eye topics need googly eyes, etc.).
 
 ### Binding object picks (use exactly the specified object, do not substitute)
 
@@ -55,7 +58,7 @@ For any topic not listed below, invent your own witty single-object pun (preferr
   - under-eye → a tea bag (optionally with tiny googly eyes resting on top — googly eyes literally signal "eyes")
   - hair loss → a smooth lychee with a few stray hairs (lychee = balding head, stray hairs = the loss itself)
   - acne → a bumpy pineapple (optionally tiny sunglasses — face/sun-protection logic)
-  - SPF / sunscreen / sun protection → a single bright **toy umbrella** (parasol-style, in a cheerful colour) OR a single **wide-brimmed sun hat**. NO razor, NO accessory unrelated to sun. The umbrella IS the pun.
+  - SPF / sunscreen / sun protection → a single bright **toy umbrella** (parasol-style, in a cheerful colour). Just the umbrella, modestly sized, generous empty space, NO accessory of any kind. NO razor, NO sunglasses, NO bottle, NO hat alongside it. **One umbrella alone.** The umbrella IS the pun (umbrella = shade = sun protection); adding a second object dilutes it and confuses the reader.
   - "vs" comparison → may use two contrasting objects, kept just as simple.
 - Pick the cleverest single-object idea, never a busy scene.
 - It must read in under 2 seconds, be witty, fun AND simple, stay tasteful, and never imply a clinical result or critique of clinics.

@@ -17,52 +17,46 @@ import { Resvg } from "@resvg/resvg-js";
 const SIZE_DEFAULT = 1024;
 
 /**
- * Path to the Inter variable-weight font. We KEEP a copy in public/fonts/
- * (tracked, 48KB) rather than reading from node_modules at runtime -
- * Vercel always ships the public/ directory with each function, whereas
- * node_modules tracing is brittle for files that aren't explicitly
- * imported. This is the most reliable path resolution for serverless.
+ * Inter font files (Regular + Bold weights, latin subset). Non-variable
+ * versions from @fontsource/inter - the variable WOFF2 has an internal
+ * family name of "Inter Variable" not "Inter", which resvg can't match
+ * against SVG `font-family="Inter"` so titles silently render blank.
+ * The non-variable files use "Inter" as their internal family.
+ *
+ * Both files live under public/fonts/ (tracked, ~24KB each) so Vercel's
+ * static asset path always ships them with each function bundle via the
+ * next.config.mjs outputFileTracingIncludes entry.
  */
-const INTER_FONT_PATH = resolve(
-  process.cwd(),
-  "public/fonts/inter-variable.woff2"
-);
+const FONT_FILES = [
+  resolve(process.cwd(), "public/fonts/Inter-Regular.woff2"),
+  resolve(process.cwd(), "public/fonts/Inter-Bold.woff2"),
+];
 
 let fontProbeLogged = false;
 
-/**
- * Render an SVG string to a transparent PNG buffer with Inter loaded as
- * the font. Encapsulates the resvg-js config so every overlay in this
- * project ships pixel-identical text rendering.
- *
- * Fails loud if the font file is missing at runtime - resvg silently
- * renders text-less PNGs when a font isn't loadable, which produces
- * invisible titles in production.
- */
 function renderSvgToPng(svg: string, size: number): Buffer {
-  if (!existsSync(INTER_FONT_PATH)) {
-    throw new Error(
-      `[title-overlay] Inter font missing at runtime: ${INTER_FONT_PATH}. ` +
-        `Confirm public/fonts/inter-variable.woff2 is committed AND that ` +
-        `next.config.mjs outputFileTracingIncludes ships public/fonts/** ` +
-        `to the calling route.`
-    );
+  for (const f of FONT_FILES) {
+    if (!existsSync(f)) {
+      throw new Error(
+        `[title-overlay] Inter font missing at runtime: ${f}. ` +
+          `Confirm public/fonts/ is committed AND that next.config.mjs ` +
+          `outputFileTracingIncludes ships public/fonts/** to the calling route.`
+      );
+    }
   }
   if (!fontProbeLogged) {
-    const size = statSync(INTER_FONT_PATH).size;
+    const detail = FONT_FILES.map((f) => `${f} (${statSync(f).size}B)`).join(", ");
     // eslint-disable-next-line no-console
-    console.log(
-      `[title-overlay] font ready: ${INTER_FONT_PATH} (${size} bytes)`
-    );
+    console.log(`[title-overlay] fonts ready: ${detail}`);
     fontProbeLogged = true;
   }
   const resvg = new Resvg(svg, {
     background: "rgba(0,0,0,0)",
     fitTo: { mode: "width", value: size },
     font: {
-      fontFiles: [INTER_FONT_PATH],
+      fontFiles: FONT_FILES,
       defaultFontFamily: "Inter",
-      loadSystemFonts: false, // serverless has none anyway; deterministic
+      loadSystemFonts: false, // deterministic + matches local-host font set
     },
   });
   return resvg.render().asPng();
@@ -88,6 +82,9 @@ export function titleSvg(
 
   const words = title.trim().split(/\s+/);
   let lines: { t: string; sz: number; w: number }[];
+  // Use weights that map exactly to the loaded font files: 400 (Regular)
+  // and 800 (Bold). Other weights would fall back via nearest-match in
+  // resvg which can produce inconsistent rendering.
   if (words.length === 1) {
     lines = [{ t: words[0], sz: BIG, w: 800 }];
   } else {
@@ -103,7 +100,7 @@ export function titleSvg(
       }
     }
     lines = [
-      { t: words.slice(0, split).join(" "), sz: SMALL, w: 600 },
+      { t: words.slice(0, split).join(" "), sz: SMALL, w: 400 },
       { t: words.slice(split).join(" "), sz: BIG, w: 800 },
     ];
   }
