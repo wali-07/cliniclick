@@ -138,8 +138,9 @@ posts:
     slug: summer-spf-single
     article: /concerns/pigmentation/what-is-pigmentation
     scheduledFor: "2026-06-01"
-    status: skipped
-    notes: "MON SINGLE | NEW seasonal topic. Final reset before natural cron tick: prior resvg-based runs delivered title-less images and left the entry stuck at delivered. After switching IG title rendering to @vercel/og (Satori), before-after-single rendered cleanly with a visible title. Resetting summer-spf-single + deleting the title-less assets so Mon 6-01 08:00 UAE natural cron picks it up and regenerates with the working overlay."
+    status: delivered
+    bgColor: purple
+    notes: "MON SINGLE | NEW seasonal topic. Cron's first roll produced umbrella+razor (razor is nonsense for SPF, banned on non-hair topics) and was Skipped in Telegram. Regenerated 6-01 with the object LOCKED to ONE toy umbrella (no accessory) + razor force-banned in the negative prompt: hot-pink umbrella on purple, Image-Brand + Image-Safety PASS, 'SPF explained' title via @vercel/og (Satori/Inter). Re-sent to Telegram; assets here are the corrected versions."
   - topic: "Reading before & after photos"
     slug: before-after-single
     article: /
