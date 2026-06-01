@@ -1,6 +1,14 @@
 import { defineArticle } from "@/lib/content/types";
 
 export const costOfDermalFillersInDubai = defineArticle({
+  heroImage: {
+    "src": "/article-images/cost-of-dermal-fillers-in-dubai.webp",
+    "alt": "A single plump glossy green grape on a warm coral background, centred with generous empty space around it.",
+    "width": 1344,
+    "height": 768,
+    "prompt": "Premium editorial still-life photograph, real photography, soft natural studio light, crisp focus. A single plump, taut, glossy fresh green grape, whole and undamaged, shown complete and centred with generous empty space around it. The grape is modest in scale — roughly one-third of the frame — so the surrounding flat solid warm coral background dominates and breathes. The grape's skin is smooth, taught, and luminous, catching soft highlight to emphasise its fullness and volume. No other objects, no plate, no stem arrangement, no props, no text, no logos, no people, no body parts, no medical imagery. Single flat solid warm coral background, seamless, no gradient, no vignette, no horizon line, no second colour. Soft natural drop shadow beneath the grape. NOT an illustration, NOT a 3D/CGI render, NOT a diagram.",
+    "generatedBy": "recraft:recraftv4"
+  }, // @generated-hero
   slug: "cost-of-dermal-fillers-in-dubai",
   parentType: "treatment",
   parentSlug: "dermal-fillers",
