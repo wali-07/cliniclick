@@ -97,14 +97,61 @@ export async function closePr(prNumber: number, reason?: string): Promise<void> 
   });
 }
 
+const VERCEL_API = "https://api.vercel.com";
+
+/** GitHub URL for a branch's tree - always resolves (for the repo owner), so
+ *  it's a safe fallback when we can't get a live Vercel preview URL. */
+function githubBranchUrl(branch: string): string {
+  return `https://github.com/${REPO_OWNER}/${REPO_NAME}/tree/${branch}`;
+}
+
 /**
- * Build the Vercel preview URL for a given branch. Vercel's per-branch URL
- * pattern is `<project>-git-<branch>-<team>.vercel.app`. Branch slashes get
- * converted to hyphens. Long branch names get truncated by Vercel - they
- * still resolve via the canonical URL but the prediction may not be exact;
- * we emit the canonical pattern + a fallback to the PR page.
+ * Resolve the WORKING Vercel preview URL for a branch.
+ *
+ * We used to construct `<project>-git-<branch>-<scope>.vercel.app` by hand,
+ * but that string is unreliable: once the hostname's first DNS label exceeds
+ * 63 characters (which most `editorial/<slug>` branches do), Vercel truncates
+ * the branch portion and inserts a hash we cannot predict - so the predicted
+ * URL simply does not resolve. The scope was also hard-coded wrongly.
+ *
+ * Instead we ask the Vercel API for the latest deployment of this branch and
+ * return its immutable deployment URL (`<project>-<hash>-<scope>.vercel.app`),
+ * which always resolves. Requires VERCEL_TOKEN (+ VERCEL_TEAM_ID for
+ * team-scoped projects); VERCEL_PROJECT defaults to the repo name.
+ *
+ * When the token is missing, or no deployment has registered yet, we fall
+ * back to the GitHub branch URL - which always resolves - so an approval
+ * message never carries a dead link.
  */
-export function vercelPreviewUrl(branch: string): string {
-  const slug = branch.replace(/\//g, "-").toLowerCase();
-  return `https://cliniclick-git-${slug}-wali-07.vercel.app`;
+export async function vercelPreviewUrl(branch: string): Promise<string> {
+  const vtoken = process.env.VERCEL_TOKEN;
+  if (!vtoken) return githubBranchUrl(branch);
+
+  const project = process.env.VERCEL_PROJECT ?? REPO_NAME;
+  const params = new URLSearchParams({ app: project, limit: "30" });
+  const teamId = process.env.VERCEL_TEAM_ID;
+  if (teamId) params.set("teamId", teamId);
+
+  // The deployment record appears within a few seconds of the push; retry
+  // briefly to cover the race between the commit and Vercel registering it.
+  for (let attempt = 0; attempt < 5; attempt++) {
+    try {
+      const res = await fetch(`${VERCEL_API}/v6/deployments?${params}`, {
+        headers: { authorization: `Bearer ${vtoken}` },
+      });
+      if (res.ok) {
+        const data = (await res.json()) as {
+          deployments: Array<{ url?: string; meta?: Record<string, string> }>;
+        };
+        const match = data.deployments.find(
+          (d) => d.meta?.githubCommitRef === branch || d.meta?.branch === branch
+        );
+        if (match?.url) return `https://${match.url}`;
+      }
+    } catch {
+      /* network blip - fall through to retry, then fallback */
+    }
+    await new Promise((r) => setTimeout(r, 3000));
+  }
+  return githubBranchUrl(branch);
 }
