@@ -294,12 +294,13 @@ articles:
       - lip filler cost uae
       - cheek filler price dubai
     dueDate: "2026-06-01"
-    status: awaiting-approval
+    status: published
     brief: |
       Commercial spoke under the dermal fillers pillar. Per-syringe and
       per-area AED ranges, filler family cost differences, package economics,
       what to compare across quotes. Cross-link to What are dermal fillers
       and the UAE pricing guide.
+    publishedDate: "2026-06-01"
   - slug: laser-hair-removal-dark-skin
     parentType: treatment
     parentSlug: laser-hair-removal
