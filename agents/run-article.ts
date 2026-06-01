@@ -482,7 +482,7 @@ async function runPipeline(
           draftLength: draftTs.length,
           prNumber: pr.number,
           prUrl: pr.htmlUrl,
-          previewUrl: vercelPreviewUrl(branchName),
+          previewUrl: await vercelPreviewUrl(branchName),
         })
       );
       log(`  sent.`);
@@ -493,7 +493,7 @@ async function runPipeline(
 
   log(`\n=== Done. Review on the preview URL, then approve via PR merge. ===`);
   log(`PR:      ${pr.htmlUrl}`);
-  log(`Preview: ${vercelPreviewUrl(branchName)}`);
+  log(`Preview: ${await vercelPreviewUrl(branchName)}`);
   log(`Approve: npm run publish-article -- --slug=${entry.slug}`);
 }
 

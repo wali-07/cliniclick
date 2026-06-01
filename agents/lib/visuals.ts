@@ -1,4 +1,4 @@
-3/**
+/**
  * The Visuals stage, shared by the editorial pipeline (run-article.ts) and
  * the one-off backfill (backfill-images.ts).
  *

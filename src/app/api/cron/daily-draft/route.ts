@@ -158,10 +158,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     log(`[daily-draft] Committed: ${commit.sha}`);
 
     // ----- Telegram approval message -----
-    const preview = vercelPreviewUrl(branch);
+    const preview = await vercelPreviewUrl(branch);
     const wordEstimate = Math.round(bundle.articleTs.length / 6);
     const verdictsLine = (Object.keys(bundle.verdicts) as Array<keyof typeof bundle.verdicts>)
-      .map((r) => `${r}\\: ${bundle.verdicts[r] === "PASS" ? "✅" : "⚠️"}`)
+      .map((r) => `${escapeMd(r)}\\: ${bundle.verdicts[r] === "PASS" ? "✅" : "⚠️"}`)
       .join("  ");
     const heroLine = bundle.hero
       ? `Hero\\: ✅ \\(${bundle.hero.width}×${bundle.hero.height}\\)`
