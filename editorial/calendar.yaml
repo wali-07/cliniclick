@@ -294,7 +294,7 @@ articles:
       - lip filler cost uae
       - cheek filler price dubai
     dueDate: "2026-06-01"
-    status: queued
+    status: awaiting-approval
     brief: |
       Commercial spoke under the dermal fillers pillar. Per-syringe and
       per-area AED ranges, filler family cost differences, package economics,
@@ -333,12 +333,6 @@ articles:
       Spoke under the hair loss pillar. Evidence-graded rundown (minoxidil,
       finasteride, PRP, low-level laser, transplant) - what works for which
       pattern, realistic timelines. Cross-link to What is hair loss.
-  # === 3-WEEK EXPANSION 2026-05-30 ===
-  # Phase 1 of filling the ~30 expected-but-empty article slots. Order:
-  # 5 missing treatment overviews (pillar pages) -> cost guides for the
-  # high-volume ones -> 2 highest-volume concern sub-spokes. Mon/Wed/Fri
-  # cadence, Sun off. Leaves machine overviews and the remaining 12+
-  # concern sub-spokes for a follow-up expansion.
   - slug: what-is-microneedling
     parentType: treatment
     parentSlug: microneedling
