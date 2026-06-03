@@ -66,7 +66,7 @@ import {
   commitAndPush,
   checkoutMain,
 } from "./lib/git.js";
-import { openPr, vercelPreviewUrl } from "./lib/github.js";
+import { openPr, vercelPreviewUrl, articlePath } from "./lib/github.js";
 import { loadPrompt } from "./lib/prompts.js";
 
 // ---------------------------------------------------------------------------
@@ -482,7 +482,7 @@ async function runPipeline(
           draftLength: draftTs.length,
           prNumber: pr.number,
           prUrl: pr.htmlUrl,
-          previewUrl: await vercelPreviewUrl(branchName),
+          previewUrl: await vercelPreviewUrl(branchName, articlePath(entry)),
         })
       );
       log(`  sent.`);
@@ -493,7 +493,7 @@ async function runPipeline(
 
   log(`\n=== Done. Review on the preview URL, then approve via PR merge. ===`);
   log(`PR:      ${pr.htmlUrl}`);
-  log(`Preview: ${await vercelPreviewUrl(branchName)}`);
+  log(`Preview: ${await vercelPreviewUrl(branchName, articlePath(entry))}`);
   log(`Approve: npm run publish-article -- --slug=${entry.slug}`);
 }
 

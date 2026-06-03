@@ -42,7 +42,7 @@ import {
   escapeMd,
   encodeCallback,
 } from "../../../../../agents/lib/telegram";
-import { vercelPreviewUrl } from "../../../../../agents/lib/github";
+import { vercelPreviewUrl, articlePath } from "../../../../../agents/lib/github";
 
 export const dynamic = "force-dynamic";
 // Vercel Pro + Fluid Compute. Pipeline runs ~5-8 min; cap at the platform
@@ -158,7 +158,7 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     log(`[daily-draft] Committed: ${commit.sha}`);
 
     // ----- Telegram approval message -----
-    const preview = await vercelPreviewUrl(branch);
+    const preview = await vercelPreviewUrl(branch, articlePath(entry));
     const wordEstimate = Math.round(bundle.articleTs.length / 6);
     const verdictsLine = (Object.keys(bundle.verdicts) as Array<keyof typeof bundle.verdicts>)
       .map((r) => `${escapeMd(r)}\\: ${bundle.verdicts[r] === "PASS" ? "✅" : "⚠️"}`)

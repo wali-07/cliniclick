@@ -106,6 +106,22 @@ function githubBranchUrl(branch: string): string {
 }
 
 /**
+ * Public site path where a published article lives. Mirrors the logic in
+ * src/app/sitemap.ts: guide articles live at /learn/<slug>; every other
+ * parentType lives at /<parentType>s/<parentSlug>/<slug>. Keep these two in
+ * sync - if the routing changes, both must change.
+ */
+export function articlePath(entry: {
+  parentType: string;
+  parentSlug: string;
+  slug: string;
+}): string {
+  return entry.parentType === "guide"
+    ? `/learn/${entry.slug}`
+    : `/${entry.parentType}s/${entry.parentSlug}/${entry.slug}`;
+}
+
+/**
  * Resolve the WORKING Vercel preview URL for a branch.
  *
  * We used to construct `<project>-git-<branch>-<scope>.vercel.app` by hand,
@@ -122,8 +138,13 @@ function githubBranchUrl(branch: string): string {
  * When the token is missing, or no deployment has registered yet, we fall
  * back to the GitHub branch URL - which always resolves - so an approval
  * message never carries a dead link.
+ *
+ * `path` is the article's site path (see articlePath()). When provided, it is
+ * appended to the resolved Vercel deployment URL so the link opens the article
+ * itself rather than the deployment's homepage. It is NOT appended to the
+ * GitHub fallback (that URL points at the source tree, not the rendered site).
  */
-export async function vercelPreviewUrl(branch: string): Promise<string> {
+export async function vercelPreviewUrl(branch: string, path = ""): Promise<string> {
   const vtoken = process.env.VERCEL_TOKEN;
   if (!vtoken) return githubBranchUrl(branch);
 
@@ -146,7 +167,7 @@ export async function vercelPreviewUrl(branch: string): Promise<string> {
         const match = data.deployments.find(
           (d) => d.meta?.githubCommitRef === branch || d.meta?.branch === branch
         );
-        if (match?.url) return `https://${match.url}`;
+        if (match?.url) return `https://${match.url}${path}`;
       }
     } catch {
       /* network blip - fall through to retry, then fallback */
