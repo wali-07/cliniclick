@@ -277,12 +277,13 @@ articles:
       - acne scarring dark skin
       - microneedling vs laser acne scars
     dueDate: "2026-05-29"
-    status: awaiting-approval
+    status: published
     brief: |
       Spoke under the acne pillar. Scar types (boxcar, rolling, ice-pick,
       PIE/PIH), which treatments suit which, special care for darker skin
       tones (UAE-relevant). Set realistic expectations. Cross-link to What
       is acne.
+    publishedDate: "2026-06-03"
   - slug: cost-of-dermal-fillers-in-dubai
     parentType: treatment
     parentSlug: dermal-fillers
