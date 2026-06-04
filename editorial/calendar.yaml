@@ -278,12 +278,12 @@ articles:
       - microneedling vs laser acne scars
     dueDate: "2026-05-29"
     status: published
+    publishedDate: "2026-06-03"
     brief: |
       Spoke under the acne pillar. Scar types (boxcar, rolling, ice-pick,
       PIE/PIH), which treatments suit which, special care for darker skin
       tones (UAE-relevant). Set realistic expectations. Cross-link to What
       is acne.
-    publishedDate: "2026-06-03"
   - slug: cost-of-dermal-fillers-in-dubai
     parentType: treatment
     parentSlug: dermal-fillers
@@ -296,12 +296,12 @@ articles:
       - cheek filler price dubai
     dueDate: "2026-06-01"
     status: published
+    publishedDate: "2026-06-01"
     brief: |
       Commercial spoke under the dermal fillers pillar. Per-syringe and
       per-area AED ranges, filler family cost differences, package economics,
       what to compare across quotes. Cross-link to What are dermal fillers
       and the UAE pricing guide.
-    publishedDate: "2026-06-01"
   - slug: laser-hair-removal-dark-skin
     parentType: treatment
     parentSlug: laser-hair-removal
@@ -313,7 +313,7 @@ articles:
       - safe laser hair removal brown skin uae
       - laser hair removal fitzpatrick
     dueDate: "2026-06-03"
-    status: queued
+    status: awaiting-approval
     brief: |
       High-search UAE spoke under the laser hair removal pillar. Why melanin-
       rich skin (Fitzpatrick IV-VI) needs the right laser (Nd:YAG), risks of
