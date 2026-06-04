@@ -313,12 +313,13 @@ articles:
       - safe laser hair removal brown skin uae
       - laser hair removal fitzpatrick
     dueDate: "2026-06-03"
-    status: awaiting-approval
+    status: published
     brief: |
       High-search UAE spoke under the laser hair removal pillar. Why melanin-
       rich skin (Fitzpatrick IV-VI) needs the right laser (Nd:YAG), risks of
       the wrong device, what to ask a clinic. Cross-link to What is laser
       hair removal.
+    publishedDate: "2026-06-04"
   - slug: hair-loss-treatments
     parentType: concern
     parentSlug: hair-loss
