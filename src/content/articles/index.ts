@@ -16,6 +16,7 @@ import { howToVerifyClinicLicenseUae } from "./guides/dha-mohap-licensing-how-to
 import { costOfBotoxInDubai } from "./treatments/botox/cost-of-botox-in-dubai";
 import { acneScarsTreatment } from "./concerns/acne/acne-scars-treatment";
 import { costOfDermalFillersInDubai } from "./treatments/dermal-fillers/cost-of-dermal-fillers-in-dubai";
+import { laserHairRemovalDarkSkin } from "./treatments/laser-hair-removal/laser-hair-removal-dark-skin";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -35,4 +36,5 @@ export const allArticles: Article[] = [
   costOfBotoxInDubai,
   acneScarsTreatment,
   costOfDermalFillersInDubai,
+  laserHairRemovalDarkSkin,
 ];
