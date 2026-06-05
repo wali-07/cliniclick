@@ -331,11 +331,12 @@ articles:
       - minoxidil vs prp
       - hair transplant alternatives dubai
     dueDate: "2026-06-05"
-    status: awaiting-approval
+    status: published
     brief: |
       Spoke under the hair loss pillar. Evidence-graded rundown (minoxidil,
       finasteride, PRP, low-level laser, transplant) - what works for which
       pattern, realistic timelines. Cross-link to What is hair loss.
+    publishedDate: "2026-06-05"
   - slug: what-is-microneedling
     parentType: treatment
     parentSlug: microneedling
