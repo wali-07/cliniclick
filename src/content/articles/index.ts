@@ -17,6 +17,7 @@ import { costOfBotoxInDubai } from "./treatments/botox/cost-of-botox-in-dubai";
 import { acneScarsTreatment } from "./concerns/acne/acne-scars-treatment";
 import { costOfDermalFillersInDubai } from "./treatments/dermal-fillers/cost-of-dermal-fillers-in-dubai";
 import { laserHairRemovalDarkSkin } from "./treatments/laser-hair-removal/laser-hair-removal-dark-skin";
+import { hairLossTreatments } from "./concerns/hair-loss/hair-loss-treatments";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -37,4 +38,5 @@ export const allArticles: Article[] = [
   acneScarsTreatment,
   costOfDermalFillersInDubai,
   laserHairRemovalDarkSkin,
+  hairLossTreatments,
 ];

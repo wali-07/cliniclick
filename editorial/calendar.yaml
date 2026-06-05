@@ -314,12 +314,12 @@ articles:
       - laser hair removal fitzpatrick
     dueDate: "2026-06-03"
     status: published
+    publishedDate: "2026-06-04"
     brief: |
       High-search UAE spoke under the laser hair removal pillar. Why melanin-
       rich skin (Fitzpatrick IV-VI) needs the right laser (Nd:YAG), risks of
       the wrong device, what to ask a clinic. Cross-link to What is laser
       hair removal.
-    publishedDate: "2026-06-04"
   - slug: hair-loss-treatments
     parentType: concern
     parentSlug: hair-loss
@@ -331,7 +331,7 @@ articles:
       - minoxidil vs prp
       - hair transplant alternatives dubai
     dueDate: "2026-06-05"
-    status: queued
+    status: awaiting-approval
     brief: |
       Spoke under the hair loss pillar. Evidence-graded rundown (minoxidil,
       finasteride, PRP, low-level laser, transplant) - what works for which
