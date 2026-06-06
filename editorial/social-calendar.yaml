@@ -169,7 +169,7 @@ posts:
     slug: downtime-single
     article: /
     scheduledFor: "2026-06-06"
-    status: draft
+    status: delivered
     notes: "SAT SINGLE | NEW decoder topic - NEEDS NEW object-pun image. To produce. (Sun 6-07 Stories only.)"
   # --- Following week: Mon 6-08 -> Tue 6-09 (top up before this runs out)
   - topic: "Why patch testing matters"
