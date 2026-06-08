@@ -18,6 +18,7 @@ import { acneScarsTreatment } from "./concerns/acne/acne-scars-treatment";
 import { costOfDermalFillersInDubai } from "./treatments/dermal-fillers/cost-of-dermal-fillers-in-dubai";
 import { laserHairRemovalDarkSkin } from "./treatments/laser-hair-removal/laser-hair-removal-dark-skin";
 import { hairLossTreatments } from "./concerns/hair-loss/hair-loss-treatments";
+import { whatIsMicroneedling } from "./treatments/microneedling/what-is-microneedling";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -39,4 +40,5 @@ export const allArticles: Article[] = [
   costOfDermalFillersInDubai,
   laserHairRemovalDarkSkin,
   hairLossTreatments,
+  whatIsMicroneedling,
 ];

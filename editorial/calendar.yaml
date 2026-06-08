@@ -332,11 +332,11 @@ articles:
       - hair transplant alternatives dubai
     dueDate: "2026-06-05"
     status: published
+    publishedDate: "2026-06-05"
     brief: |
       Spoke under the hair loss pillar. Evidence-graded rundown (minoxidil,
       finasteride, PRP, low-level laser, transplant) - what works for which
       pattern, realistic timelines. Cross-link to What is hair loss.
-    publishedDate: "2026-06-05"
   - slug: what-is-microneedling
     parentType: treatment
     parentSlug: microneedling
@@ -349,7 +349,7 @@ articles:
       - microneedling for acne scars
       - microneedling dark skin
     dueDate: "2026-06-08"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview. How it works (controlled micro-injuries trigger
       collagen remodeling), the difference between manual derma-rolling,
