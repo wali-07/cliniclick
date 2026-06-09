@@ -32,7 +32,7 @@ import {
   deleteBranch,
   previewBranchName,
 } from "../../../../../agents/lib/github-storage";
-import { applyEntryUpdate } from "../../../../../agents/lib/calendar";
+import { applyEntryUpdate, parseCalendar } from "../../../../../agents/lib/calendar";
 import {
   answerCallbackQuery,
   editMessageText,
@@ -62,6 +62,15 @@ type TelegramUpdate = {
     };
   };
 };
+
+/** Read an article entry's current status from calendar.yaml (or null). */
+function readArticleStatus(calendarYaml: string, slug: string): string | null {
+  try {
+    return parseCalendar(calendarYaml).find((e) => e.slug === slug)?.status ?? null;
+  } catch {
+    return null;
+  }
+}
 
 /** Repo-canonical site URL for posted-article confirmations. */
 function articleUrl(slug: string, parentType: string, parentSlug: string): string {
@@ -194,6 +203,15 @@ async function handle(d: DecodedCallback): Promise<HandlerResult> {
 async function approveArticle(slug: string): Promise<HandlerResult> {
   const branch = previewBranchName(slug);
 
+  // Idempotency: a retried tap (or a second tap after the first published)
+  // must not merge + re-flip again. If the entry is already published,
+  // report success without touching the repo.
+  const { content: calStatusCheck } = await getFileContent({ path: CALENDAR_PATH, ref: "main" });
+  const alreadyStatus = readArticleStatus(calStatusCheck, slug);
+  if (alreadyStatus === "published") {
+    return { statusLine: `*✅ PUBLISHED* \\(already\\)` };
+  }
+
   // 1. Merge editorial/<slug> into main. Creates a real merge commit on
   //    main with the article files + the calendar.yaml flipped to
   //    awaiting-approval (the cron set that state on the branch).
@@ -263,6 +281,12 @@ async function approveArticle(slug: string): Promise<HandlerResult> {
 async function rejectArticle(slug: string): Promise<HandlerResult> {
   const branch = previewBranchName(slug);
 
+  // Idempotency: a retried tap must not re-flip an already-rejected entry.
+  const { content: calStatusCheck } = await getFileContent({ path: CALENDAR_PATH, ref: "main" });
+  if (readArticleStatus(calStatusCheck, slug) === "rejected") {
+    return { statusLine: `*❌ REJECTED* \\(already\\)` };
+  }
+
   // 1. Delete the preview branch (cleanup; the article never reaches main).
   try {
     await deleteBranch(branch);
@@ -318,11 +342,34 @@ function flipSocialStatus(yamlText: string, slug: string, to: string): string {
   throw new Error(`Social entry not found or had no status line: ${slug}`);
 }
 
+/** Read a single social entry's current status (or null if not found). */
+function readSocialStatus(yamlText: string, slug: string): string | null {
+  const lines = yamlText.split(/\r?\n/);
+  let inEntry = false;
+  for (let i = 0; i < lines.length; i++) {
+    if (lines[i].includes(`slug: ${slug}`)) inEntry = true;
+    if (inEntry) {
+      const m = lines[i].match(/^\s+status:\s*(\w+)/);
+      if (m) return m[1];
+      if (/^\s+- topic:/.test(lines[i])) break;
+    }
+  }
+  return null;
+}
+
 async function markSocialPosted(slug: string): Promise<HandlerResult> {
   const { content } = await getFileContent({
     path: SOCIAL_CALENDAR_PATH,
     ref: "main",
   });
+  // Idempotency: Telegram retries a callback if the handler is slow to
+  // answer, so the same tap can arrive several times. Only act when the
+  // entry is still "delivered" - a repeat tap on an already-resolved post
+  // is a no-op instead of a duplicate commit.
+  const current = readSocialStatus(content, slug);
+  if (current !== "delivered") {
+    return { statusLine: `*✅ POSTED ON IG* \\(already ${escapeMd(current ?? "unknown")}\\)` };
+  }
   const updated = flipSocialStatus(content, slug, "posted");
   const commit = await commitFilesToBranch({
     branch: "main",
@@ -337,6 +384,10 @@ async function markSocialSkipped(slug: string): Promise<HandlerResult> {
     path: SOCIAL_CALENDAR_PATH,
     ref: "main",
   });
+  const current = readSocialStatus(content, slug);
+  if (current !== "delivered") {
+    return { statusLine: `*⏭️ SKIPPED* \\(already ${escapeMd(current ?? "unknown")}\\)` };
+  }
   const updated = flipSocialStatus(content, slug, "skipped");
   const commit = await commitFilesToBranch({
     branch: "main",
