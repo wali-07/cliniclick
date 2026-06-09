@@ -189,6 +189,10 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
   const targetDate = resolveTargetDate(req);
   const log = (m: string) => console.log(m);
 
+  // Set once we have claimed an entry on main, so the catch block can roll
+  // the claim back to "draft" if the run fails before the post is sent.
+  let claimedSlug: string | null = null;
+
   try {
     // ----- Find today's draft -----
     const calRes = await getFileContent({ path: SOCIAL_CALENDAR_PATH, ref: "main" });
@@ -200,6 +204,26 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     }
     const format = inferFormat(due.slug);
     log(`[daily-social] preparing ${due.slug} (${format}) for ${targetDate}`);
+
+    // ----- Claim the entry on main BEFORE generating -----
+    // Without this, two cron invocations (we have seen the daily-social cron
+    // fire twice ~6s apart) both read the entry while it is still "draft",
+    // both run the generator - which picks a random background colour, so the
+    // two posts look almost-but-not-quite identical - and both send to
+    // Telegram. Flipping the status to "delivered" up front removes the entry
+    // from the "draft" set so a second run finds nothing due and exits.
+    //
+    // commitFilesToBranch advances main with force:false (compare-and-swap),
+    // so if the two runs are truly simultaneous, only the first claim commit
+    // lands; the loser is rejected as a non-fast-forward and falls into the
+    // catch (where claimedSlug is still null, so nothing is rolled back).
+    await commitFilesToBranch({
+      branch: "main",
+      files: [{ path: SOCIAL_CALENDAR_PATH, content: flipSocialStatus(calRes.content, due.slug, "delivered") }],
+      message: `Social: ${due.slug} draft -> delivered (claimed by daily-social cron)`,
+    });
+    claimedSlug = due.slug;
+    log(`[daily-social] claimed ${due.slug} on main (draft -> delivered).`);
 
     // ----- Use pre-rendered assets if present, otherwise auto-generate -----
     let brief: SocialBrief;
@@ -253,18 +277,19 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       bgColor = bundle.bgColor;
     }
 
-    // ----- Commit (artifacts + calendar flip) in one commit -----
-    const files: FileChange[] = [
-      { path: SOCIAL_CALENDAR_PATH, content: flipSocialStatus(calRes.content, due.slug, "delivered") },
-    ];
+    // ----- Commit the generated artifacts -----
+    // The calendar was already flipped to "delivered" in the claim commit
+    // above, so here we only persist freshly generated image/brief assets.
+    // Pre-rendered runs (!didGenerate) have nothing new to commit.
+    let commit: { sha: string } | null = null;
     if (didGenerate) {
-      // Brief + image artifacts only need to be committed when we
-      // generated them; pre-rendered assets are already on main.
-      files.push({
-        path: `${BRIEFS_DIR}/${due.slug}.json`,
-        content: JSON.stringify(brief, null, 2) + "\n",
-      });
-      files.push({ path: `${RENDERS_DIR}/${due.slug}.webp`, content: coverWebp });
+      const files: FileChange[] = [
+        {
+          path: `${BRIEFS_DIR}/${due.slug}.json`,
+          content: JSON.stringify(brief, null, 2) + "\n",
+        },
+        { path: `${RENDERS_DIR}/${due.slug}.webp`, content: coverWebp },
+      ];
       if (coverJpg) files.push({ path: `${RENDERS_DIR}/${due.slug}.jpg`, content: coverJpg });
       if (baseWebp) files.push({ path: `${RENDERS_DIR}/${due.slug}.base.webp`, content: baseWebp });
       slides.forEach((buf, i) => {
@@ -273,13 +298,13 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
           content: buf,
         });
       });
+      commit = await commitFilesToBranch({
+        branch: "main",
+        files,
+        message: `Social: ${due.slug} generated assets (via daily-social cron)${bgColor ? ` [bgColor: ${bgColor}]` : ""}`,
+      });
+      log(`[daily-social] committed ${commit.sha}`);
     }
-    const commit = await commitFilesToBranch({
-      branch: "main",
-      files,
-      message: `Social: ${due.slug} ${didGenerate ? "generated +" : ""} delivered (via daily-social cron)${bgColor ? ` [bgColor: ${bgColor}]` : ""}`,
-    });
-    log(`[daily-social] committed ${commit.sha}`);
 
     // ----- Send to Telegram -----
     // IG-ready captions are ~150-200 words = often >1024 chars, which is
@@ -299,6 +324,11 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
         caption: shortHeader,
       });
     }
+
+    // The post has reached Telegram, so "delivered" is now truthful. Clear
+    // the rollback marker: a failure on the follow-up caption below must not
+    // revert the entry to "draft", or the next run would re-send the image.
+    claimedSlug = null;
 
     // Follow-up message with the FULL caption + 5 hashtags + buttons. The
     // user copies this entire block into IG when posting.
@@ -337,12 +367,32 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
       generated: didGenerate,
       slides: slides.length,
       bgColor,
-      commitSha: commit.sha,
+      commitSha: commit?.sha ?? null,
       telegramMsgId: msgId,
     });
   } catch (err) {
     const msg = err instanceof Error ? err.message : String(err);
     log(`[daily-social] FATAL: ${msg}`);
+
+    // If we claimed an entry on main but never sent the post, roll the claim
+    // back to "draft" so a future run retries it instead of silently
+    // dropping the day's post. (When the claim commit itself lost a
+    // concurrency race, claimedSlug is still null and we skip the rollback.)
+    if (claimedSlug) {
+      try {
+        const { content } = await getFileContent({ path: SOCIAL_CALENDAR_PATH, ref: "main" });
+        await commitFilesToBranch({
+          branch: "main",
+          files: [{ path: SOCIAL_CALENDAR_PATH, content: flipSocialStatus(content, claimedSlug, "draft") }],
+          message: `Social: ${claimedSlug} delivered -> draft (daily-social failed, rolled back)`,
+        });
+        log(`[daily-social] rolled ${claimedSlug} back to draft.`);
+      } catch (rollbackErr) {
+        const rmsg = rollbackErr instanceof Error ? rollbackErr.message : String(rollbackErr);
+        log(`[daily-social] rollback FAILED for ${claimedSlug}: ${rmsg}`);
+      }
+    }
+
     try {
       await alertFailure("(unknown)", msg);
     } catch {
