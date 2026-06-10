@@ -184,3 +184,68 @@ posts:
     scheduledFor: "2026-06-09"
     status: delivered
     notes: "TUE SINGLE | NEW decoder topic - NEEDS NEW object-pun image. NO attacking ads/marketing. To produce."
+  # --- Following two weeks: Wed 6-10 -> Sat 6-20 (Sun 6-14 & 6-21 off).
+  #     Refilled 2026-06-10 after the calendar ran dry. All NEW distinct
+  #     evergreen ingredient-decoder + how-it-works topics, no repeats, no
+  #     pricing, no clinic names. status: draft -> daily-social cron will
+  #     auto-generate the object-pun asset on each date.
+  - topic: "Niacinamide, explained"
+    slug: niacinamide-single
+    article: /
+    scheduledFor: "2026-06-10"
+    status: draft
+    notes: "WED SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Skin purging vs breaking out"
+    slug: purging-vs-breakout-single
+    article: /
+    scheduledFor: "2026-06-11"
+    status: draft
+    notes: "THU SINGLE | NEW decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Exfoliation: physical vs chemical"
+    slug: exfoliation-carousel
+    article: /
+    scheduledFor: "2026-06-12"
+    status: draft
+    notes: "FRI CAROUSEL | NEW decoder topic - NEEDS NEW object-pun image. Criteria mode, save-worthy. To produce."
+  - topic: "What 'non-comedogenic' means"
+    slug: non-comedogenic-single
+    article: /
+    scheduledFor: "2026-06-13"
+    status: draft
+    notes: "SAT SINGLE | NEW label-decoder topic - NEEDS NEW object-pun image. To produce. (Sun 6-14 Stories only.)"
+  - topic: "Vitamin C, explained"
+    slug: vitamin-c-single
+    article: /
+    scheduledFor: "2026-06-15"
+    status: draft
+    notes: "MON SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Double-cleansing, decoded"
+    slug: double-cleanse-carousel
+    article: /
+    scheduledFor: "2026-06-16"
+    status: draft
+    notes: "TUE CAROUSEL | NEW how-to decoder topic - NEEDS NEW object-pun image. Save-worthy. To produce."
+  - topic: "Hyaluronic acid, explained"
+    slug: hyaluronic-acid-single
+    article: /
+    scheduledFor: "2026-06-17"
+    status: draft
+    notes: "WED SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Pores: what actually changes them"
+    slug: pores-single
+    article: /
+    scheduledFor: "2026-06-18"
+    status: draft
+    notes: "THU SINGLE | NEW myth-bust topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Mixing actives safely"
+    slug: mixing-actives-carousel
+    article: /
+    scheduledFor: "2026-06-19"
+    status: draft
+    notes: "FRI CAROUSEL | NEW decoder topic - NEEDS NEW object-pun image. Criteria mode, save-worthy. To produce."
+  - topic: "Fragrance in skincare, decoded"
+    slug: fragrance-single
+    article: /
+    scheduledFor: "2026-06-20"
+    status: draft
+    notes: "SAT SINGLE | NEW decoder topic - NEEDS NEW object-pun image. To produce. (Sun 6-21 Stories only.)"
