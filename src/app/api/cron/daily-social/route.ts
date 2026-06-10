@@ -199,7 +199,31 @@ export async function GET(req: NextRequest): Promise<NextResponse> {
     const posts = parseSocialCalendar(calRes.content);
     const due = posts.find((p) => p.scheduledFor === targetDate && p.status === "draft");
     if (!due) {
-      log(`[daily-social] ${targetDate}: no draft due. Exiting.`);
+      // Distinguish a one-off gap day (drafts still queued for later dates)
+      // from an exhausted calendar (nothing scheduled today OR after). A dry
+      // calendar silently stops IG forever - which is exactly what happened
+      // after 2026-06-09 - so when it's truly empty we ping Telegram instead
+      // of exiting quietly. A gap day stays silent to avoid daily noise.
+      const futureDrafts = posts.filter((p) => p.status === "draft" && p.scheduledFor >= targetDate);
+      if (futureDrafts.length === 0) {
+        log(`[daily-social] ${targetDate}: calendar exhausted (no draft today or later). Alerting.`);
+        try {
+          await sendMessageWithButtons({
+            text: [
+              `*📭 IG calendar is empty*`,
+              ``,
+              `No Instagram post was scheduled for ${escapeMd(targetDate)}, and there are no upcoming drafts left in \`editorial/social\\-calendar\\.yaml\`\\.`,
+              ``,
+              `Add new entries to resume daily posts \\(the cron will keep pinging until you do\\)\\.`,
+            ].join("\n"),
+            buttons: [],
+          });
+        } catch {
+          /* best-effort; a failed ping must not 500 the cron */
+        }
+        return NextResponse.json({ ok: true, date: targetDate, sent: null, calendarEmpty: true });
+      }
+      log(`[daily-social] ${targetDate}: no draft due (gap day; ${futureDrafts.length} upcoming). Exiting.`);
       return NextResponse.json({ ok: true, date: targetDate, sent: null });
     }
     const format = inferFormat(due.slug);
