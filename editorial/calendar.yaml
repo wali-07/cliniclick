@@ -349,7 +349,8 @@ articles:
       - microneedling for acne scars
       - microneedling dark skin
     dueDate: "2026-06-08"
-    status: awaiting-approval
+    status: published
+    publishedDate: "2026-06-10"
     brief: |
       Pillar overview. How it works (controlled micro-injuries trigger
       collagen remodeling), the difference between manual derma-rolling,
