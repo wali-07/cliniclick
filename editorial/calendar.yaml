@@ -370,13 +370,14 @@ articles:
       - hydrafacial vs regular facial
       - hydrafacial benefits
     dueDate: "2026-06-10"
-    status: awaiting-approval
+    status: published
     brief: |
       Pillar overview. The three-step protocol (cleanse+peel, extract+hydrate,
       fuse+protect), realistic expectations (immediate-glow facial, not
       anti-aging therapy), maintenance cadence, who suits it, who doesn't
       (active acne, rosacea flares). Distinguish from medical treatments.
       No clinic naming.
+    publishedDate: "2026-06-11"
   - slug: what-is-prp
     parentType: treatment
     parentSlug: prp
