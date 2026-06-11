@@ -184,72 +184,104 @@ posts:
     scheduledFor: "2026-06-09"
     status: delivered
     notes: "TUE SINGLE | NEW decoder topic - NEEDS NEW object-pun image. NO attacking ads/marketing. To produce."
-  # --- Following two weeks: Thu 6-11 -> Mon 6-22 (Sun 6-14 & 6-21 off).
-  #     Refilled 2026-06-10 after the calendar ran dry post 06-09. The
-  #     06-10 social cron had already fired (08:00 UAE / 04:00 UTC) before
-  #     this refill, and daily-social matches scheduledFor EXACTLY (no
-  #     catch-up), so the schedule resumes hands-off from 06-11 with no
-  #     06-10 entry (would have been stranded). All NEW distinct evergreen
-  #     ingredient-decoder + how-it-works topics, no repeats, no pricing,
-  #     no clinic names. status: draft -> daily-social cron auto-generates
-  #     the object-pun asset on each date.
+  # --- REALIGNED 2026-06-11 (Abdullah): social must track the topics we are
+  #     ALSO publishing articles for - not standalone ingredient jargon. The
+  #     06-10 refill (niacinamide, vitamin C, hyaluronic acid, fragrance...)
+  #     was all `article: /` with no linked article AND leaned on complex
+  #     words (06-11 niacinamide was skipped for exactly this reason). Every
+  #     entry below now maps 1:1 to a treatment/concern overview in
+  #     editorial/calendar.yaml, scheduled ~1 week AFTER that article
+  #     publishes so the `article:` link is live. New article topics are
+  #     queued in calendar.yaml to keep both programs fed in lockstep.
+  #  CADENCE (Abdullah, 2026-06-11): NOT daily. ~2 posts/week on WED + SAT,
+  #     trailing the article timeline. Pricing + repeat-topic articles get
+  #     NO social post, so social is naturally less frequent than articles.
+  #     Rules unchanged: no topic repeats, no pricing (booking not live),
+  #     no clinic names, educational/witty. daily-social matches the date
+  #     EXACTLY (no catch-up), so all dates below are 06-12+ (06-11 already
+  #     fired). NEXT TOP-UP: queue more overview articles + social after
+  #     2026-07-25. See memory social-calendar-maintenance.
   - topic: "Niacinamide, explained"
     slug: niacinamide-single
     article: /
     scheduledFor: "2026-06-11"
     status: skipped
-    notes: "THU SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
-  - topic: "Skin purging vs breaking out"
-    slug: purging-vs-breakout-single
-    article: /
-    scheduledFor: "2026-06-12"
-    status: draft
-    notes: "FRI SINGLE | NEW decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
-  - topic: "Exfoliation: physical vs chemical"
-    slug: exfoliation-carousel
-    article: /
+    notes: "THU SINGLE | SKIPPED by Abdullah - too jargony, no linked article. Superseded by the article-tracking realignment below."
+  - topic: "HydraFacial"
+    slug: hydrafacial-carousel
+    article: /treatments/hydrafacial/what-is-hydrafacial
     scheduledFor: "2026-06-13"
     status: draft
-    notes: "SAT CAROUSEL | NEW decoder topic - NEEDS NEW object-pun image. Criteria mode, save-worthy. To produce. (Sun 6-14 Stories only.)"
-  - topic: "What 'non-comedogenic' means"
-    slug: non-comedogenic-single
-    article: /
-    scheduledFor: "2026-06-15"
-    status: draft
-    notes: "MON SINGLE | NEW label-decoder topic - NEEDS NEW object-pun image. To produce."
-  - topic: "Vitamin C, explained"
-    slug: vitamin-c-single
-    article: /
-    scheduledFor: "2026-06-16"
-    status: draft
-    notes: "TUE SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
-  - topic: "Double-cleansing, decoded"
-    slug: double-cleanse-carousel
-    article: /
+    notes: "SAT CAROUSEL | Tracks What is HydraFacial (published 06-11). NEEDS NEW object-pun image. Save-worthy how-it-works. To produce."
+  - topic: "Microneedling"
+    slug: microneedling-single
+    article: /treatments/microneedling/what-is-microneedling
     scheduledFor: "2026-06-17"
     status: draft
-    notes: "WED CAROUSEL | NEW how-to decoder topic - NEEDS NEW object-pun image. Save-worthy. To produce."
-  - topic: "Hyaluronic acid, explained"
-    slug: hyaluronic-acid-single
-    article: /
-    scheduledFor: "2026-06-18"
-    status: draft
-    notes: "THU SINGLE | NEW ingredient-decoder topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
-  - topic: "Pores: what actually changes them"
-    slug: pores-single
-    article: /
-    scheduledFor: "2026-06-19"
-    status: draft
-    notes: "FRI SINGLE | NEW myth-bust topic - NEEDS NEW object-pun image. Educational, not advice. To produce."
-  - topic: "Mixing actives safely"
-    slug: mixing-actives-carousel
-    article: /
+    notes: "WED SINGLE | Tracks What is microneedling (published 06-10). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "PRP"
+    slug: prp-single
+    article: /treatments/prp/what-is-prp
     scheduledFor: "2026-06-20"
     status: draft
-    notes: "SAT CAROUSEL | NEW decoder topic - NEEDS NEW object-pun image. Criteria mode, save-worthy. To produce. (Sun 6-21 Stories only.)"
-  - topic: "Fragrance in skincare, decoded"
-    slug: fragrance-single
-    article: /
-    scheduledFor: "2026-06-22"
+    notes: "SAT SINGLE | Tracks What is PRP (article due 06-12). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Chemical peels"
+    slug: chemical-peels-single
+    article: /treatments/chemical-peels/what-is-chemical-peels
+    scheduledFor: "2026-06-24"
     status: draft
-    notes: "MON SINGLE | NEW decoder topic - NEEDS NEW object-pun image. To produce."
+    notes: "WED SINGLE | Tracks What are chemical peels (article due 06-15). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "CoolSculpting"
+    slug: coolsculpting-carousel
+    article: /treatments/coolsculpting/what-is-coolsculpting
+    scheduledFor: "2026-06-27"
+    status: draft
+    notes: "SAT CAROUSEL | Tracks What is CoolSculpting (article due 06-17). NEEDS NEW object-pun image. Save-worthy how-it-works. To produce."
+  - topic: "Skin tightening"
+    slug: skin-tightening-single
+    article: /treatments/skin-tightening/what-is-skin-tightening
+    scheduledFor: "2026-07-01"
+    status: draft
+    notes: "WED SINGLE | Tracks What is skin tightening (article due 06-23). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Rosacea"
+    slug: rosacea-single
+    article: /concerns/rosacea/what-is-rosacea
+    scheduledFor: "2026-07-04"
+    status: draft
+    notes: "SAT SINGLE | Tracks What is rosacea (article due 06-25). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Skin boosters"
+    slug: skin-boosters-carousel
+    article: /treatments/skin-boosters/what-are-skin-boosters
+    scheduledFor: "2026-07-08"
+    status: draft
+    notes: "WED CAROUSEL | Tracks What are skin boosters (article due 06-30). NEEDS NEW object-pun image. Save-worthy. To produce."
+  - topic: "Thread lift"
+    slug: thread-lift-single
+    article: /treatments/thread-lift/what-is-a-thread-lift
+    scheduledFor: "2026-07-11"
+    status: draft
+    notes: "SAT SINGLE | Tracks What is a thread lift (article due 07-03). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Laser skin resurfacing"
+    slug: laser-resurfacing-single
+    article: /treatments/laser-resurfacing/what-is-laser-skin-resurfacing
+    scheduledFor: "2026-07-15"
+    status: draft
+    notes: "WED SINGLE | Tracks What is laser skin resurfacing (article due 07-07). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Enlarged pores"
+    slug: enlarged-pores-carousel
+    article: /concerns/enlarged-pores/what-causes-enlarged-pores
+    scheduledFor: "2026-07-18"
+    status: draft
+    notes: "SAT CAROUSEL | Tracks What causes enlarged pores (article due 07-10). NEEDS NEW object-pun image. Myth-bust, save-worthy. To produce."
+  - topic: "IPL photofacial"
+    slug: ipl-single
+    article: /treatments/ipl/what-is-ipl-photofacial
+    scheduledFor: "2026-07-22"
+    status: draft
+    notes: "WED SINGLE | Tracks What is IPL photofacial (article due 07-14). NEEDS NEW object-pun image. Educational, not advice. To produce."
+  - topic: "Stretch marks"
+    slug: stretch-marks-single
+    article: /concerns/stretch-marks/what-causes-stretch-marks
+    scheduledFor: "2026-07-25"
+    status: draft
+    notes: "SAT SINGLE | Tracks What causes stretch marks (article due 07-17). NEEDS NEW object-pun image. Educational, not advice. To produce."

@@ -526,3 +526,166 @@ articles:
       rejuvenation indications. Package economics for the typical 3-4
       session protocol. What drives price (centrifuge tier, practitioner,
       combination with microneedling). Cross-link to What is PRP.
+  # --- Overview program extended 2026-06-11 so the IG social calendar always
+  #     has a freshly-published article to track (social mirrors articles; see
+  #     editorial/social-calendar.yaml). All NEW distinct treatment/concern
+  #     overviews - no repeats of already-published topics, no pricing (booking
+  #     not live yet). dueDates lead the matching social post by ~5 days so the
+  #     article is live before its post goes out.
+  - slug: what-is-skin-tightening
+    parentType: treatment
+    parentSlug: skin-tightening
+    kind: overview
+    title: What is skin tightening
+    keywords:
+      - what is skin tightening
+      - rf skin tightening
+      - radiofrequency skin tightening
+      - non-surgical skin tightening dubai
+      - skin tightening for jawline
+    dueDate: "2026-06-23"
+    status: queued
+    brief: |
+      Pillar overview of energy-based skin tightening (radiofrequency,
+      RF microneedling, HIFU at a high level). How controlled heat triggers
+      collagen remodelling, what it realistically does (mild-moderate
+      laxity, not a facelift), timeline (gradual over 2-3 months), sessions,
+      downtime, who suits it. Sober on over-claims. Cross-link to What are
+      wrinkles and fine lines and to microneedling.
+  - slug: what-is-rosacea
+    parentType: concern
+    parentSlug: rosacea
+    kind: overview
+    title: What is rosacea
+    keywords:
+      - what is rosacea
+      - rosacea treatment dubai
+      - facial redness causes
+      - rosacea triggers
+      - rosacea vs acne
+    dueDate: "2026-06-25"
+    status: queued
+    brief: |
+      Concern overview. Persistent facial redness/flushing, the main
+      subtypes (erythematotelangiectatic, papulopustular), common triggers
+      (heat, sun, spicy food, alcohol) - especially relevant in the Gulf
+      climate. What helps (gentle routine, in-clinic vascular laser/IPL,
+      prescription topicals) vs what makes it worse. Distinguish from acne.
+      Not medical advice; encourage a derm assessment.
+  - slug: what-are-skin-boosters
+    parentType: treatment
+    parentSlug: skin-boosters
+    kind: overview
+    title: What are skin boosters
+    keywords:
+      - what are skin boosters
+      - profhilo dubai
+      - injectable moisturiser
+      - skin booster vs filler
+      - skin hydration injectables
+    dueDate: "2026-06-30"
+    status: queued
+    brief: |
+      Pillar overview of injectable skin boosters (hyaluronic-acid hydrators
+      like Profhilo-class products). How they differ from fillers (hydration
+      and quality, not volume/shape), what they realistically improve (glow,
+      fine crepiness, hydration), the typical 2-session protocol, results
+      timeline, downtime. Sober, no brand worship. Cross-link to What are
+      dermal fillers.
+  - slug: what-is-a-thread-lift
+    parentType: treatment
+    parentSlug: thread-lift
+    kind: overview
+    title: What is a thread lift
+    keywords:
+      - what is a thread lift
+      - pdo thread lift dubai
+      - non-surgical face lift
+      - thread lift vs facelift
+      - thread lift results
+    dueDate: "2026-07-03"
+    status: queued
+    brief: |
+      Pillar overview of PDO/PLLA thread lifts. How dissolvable threads
+      reposition tissue and stimulate collagen, what they realistically do
+      (mild lift + gradual collagen, not a surgical lift), longevity,
+      downtime, risks (puckering, migration). Frame honestly against both
+      fillers and surgery. Cross-link to skin tightening and dermal fillers.
+  - slug: what-is-laser-skin-resurfacing
+    parentType: treatment
+    parentSlug: laser-resurfacing
+    kind: overview
+    title: What is laser skin resurfacing
+    keywords:
+      - what is laser skin resurfacing
+      - fractional laser dubai
+      - co2 laser resurfacing
+      - laser resurfacing dark skin
+      - laser for acne scars
+    dueDate: "2026-07-07"
+    status: queued
+    brief: |
+      Pillar overview. Ablative vs non-ablative and fractional resurfacing,
+      what each treats (texture, scars, fine lines, sun damage), and the
+      critical dark-skin (Fitzpatrick IV-VI) PIH-risk section - device and
+      settings selection matters. Downtime tiers, results timing, aftercare.
+      Cross-link to acne scars and to chemical peels.
+  - slug: what-causes-enlarged-pores
+    parentType: concern
+    parentSlug: enlarged-pores
+    kind: overview
+    title: What causes enlarged pores
+    keywords:
+      - what causes enlarged pores
+      - how to minimise pores
+      - enlarged pores treatment dubai
+      - pores and oily skin
+      - can you shrink pores
+    dueDate: "2026-07-10"
+    status: queued
+    brief: |
+      Concern overview / myth-bust. What pore size actually depends on
+      (genetics, oil, sun-damage laxity, age) and the honest truth that you
+      cannot permanently shrink pores - only make them look smaller. What
+      genuinely helps (retinoids, niacinamide, in-clinic resurfacing,
+      sun protection) vs marketing claims. Cross-link to chemical peels and
+      laser resurfacing.
+  - slug: what-is-ipl-photofacial
+    parentType: treatment
+    parentSlug: ipl
+    kind: overview
+    title: What is IPL photofacial
+    keywords:
+      - what is ipl photofacial
+      - ipl treatment dubai
+      - photofacial for redness
+      - ipl for pigmentation
+      - ipl vs laser
+    dueDate: "2026-07-14"
+    status: queued
+    brief: |
+      Pillar overview of intense pulsed light. How broadband light targets
+      redness and brown pigment, what it treats (sun spots, diffuse redness,
+      rosacea-type flushing), what it does NOT (deep melasma - can worsen
+      it), the important caution for darker skin tones. Sessions, downtime,
+      results. Cross-link to rosacea and to pigmentation overview.
+  - slug: what-causes-stretch-marks
+    parentType: concern
+    parentSlug: stretch-marks
+    kind: overview
+    title: What causes stretch marks
+    keywords:
+      - what causes stretch marks
+      - stretch marks treatment dubai
+      - striae treatment
+      - stretch marks dark skin
+      - can you remove stretch marks
+    dueDate: "2026-07-17"
+    status: queued
+    brief: |
+      Concern overview. Why stretch marks form (rapid skin stretching +
+      collagen disruption), red/early (striae rubra) vs mature/white
+      (striae alba), and the honest expectation that treatment fades rather
+      than erases them. What helps per stage (early: vascular laser,
+      retinoids; mature: microneedling, fractional laser) with dark-skin
+      caution. Cross-link to microneedling and laser resurfacing.
