@@ -19,6 +19,7 @@ import { costOfDermalFillersInDubai } from "./treatments/dermal-fillers/cost-of-
 import { laserHairRemovalDarkSkin } from "./treatments/laser-hair-removal/laser-hair-removal-dark-skin";
 import { hairLossTreatments } from "./concerns/hair-loss/hair-loss-treatments";
 import { whatIsMicroneedling } from "./treatments/microneedling/what-is-microneedling";
+import { whatIsHydrafacial } from "./treatments/hydrafacial/what-is-hydrafacial";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -41,4 +42,5 @@ export const allArticles: Article[] = [
   laserHairRemovalDarkSkin,
   hairLossTreatments,
   whatIsMicroneedling,
+  whatIsHydrafacial,
 ];
