@@ -390,13 +390,14 @@ articles:
       - prp for skin rejuvenation
       - prp dubai
     dueDate: "2026-06-12"
-    status: awaiting-approval
+    status: published
     brief: |
       Pillar overview of platelet-rich plasma. How the blood-spin process
       produces growth-factor-rich plasma, what the science actually supports
       (hair-loss adjunct, skin rejuvenation, scarring) vs over-claims.
       Sessions, expectations, what 'response' looks like, who shouldn't do
       it. Cross-link to hair-loss-treatments.
+    publishedDate: "2026-06-12"
   - slug: what-is-chemical-peels
     parentType: treatment
     parentSlug: chemical-peels
