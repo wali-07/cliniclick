@@ -371,13 +371,13 @@ articles:
       - hydrafacial benefits
     dueDate: "2026-06-10"
     status: published
+    publishedDate: "2026-06-11"
     brief: |
       Pillar overview. The three-step protocol (cleanse+peel, extract+hydrate,
       fuse+protect), realistic expectations (immediate-glow facial, not
       anti-aging therapy), maintenance cadence, who suits it, who doesn't
       (active acne, rosacea flares). Distinguish from medical treatments.
       No clinic naming.
-    publishedDate: "2026-06-11"
   - slug: what-is-prp
     parentType: treatment
     parentSlug: prp
@@ -390,7 +390,7 @@ articles:
       - prp for skin rejuvenation
       - prp dubai
     dueDate: "2026-06-12"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview of platelet-rich plasma. How the blood-spin process
       produces growth-factor-rich plasma, what the science actually supports
@@ -526,12 +526,6 @@ articles:
       rejuvenation indications. Package economics for the typical 3-4
       session protocol. What drives price (centrifuge tier, practitioner,
       combination with microneedling). Cross-link to What is PRP.
-  # --- Overview program extended 2026-06-11 so the IG social calendar always
-  #     has a freshly-published article to track (social mirrors articles; see
-  #     editorial/social-calendar.yaml). All NEW distinct treatment/concern
-  #     overviews - no repeats of already-published topics, no pricing (booking
-  #     not live yet). dueDates lead the matching social post by ~5 days so the
-  #     article is live before its post goes out.
   - slug: what-is-skin-tightening
     parentType: treatment
     parentSlug: skin-tightening
