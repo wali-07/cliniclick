@@ -1,0 +1,33 @@
+{
+  "title": "HydraFacial",
+  "caption": "A HydraFacial is a machine-based facial that runs three steps in one pass: it exfoliates dead skin cells, extracts debris from pores using suction, and pushes a serum into the skin at the same time. Unlike many clinical treatments, there's no recovery period — redness usually clears within hours. The results are real but temporary: most people need regular sessions to maintain them, because the machine isn't changing your skin's underlying biology. Knowing that helps you judge whether a course of treatments fits your actual goal. Not medical advice, just the honest basics. Learn more at cliniclick.ae",
+  "hashtags": [
+    "#hydrafacial",
+    "#dubaiskincare",
+    "#skincaretips",
+    "#facialtreatment",
+    "#cliniclick"
+  ],
+  "slides": [
+    {
+      "headline": "Three steps, one pass",
+      "sub": "Exfoliation, pore extraction, and serum delivery happen simultaneously."
+    },
+    {
+      "headline": "No real downtime",
+      "sub": "Most redness settles within hours — no peeling, no hiding indoors."
+    },
+    {
+      "headline": "Results are real but temporary",
+      "sub": "The machine doesn't change your skin's biology — maintenance sessions matter."
+    },
+    {
+      "headline": "The serum varies",
+      "sub": "Clinics swap in different serums — brightening, hydrating, or acne-targeted."
+    },
+    {
+      "headline": "Know your actual goal",
+      "sub": "A one-off glow differs from treating a persistent skin concern over time."
+    }
+  ]
+}
