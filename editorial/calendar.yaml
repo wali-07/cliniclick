@@ -410,13 +410,14 @@ articles:
       - tca peel
       - chemical peel dark skin
     dueDate: "2026-06-15"
-    status: awaiting-approval
+    status: published
     brief: |
       Pillar overview. The three depth tiers (superficial AHA/BHA, medium
       TCA, deep phenol), which concerns each suits, and why dark skin tones
       need careful peel selection (PIH risk). Aftercare, downtime, results
       timing. Cross-link to pigmentation overview and to microneedling
       (peels-vs-microneedling territory).
+    publishedDate: "2026-06-15"
   - slug: what-is-coolsculpting
     parentType: treatment
     parentSlug: coolsculpting
