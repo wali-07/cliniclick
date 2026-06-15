@@ -21,6 +21,7 @@ import { hairLossTreatments } from "./concerns/hair-loss/hair-loss-treatments";
 import { whatIsMicroneedling } from "./treatments/microneedling/what-is-microneedling";
 import { whatIsHydrafacial } from "./treatments/hydrafacial/what-is-hydrafacial";
 import { whatIsPrp } from "./treatments/prp/what-is-prp";
+import { whatIsChemicalPeels } from "./treatments/chemical-peels/what-is-chemical-peels";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -45,4 +46,5 @@ export const allArticles: Article[] = [
   whatIsMicroneedling,
   whatIsHydrafacial,
   whatIsPrp,
+  whatIsChemicalPeels,
 ];
