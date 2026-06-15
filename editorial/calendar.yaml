@@ -391,13 +391,13 @@ articles:
       - prp dubai
     dueDate: "2026-06-12"
     status: published
+    publishedDate: "2026-06-12"
     brief: |
       Pillar overview of platelet-rich plasma. How the blood-spin process
       produces growth-factor-rich plasma, what the science actually supports
       (hair-loss adjunct, skin rejuvenation, scarring) vs over-claims.
       Sessions, expectations, what 'response' looks like, who shouldn't do
       it. Cross-link to hair-loss-treatments.
-    publishedDate: "2026-06-12"
   - slug: what-is-chemical-peels
     parentType: treatment
     parentSlug: chemical-peels
@@ -410,7 +410,7 @@ articles:
       - tca peel
       - chemical peel dark skin
     dueDate: "2026-06-15"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview. The three depth tiers (superficial AHA/BHA, medium
       TCA, deep phenol), which concerns each suits, and why dark skin tones
