@@ -411,13 +411,13 @@ articles:
       - chemical peel dark skin
     dueDate: "2026-06-15"
     status: published
+    publishedDate: "2026-06-15"
     brief: |
       Pillar overview. The three depth tiers (superficial AHA/BHA, medium
       TCA, deep phenol), which concerns each suits, and why dark skin tones
       need careful peel selection (PIH risk). Aftercare, downtime, results
       timing. Cross-link to pigmentation overview and to microneedling
       (peels-vs-microneedling territory).
-    publishedDate: "2026-06-15"
   - slug: what-is-coolsculpting
     parentType: treatment
     parentSlug: coolsculpting
@@ -430,7 +430,7 @@ articles:
       - fat freezing dubai
       - coolsculpting risks
     dueDate: "2026-06-17"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview of cryolipolysis. How fat freezing works (selective
       destruction of fat cells via controlled cooling), what it treats
