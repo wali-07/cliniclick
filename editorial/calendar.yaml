@@ -449,12 +449,13 @@ articles:
       - rf microneedling cost dubai
       - microneedling package price
     dueDate: "2026-06-19"
-    status: awaiting-approval
+    status: published
     brief: |
       Commercial spoke. Per-session AED ranges for standard pen, RF
       microneedling (Morpheus8-class), and combined PRP+microneedling.
       Package economics. What drives cost (device tier, practitioner
       credentialing). Cross-link to What is microneedling.
+    publishedDate: "2026-06-19"
   - slug: cost-of-hydrafacial-in-dubai
     parentType: treatment
     parentSlug: hydrafacial
