@@ -431,13 +431,13 @@ articles:
       - coolsculpting risks
     dueDate: "2026-06-17"
     status: published
+    publishedDate: "2026-06-17"
     brief: |
       Pillar overview of cryolipolysis. How fat freezing works (selective
       destruction of fat cells via controlled cooling), what it treats
       (stubborn pockets, not weight loss), realistic timeline (results
       2-3 months), session expectations, side effects. Mention paradoxical
       adipose hyperplasia briefly + soberly. Cross-link to what-is-body-fat.
-    publishedDate: "2026-06-17"
   - slug: cost-of-microneedling-in-dubai
     parentType: treatment
     parentSlug: microneedling
@@ -449,7 +449,7 @@ articles:
       - rf microneedling cost dubai
       - microneedling package price
     dueDate: "2026-06-19"
-    status: queued
+    status: awaiting-approval
     brief: |
       Commercial spoke. Per-session AED ranges for standard pen, RF
       microneedling (Morpheus8-class), and combined PRP+microneedling.
