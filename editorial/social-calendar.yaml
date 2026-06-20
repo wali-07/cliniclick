@@ -223,7 +223,7 @@ posts:
     slug: prp-single
     article: /treatments/prp/what-is-prp
     scheduledFor: "2026-06-20"
-    status: draft
+    status: delivered
     notes: "SAT SINGLE | Tracks What is PRP (article due 06-12). NEEDS NEW object-pun image. Educational, not advice. To produce."
   - topic: "Chemical peels"
     slug: chemical-peels-single
