@@ -450,12 +450,12 @@ articles:
       - microneedling package price
     dueDate: "2026-06-19"
     status: published
+    publishedDate: "2026-06-19"
     brief: |
       Commercial spoke. Per-session AED ranges for standard pen, RF
       microneedling (Morpheus8-class), and combined PRP+microneedling.
       Package economics. What drives cost (device tier, practitioner
       credentialing). Cross-link to What is microneedling.
-    publishedDate: "2026-06-19"
   - slug: cost-of-hydrafacial-in-dubai
     parentType: treatment
     parentSlug: hydrafacial
@@ -467,7 +467,7 @@ articles:
       - hydrafacial package dubai
       - hydrafacial booster cost
     dueDate: "2026-06-22"
-    status: queued
+    status: awaiting-approval
     brief: |
       Commercial spoke. Per-session AED ranges, add-ons (boosters, LED,
       neck/back), package economics for maintenance cadence (typical
