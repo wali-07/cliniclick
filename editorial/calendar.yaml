@@ -467,12 +467,13 @@ articles:
       - hydrafacial package dubai
       - hydrafacial booster cost
     dueDate: "2026-06-22"
-    status: awaiting-approval
+    status: published
     brief: |
       Commercial spoke. Per-session AED ranges, add-ons (boosters, LED,
       neck/back), package economics for maintenance cadence (typical
       monthly). What drives price (location overhead, booster choice).
       Cross-link to What is HydraFacial.
+    publishedDate: "2026-06-23"
   - slug: melasma
     parentType: concern
     parentSlug: pigmentation
