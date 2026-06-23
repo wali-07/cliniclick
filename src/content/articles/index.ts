@@ -24,6 +24,7 @@ import { whatIsPrp } from "./treatments/prp/what-is-prp";
 import { whatIsChemicalPeels } from "./treatments/chemical-peels/what-is-chemical-peels";
 import { whatIsCoolsculpting } from "./treatments/coolsculpting/what-is-coolsculpting";
 import { costOfMicroneedlingInDubai } from "./treatments/microneedling/cost-of-microneedling-in-dubai";
+import { whatIsSkinTightening } from "./treatments/skin-tightening/what-is-skin-tightening";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -51,4 +52,5 @@ export const allArticles: Article[] = [
   whatIsChemicalPeels,
   whatIsCoolsculpting,
   costOfMicroneedlingInDubai,
+  whatIsSkinTightening,
 ];
