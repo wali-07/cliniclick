@@ -468,12 +468,12 @@ articles:
       - hydrafacial booster cost
     dueDate: "2026-06-22"
     status: published
+    publishedDate: "2026-06-23"
     brief: |
       Commercial spoke. Per-session AED ranges, add-ons (boosters, LED,
       neck/back), package economics for maintenance cadence (typical
       monthly). What drives price (location overhead, booster choice).
       Cross-link to What is HydraFacial.
-    publishedDate: "2026-06-23"
   - slug: melasma
     parentType: concern
     parentSlug: pigmentation
@@ -486,7 +486,7 @@ articles:
       - melasma hormonal causes
       - melasma vs sun spots
     dueDate: "2026-06-24"
-    status: queued
+    status: awaiting-approval
     brief: |
       Sub-concern guide under pigmentation. Hormone-driven brown patches;
       why it's particularly common in the Gulf (sun + hormones + genetics);
