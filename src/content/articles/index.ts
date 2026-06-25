@@ -25,6 +25,7 @@ import { whatIsChemicalPeels } from "./treatments/chemical-peels/what-is-chemica
 import { whatIsCoolsculpting } from "./treatments/coolsculpting/what-is-coolsculpting";
 import { costOfMicroneedlingInDubai } from "./treatments/microneedling/cost-of-microneedling-in-dubai";
 import { costOfHydrafacialInDubai } from "./treatments/hydrafacial/cost-of-hydrafacial-in-dubai";
+import { whatIsRosacea } from "./concerns/rosacea/what-is-rosacea";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -53,4 +54,5 @@ export const allArticles: Article[] = [
   whatIsCoolsculpting,
   costOfMicroneedlingInDubai,
   costOfHydrafacialInDubai,
+  whatIsRosacea,
 ];
