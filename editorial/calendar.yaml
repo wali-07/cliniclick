@@ -563,7 +563,7 @@ articles:
       - rosacea triggers
       - rosacea vs acne
     dueDate: "2026-06-25"
-    status: awaiting-approval
+    status: published
     brief: |
       Concern overview. Persistent facial redness/flushing, the main
       subtypes (erythematotelangiectatic, papulopustular), common triggers
@@ -571,6 +571,7 @@ articles:
       climate. What helps (gentle routine, in-clinic vascular laser/IPL,
       prescription topicals) vs what makes it worse. Distinguish from acne.
       Not medical advice; encourage a derm assessment.
+    publishedDate: "2026-06-25"
   - slug: what-are-skin-boosters
     parentType: treatment
     parentSlug: skin-boosters
