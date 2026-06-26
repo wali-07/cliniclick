@@ -506,7 +506,7 @@ articles:
       - dark circles dark skin
       - under-eye pigmentation
     dueDate: "2026-06-26"
-    status: queued
+    status: awaiting-approval
     brief: |
       Sub-concern guide. Why dark circles happen (pigmentation, vascular
       visibility, tear-trough shadow, allergic shiners) - and why the
@@ -564,6 +564,7 @@ articles:
       - rosacea vs acne
     dueDate: "2026-06-25"
     status: published
+    publishedDate: "2026-06-25"
     brief: |
       Concern overview. Persistent facial redness/flushing, the main
       subtypes (erythematotelangiectatic, papulopustular), common triggers
@@ -571,7 +572,6 @@ articles:
       climate. What helps (gentle routine, in-clinic vascular laser/IPL,
       prescription topicals) vs what makes it worse. Distinguish from acne.
       Not medical advice; encourage a derm assessment.
-    publishedDate: "2026-06-25"
   - slug: what-are-skin-boosters
     parentType: treatment
     parentSlug: skin-boosters
