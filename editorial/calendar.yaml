@@ -525,12 +525,13 @@ articles:
       - prp skin cost dubai
       - prp package dubai
     dueDate: "2026-06-29"
-    status: awaiting-approval
+    status: published
     brief: |
       Commercial spoke. Per-session AED ranges for hair-loss vs skin-
       rejuvenation indications. Package economics for the typical 3-4
       session protocol. What drives price (centrifuge tier, practitioner,
       combination with microneedling). Cross-link to What is PRP.
+    publishedDate: "2026-07-01"
   - slug: what-is-skin-tightening
     parentType: treatment
     parentSlug: skin-tightening
