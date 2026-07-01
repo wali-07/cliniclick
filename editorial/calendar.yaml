@@ -585,7 +585,7 @@ articles:
       - skin booster vs filler
       - skin hydration injectables
     dueDate: "2026-06-30"
-    status: awaiting-approval
+    status: published
     brief: |
       Pillar overview of injectable skin boosters (hyaluronic-acid hydrators
       like Profhilo-class products). How they differ from fillers (hydration
@@ -593,6 +593,7 @@ articles:
       fine crepiness, hydration), the typical 2-session protocol, results
       timeline, downtime. Sober, no brand worship. Cross-link to What are
       dermal fillers.
+    publishedDate: "2026-07-01"
   - slug: what-is-a-thread-lift
     parentType: treatment
     parentSlug: thread-lift
