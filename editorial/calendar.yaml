@@ -586,6 +586,7 @@ articles:
       - skin hydration injectables
     dueDate: "2026-06-30"
     status: published
+    publishedDate: "2026-07-01"
     brief: |
       Pillar overview of injectable skin boosters (hyaluronic-acid hydrators
       like Profhilo-class products). How they differ from fillers (hydration
@@ -593,7 +594,6 @@ articles:
       fine crepiness, hydration), the typical 2-session protocol, results
       timeline, downtime. Sober, no brand worship. Cross-link to What are
       dermal fillers.
-    publishedDate: "2026-07-01"
   - slug: what-is-a-thread-lift
     parentType: treatment
     parentSlug: thread-lift
@@ -606,7 +606,7 @@ articles:
       - thread lift vs facelift
       - thread lift results
     dueDate: "2026-07-03"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview of PDO/PLLA thread lifts. How dissolvable threads
       reposition tissue and stimulate collagen, what they realistically do
