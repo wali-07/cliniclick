@@ -606,13 +606,14 @@ articles:
       - thread lift vs facelift
       - thread lift results
     dueDate: "2026-07-03"
-    status: awaiting-approval
+    status: published
     brief: |
       Pillar overview of PDO/PLLA thread lifts. How dissolvable threads
       reposition tissue and stimulate collagen, what they realistically do
       (mild lift + gradual collagen, not a surgical lift), longevity,
       downtime, risks (puckering, migration). Frame honestly against both
       fillers and surgery. Cross-link to skin tightening and dermal fillers.
+    publishedDate: "2026-07-03"
   - slug: what-is-laser-skin-resurfacing
     parentType: treatment
     parentSlug: laser-resurfacing
