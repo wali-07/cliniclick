@@ -29,6 +29,7 @@ import { whatIsRosacea } from "./concerns/rosacea/what-is-rosacea";
 import { costOfPrpInDubai } from "./treatments/prp/cost-of-prp-in-dubai";
 import { whatAreSkinBoosters } from "./treatments/skin-boosters/what-are-skin-boosters";
 import { whatIsAThreadLift } from "./treatments/thread-lift/what-is-a-thread-lift";
+import { whatIsLaserSkinResurfacing } from "./treatments/laser-resurfacing/what-is-laser-skin-resurfacing";
 
 export const allArticles: Article[] = [
   whatIsAcne,
@@ -61,4 +62,5 @@ export const allArticles: Article[] = [
   costOfPrpInDubai,
   whatAreSkinBoosters,
   whatIsAThreadLift,
+  whatIsLaserSkinResurfacing,
 ];
