@@ -607,13 +607,13 @@ articles:
       - thread lift results
     dueDate: "2026-07-03"
     status: published
+    publishedDate: "2026-07-03"
     brief: |
       Pillar overview of PDO/PLLA thread lifts. How dissolvable threads
       reposition tissue and stimulate collagen, what they realistically do
       (mild lift + gradual collagen, not a surgical lift), longevity,
       downtime, risks (puckering, migration). Frame honestly against both
       fillers and surgery. Cross-link to skin tightening and dermal fillers.
-    publishedDate: "2026-07-03"
   - slug: what-is-laser-skin-resurfacing
     parentType: treatment
     parentSlug: laser-resurfacing
@@ -626,7 +626,7 @@ articles:
       - laser resurfacing dark skin
       - laser for acne scars
     dueDate: "2026-07-07"
-    status: queued
+    status: awaiting-approval
     brief: |
       Pillar overview. Ablative vs non-ablative and fractional resurfacing,
       what each treats (texture, scars, fine lines, sun damage), and the
