@@ -626,13 +626,14 @@ articles:
       - laser resurfacing dark skin
       - laser for acne scars
     dueDate: "2026-07-07"
-    status: awaiting-approval
+    status: published
     brief: |
       Pillar overview. Ablative vs non-ablative and fractional resurfacing,
       what each treats (texture, scars, fine lines, sun damage), and the
       critical dark-skin (Fitzpatrick IV-VI) PIH-risk section - device and
       settings selection matters. Downtime tiers, results timing, aftercare.
       Cross-link to acne scars and to chemical peels.
+    publishedDate: "2026-07-07"
   - slug: what-causes-enlarged-pores
     parentType: concern
     parentSlug: enlarged-pores
