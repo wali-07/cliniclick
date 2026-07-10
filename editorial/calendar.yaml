@@ -627,13 +627,13 @@ articles:
       - laser for acne scars
     dueDate: "2026-07-07"
     status: published
+    publishedDate: "2026-07-07"
     brief: |
       Pillar overview. Ablative vs non-ablative and fractional resurfacing,
       what each treats (texture, scars, fine lines, sun damage), and the
       critical dark-skin (Fitzpatrick IV-VI) PIH-risk section - device and
       settings selection matters. Downtime tiers, results timing, aftercare.
       Cross-link to acne scars and to chemical peels.
-    publishedDate: "2026-07-07"
   - slug: what-causes-enlarged-pores
     parentType: concern
     parentSlug: enlarged-pores
@@ -646,7 +646,7 @@ articles:
       - pores and oily skin
       - can you shrink pores
     dueDate: "2026-07-10"
-    status: queued
+    status: awaiting-approval
     brief: |
       Concern overview / myth-bust. What pore size actually depends on
       (genetics, oil, sun-damage laxity, age) and the honest truth that you
